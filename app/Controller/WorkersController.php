@@ -9,18 +9,16 @@ class WorkersController extends Controller
 {
 
 	/**
-	 * Page d'ajout d'un ouvrier
-	 */
-        
-    
-	public function addWorker(){
+	 * Ajout d'un ouvrier
+	 */    
+	public function AddWorker(){
             
             //debug($_POST);
             
-            $wor_lastname = (isset($_POST['wor_lastname']) ? trim($_POST['wor_lastname']) : '');
-            $wor_firstname = (isset($_POST['wor_firstname']) ? trim($_POST['wor_firstname']) : '');
-            $wor_quality = (isset($_POST['wor_quality']) ? trim($_POST['wor_quality']) : '');
-            $wor_remark = (isset($_POST['wor_remark']) ? trim($_POST['wor_remark']) : '');       
+            $wor_lastname = (isset($_POST['wor_lastname']) ? trim($_POST['wor_lastname']) : trim($_POST['wor_lastname_mod']));
+            $wor_firstname = (isset($_POST['wor_firstname']) ? trim($_POST['wor_firstname']) : trim($_POST['wor_firstname_mod']));
+            $wor_quality = (isset($_POST['wor_quality']) ? trim($_POST['wor_quality']) : trim($_POST['wor_quality_mod']));
+            $wor_remark = (isset($_POST['wor_remark']) ? trim($_POST['wor_remark']) : trim($_POST['wor_remark_mod']));       
             
             //debug($wor_lastname);
             
@@ -33,13 +31,56 @@ class WorkersController extends Controller
                                                  
             
             //debug($data);
-            $model = new \Model\WorkersModel();       
-            $worker = $model->insert($data);
-            //debug($worker);
+            $model = new \Model\WorkersModel();  
+            $addWorker = $model->insert($data);
+            //$modWorker = $model->update($data);
+            $allWorker = $model->findAll();
+                 
+            debug($allWorker);
+            //debug($addWorker);
             
-            $this->show('worker/addWorker');
+            //$selectWorker = array();
+            //foreach ($allWorker as $currentWorker){           
+            //        $selectWorker[] = $currentWorker;               
+            //}
+            
+            //debug($currentWorker);
+            //debug($selectWorker);
+            
+            $this->show('worker/worker',array(
+                'allWorker' => $allWorker
+            ));
 	}
         
+        /**
+	 * Mod d'un ouvrier
+	 */  
+        /*public function ModWorker(){
+            
+            debug($_POST);
+            
+            $wor_lastname = (isset($_POST['wor_lastname_mod']) ? trim($_POST['wor_lastname_mod']) : '');
+            $wor_firstname = (isset($_POST['wor_firstname_mod']) ? trim($_POST['wor_firstname_mod']) : '');
+            $wor_quality = (isset($_POST['wor_quality_mod']) ? trim($_POST['wor_quality_mod']) : '');
+            $wor_remark = (isset($_POST['wor_remark_mod']) ? trim($_POST['wor_remark_mod']) : '');       
+            
+            //debug($wor_lastname);
+            
+            $data = array(               
+                'wor_lastname_mod' => $wor_lastname,
+                'wor_firstname_mod' => $wor_firstname,
+                'wor_quality_mod' => $wor_quality,
+                'wor_remark_mod' => $wor_remark,
+            );
+                                                 
+            
+            //debug($data);
+            $model = new \Model\WorkersModel();       
+            $worker = $model->update($data);
+            //debug($worker);
+            
+            $this->show('worker/worker');
+	}*/
 
 }
 //isset($_POST['wor_lastname']) ? intval(trim($_POST['wor_lastname'])) : 0
