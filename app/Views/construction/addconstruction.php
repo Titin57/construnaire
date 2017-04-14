@@ -18,9 +18,9 @@
         <input type="name" class="form-control" name="name" value="" placeholder="Construction name" /><br />
         <input type="city" class="form-control" name="city" value="" placeholder="City" /><br />
         <input type="country" class="form-control" name="country" value="Luxembourg" placeholder="" /><br />
-        
+        <input type="type" class="form-control" name="type" value="" placeholder="Construction type" /><br />
         <input type="client" class="form-control" name="client" value="" placeholder="Client name" /><br />        
-        <input type="submit" class="btn btn-success btn-block" value="Sign up" />
+        <input type="submit" class="btn btn-success btn-sm" value="Submit" />
     </fieldset>
 </form>
 <?php $this->stop('main_content') ?>

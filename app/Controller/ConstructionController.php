@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Controller;
 
 /**
@@ -8,12 +7,13 @@ namespace Controller;
  *
  * @author CS
  */
-class ConstructionController extends \W\Controller\Controller {
+class ConstructionaddController extends \W\Controller\Controller {
 
-    public function construction() {
-        // Je vide les alerts en Session
+    // here starts the construction add method|function
+    public function addConstruction() {
+        // Remove all comments
         unset($_SESSION['flash']);
-        // SI POST
+        // If POST
         if (!empty($_POST)) {
             //debug($_POST);
             // recover data on POST 
@@ -24,7 +24,7 @@ class ConstructionController extends \W\Controller\Controller {
             $country = isset($_POST['country']) ? trim($_POST['country']) : '';
             $type = isset($_POST['type']) ? trim($_POST['type']) : '';
             $client = isset($_POST['client']) ? trim($_POST['client']) : '';
-            
+
             $errorList = array();
             // I validate inputs
             // construction name
@@ -42,50 +42,48 @@ class ConstructionController extends \W\Controller\Controller {
             // type name
             if (strlen($type) < 3) {
                 $errorList[] = 'Name must be at least 3 characters long !';
-            }            
-            
+            }
+
             // client name
-            if (strlen($client) < 3)  {
+            if (strlen($client) < 3) {
                 $errorList[] = 'Name must be at least 3 characters long !';
             }
-            
-            
+
+
             // If all data is ok
             if (empty($errorList)) {
-                // Je teste si l'email existe
-                $constructionModel = new \W\Model\UsersModel();
-                if ($usersModel->emailExists($email)) {
-                    $this->flash('L\'adresse email existe déjà !', 'danger');
-                }
-                else {
-                    // Je crypte le MDP
-                    $authModel = new \W\Security\AuthentificationModel();
-                    $hashedPassword = $authModel->hashPassword($password1);
-                    
-                    // J'insère les données en DB
-                    $insertedUser = $usersModel->insert(array(
-                        'usr_email' => $email,
-                        'usr_password' => $hashedPassword,
-                        'usr_role' => 'user',
-                    ));
-                    
-                    // Si l'insertion a fonctionné, je redirige sur signin
-                    if (!empty($insertedUser)) {
-                        // Ajoute un message de succès à afficher
-                        $this->flash('Inscription effectué', 'success');
-                        
-                        // Redirection vers la page signin
-                        $this->redirectToRoute('user_signin');
-                    }
-                    else {
-                        $this->flash('Erreur dans l\'insertion', 'danger');
-                    }
+                // Data is inserted into DB
+                $addConstruction = $constructionModel->insert(array(
+                    'con_name' => $name,
+                    'con_city' => $city,
+                    'con_country' => $country,
+                    'con_type' => $type,
+                    'con_client' => $client
+                ));
+
+                // If insertion worked out, redirection to construction main page
+                if (!empty($addConstruction)) {
+
+
+                    // Redirection to construction list page
+                    $this->redirectToRoute('constrcution_listconstruction');
+                } else {
+                    $this->flash('Error inserting into the DB !', 'danger');
                 }
             }
-            else {
-                $this->flash(join('<br>', $errorList), 'danger');
-            }
+        } else {
+            $this->flash(join('<br>', $errorList), 'danger');
         }
+
         $this->show('construction/construction');
-    } // end of function|method
-} // end of class
+    }// end of function|method
+    
+    // here starts the construction list method|function
+    public function listConstruction() {
+        // Remove all comments
+        unset($_SESSION['flash']);
+        // code here to list all constructions from DB
+        
+    }
+    
+}// end of class

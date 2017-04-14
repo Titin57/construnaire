@@ -42,7 +42,7 @@ class UsersController extends \W\Controller\Controller {
                 // Here a success message is returned
                 $this->flash('Connection for ' . $userInfos['usr_email'] . ' succeeded !', 'success');
                 // Redirection to construction page (the comment must be removed)
-                // $this->redirectToRoute('construction_construction');
+                $this->redirectToRoute('construction_construction');
             } else {
                 // Message in case of error
                 $this->flash('User does not exist !', 'danger');

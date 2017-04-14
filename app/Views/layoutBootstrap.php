@@ -42,7 +42,7 @@
                                     <a href="<?= $this->url('default_home') ?>">Process</a>
                                 </li>
                                 <li<?php if ($currentPage == 'output'): ?> class="active"<?php endif; ?>>
-                                    <a href="<?= $this->url('output_outputText') ?>">Summery</a>
+                                    <a href="<?= $this->url('output_outputText') ?>">Summary</a>
                                 </li>
                                 <li <?php if ($currentPage == 'addWorker'): ?>class="active"<?php endif; ?> ><a href="<?= $this->url('worker_addWorker') ?>">Worker</a></li>
                                 <li role="separator" class="divider"></li>                                
