@@ -16,24 +16,19 @@
 		</tr>
 		<tr>
                     <td>Firstname :&nbsp;</td>
-                    <td>
-                        <select name="wor_firstname">
-			<option value="">choisissez</option>
-			<option value="">choisissez</option>
-                        
+                    <td>                     
+			<input type="text" name="wor_firstname" value=""/>     
                     </td>
 		</tr>
 		<tr>
                     <td>Buisness :&nbsp;</td>
                     <td>
-                        <select name="wor_quality">
-                            <option value="">choisissez</option>                    
-			</select>
+                        <input type="text" name="wor_quality" value=""/>
                     </td>
 		</tr>
 		<tr>
                     <td>Remarque :&nbsp;</td>
-                    <td><textarea name="wor_text" rows="5" cols="100"></textarea></td>
+                    <td><textarea name="wor_remark" rows="5" cols="100"></textarea></td>
 		</tr>
                 <tr>
                     <td></td>
