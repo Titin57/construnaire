@@ -44,7 +44,7 @@
                                 <li<?php if ($currentPage == 'output'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('output_output') ?>">Summery</a>
                                 </li>
-                                <li <?php if ($currentPage == 'addWorker'): ?>class="active"<?php endif; ?> ><a href="<?= $this->url('worker_addWorker') ?>">Worker</a></li>
+                                <li <?php if ($currentPage == 'worker'): ?>class="active"<?php endif; ?> ><a href="<?= $this->url('worker_worker') ?>">Worker</a></li>
                                 <li role="separator" class="divider"></li>                                
                                 <?php if (empty($w_user)) : ?>
                                     <li<?php if ($currentPage == 'signin'): ?> class="active"<?php endif; ?>>

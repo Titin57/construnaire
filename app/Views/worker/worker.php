@@ -1,4 +1,4 @@
-<?php  $this->layout('layout_Bootstrap', ['title' => ' - Worker', 'currentPage'=>'worker']) ?>
+<?php  $this->layout('layoutBootstrap', ['title' => ' - Worker', 'currentPage'=>'worker']) ?>
 
 <?php  $this->start('main_content') ?>
 

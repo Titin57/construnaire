@@ -25,7 +25,7 @@ $w_routes = array(
     ['GET', '/output/text/', 'Output#outputText', 'output_outputText'],
     ['GET', '/output/visuals/', 'Output#output', 'output_output'],
     
-    ['GET', '/workers/', 'Workers#addWorker', 'worker_addWorker'],
+    ['GET', '/workers/', 'Workers#worker', 'worker_worker'],
  
 
 );

@@ -11,7 +11,7 @@ class WorkersController extends Controller
 	/**
 	 * Ajout d'un ouvrier
 	 */    
-	public function AddWorker(){
+	public function Worker(){
             
             //debug($_POST);
             
