@@ -1,4 +1,4 @@
-<?php  $this->layout('layoutBootstrap', ['title' => ' - Worker', 'currentPage'=>'worker']) ?>
+<?php  $this->layout('layoutBootstrap', ['title' => ' - Worker', 'currentPage'=>'modworker']) ?>
 
 <?php  $this->start('main_content') ?>
 
@@ -14,8 +14,7 @@
 			<option value="">choisissez</option>
                         <?php foreach ($allWorker as $currentWorker) : ?>
                         <option value=""><?php echo $currentWorker['wor_lastname']; ?></option>
-			<?php endforeach; ?>
-                       
+			<?php endforeach; ?>                 
                     </select> 
                 </td>
         </table>
@@ -42,12 +41,12 @@
 		<tr>
                     <td>Buisness :&nbsp;</td>
                     <td>
-                        <input type="text" name="wor_quality_mod" value=""/>
+                        <input type="text" name="wor_quality_mod" value="<?php echo $currentWorker['wor_quality']; ?>"/>
                     </td>
 		</tr>
 		<tr>
                     <td>Remarque :&nbsp;</td>
-                    <td><textarea name="wor_remark_mod" rows="5" cols="100"></textarea></td>
+                    <td><textarea name="wor_remark_mod" rows="5" cols="100"><?php echo $currentWorker['wor_remark']; ?></textarea></td>
 		</tr>
                 <tr>
                     <td></td>
@@ -59,37 +58,6 @@
 
 &nbsp;
 
-<form action="" method="post">
-    <legend>Add a worker</legend>
-    <fieldset>
-	<input type="hidden" name="wor_id" value="" />
-            <table>
-		<tr>
-                    <td>Lastname :&nbsp;</td>
-                    <td><input type="text" name="wor_lastname" value=""/></td>
-		</tr>
-		<tr>
-                    <td>Firstname :&nbsp;</td>
-                    <td>                     
-			<input type="text" name="wor_firstname" value=""/>     
-                    </td>
-		</tr>
-		<tr>
-                    <td>Buisness :&nbsp;</td>
-                    <td>
-                        <input type="text" name="wor_quality" value=""/>
-                    </td>
-		</tr>
-		<tr>
-                    <td>Remarque :&nbsp;</td>
-                    <td><textarea name="wor_remark" rows="5" cols="100"></textarea></td>
-		</tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Add"/></td>
-		</tr>	
-            </table>
-    </fieldset>
-</form>	
+
 
 <?php $this->stop('main_content') ?>
