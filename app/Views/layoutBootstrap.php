@@ -35,8 +35,8 @@
                                 <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('default_home') ?>">Tasks</a>
                                 </li>
-                                <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
-                                    <a href="<?= $this->url('default_home') ?>">A/M Task</a>
+                                <li<?php if ($currentPage == 'addtask'): ?> class="active"<?php endif; ?>>
+                                    <a href="<?= $this->url('task_addtask') ?>">A/M Task</a>
                                 </li>
                                 <li<?php if ($currentPage == 'contact'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('default_home') ?>">Process</a>
