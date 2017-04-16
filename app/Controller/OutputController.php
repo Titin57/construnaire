@@ -11,22 +11,16 @@ class OutputController extends Controller {
 
 
         $model = new \Model\outputModel();
-        $allOutput = $model->getOutput();
-        /*
-          //$allGenres = $model->getGenres();
-          //$selectedConsole = $model->find($id);
-          //$conference = $model->find(2);
-        */
-          debug(allOutput);
-        $this->show('modification/modification', array(
-            'allOutput' => $allOutput,
-                //'allGenres' => $allGenres
+        
+        // output ID still hardcoded
+        $allOutput = $model->getOutput(1);
+          debug($allOutput);
+        $this->show('output/outputText', array(
+            'allOutput' => $allOutput
         ));
 
-
-
-
-        $this->show('output/outputText');
+/*
+  */
     }
 
     public function output() {

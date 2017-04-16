@@ -5,6 +5,10 @@
 <p>
     <strong><a href="<?= $this->url('output_output') ?> "title="home">visuals</a> - </strong>
 </p>
+<form action="" method="post">
+    <input type="text" name="txt" placeholder="city"/>
+    <input type="submit" name="insert" value="insert" onclick="insert()" />
+</form>
 
 <h2>output text</h2>
 
