@@ -13,10 +13,10 @@ class OutputController extends Controller {
         $model = new \Model\outputModel();
         
         // output ID still hardcoded
-        $allOutput = $model->getOutput(1);
-          debug($allOutput);
+        $allOutputFromProcess = $model->getOutputFromProcess(10);
+          //debug($allOutputFromProcess);
         $this->show('output/outputText', array(
-            'allOutput' => $allOutput
+            'allOutputFromProcess' => $allOutputFromProcess
         ));
 
 /*

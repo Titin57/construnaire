@@ -1,1 +1,5 @@
-tas_id not autoincrement
+task.tas_id => not autoincrement
+task.tas_created => no current timestamp (why created and not inserted?? -> changed by me)
+process.pro_inserted => no current timestamp
+construction.con_created (why created and not inserted?? -> changed by me)
+construction (no date?? / time period) 

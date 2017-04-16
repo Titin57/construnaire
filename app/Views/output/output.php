@@ -3,8 +3,7 @@
 <?php $this->start('main_content') ?>
 
 <p>
-    <strong><a href="<?= $this->url('output_outputText')?> "title="text">output text</a> - </strong>
-                <a href="<?= $this->url('output_outputText') ?>">Text</a>
+    <strong>visuals - </strong><a href="<?= $this->url('output_outputText') ?>">Text</a>
 </p>
 
 <h2>output visuals</h2>

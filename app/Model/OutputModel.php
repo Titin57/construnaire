@@ -10,20 +10,65 @@ class OutputModel extends \W\Model\Model {
         $this->setPrimaryKey('pro_id');
     }
 
-    public function getOutput($pro_id, $limit = 5) {
+    public function getOutputFromProcess($pro_id, $limit = 5) {
         $sql = '
-                SELECT *
+            SELECT  
+                    `process_pro_id`,
+                    `pro_name`,
+                    `pro_text`,
+                    
+                    `tas_name`,
+                    `tas_date`, 
+                    `tas_typology`, 
+                    `tas_repeat`, 
+                    `tas_penalitiy`,  
+                    `tas_start`, 
+                    `tas_stop`, 
+                    `tas_time`, 
+                    `tas_text`, 
+                    `tas_remark`,  
+                    `tas_wastage`, 
+                    `tas_va`, 
+                    `tas_nva`, 
+                    `tas_nvau`, 
+                    
+                    `tea_name`, 
+                    `tea_text`,
+                    
+                    `con_name`, 
+                    `con_client`, 
+                    `con_type`, 
+                    `con_text`, 
+                    
+                    `cit_name`,
+                    
+                    `cou_name`
+                    
+                    
+
+
+                    
                 FROM process
                 INNER JOIN tasks ON process.pro_id = tasks.process_pro_id
-                INNER JOIN workers ON workers.tasks_tas_id = tasks.tas_id
                 INNER JOIN teams ON teams.tea_id = tasks.teams_tea_id
                 INNER JOIN constructions ON constructions.con_id = teams.constructions_con_id
-                INNER JOIN city ON city.cit_id = constructions.city_cit_id
-                INNER JOIN country ON country.cou_id = city.country_cou_id            
+                INNER JOIN city ON constructions.city_cit_id = city.cit_id
+                INNER JOIN country ON country.cou_id = city.country_cou_id 
+
+             
                 WHERE pro_id= :pro_id
-                ORDER BY con_created
+
                 LIMIT :limit
                 ';
+        //`tas_image1`, `tas_image2`, `tas_image3`,`tas_inserted`, `tas_vocal_message`, `con_inserted`,
+        // ambiguous: `teams_tea_id`, 
+        
+        /*debug
+
+                INNER JOIN workers ON workers.tasks_tas_id = tasks.tas_id
+         *                 ORDER BY con_created
+         * 
+         */
         $stmt = $this->dbh->prepare($sql);
         $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
         $stmt->bindvalue(':limit', $limit, \PDO::PARAM_INT);
@@ -180,6 +225,22 @@ class OutputModel extends \W\Model\Model {
       ('css', 'better than A-Team', 1),
       ('Top Dogs', 'Named after the famous WORMS Team', 2)
 
+      ///////// process of TREEHOUSE of hooro XVII
+            INSERT INTO `process`(
+      `pro_name`,
+      `pro_text`)
+      VALUES (
+      '`building the framework of the treehouse`',
+      '`construction of a treehouse`'
+
+      ),(
+      '`building the stairs  of the treehouse`',
+      '`construction of a treehouse`'
+      ),(
+      '`installation of the bathroom in the Treehouse`',
+      '`construction of a treehouse`'
+
+      )
       ///////// process
       INSERT INTO `process`(
       `pro_name`,
@@ -213,6 +274,92 @@ class OutputModel extends \W\Model\Model {
       '`construction of a treehouse`'
 
       )
+       * ///////// tasks Treehouse
+      INSERT INTO samw_sql1.`tasks`(
+      `tas_name`,
+      `tas_date`,
+      `tas_typology`,
+
+      `tas_repeat`,
+      `tas_penalitiy`,
+      `tas_start`,
+
+      `tas_stop`,
+      `tas_time`,
+      `tas_text`,
+
+      `tas_remark`,
+      `tas_wastage`,
+      `tas_va`,
+
+      `tas_nva`,
+      `tas_nvau`,
+      `teams_tea_id`,
+      `process_pro_id`
+      )
+      VALUES (
+      'installation of the toilet',
+      2017-04-16,
+      'Team',
+
+      1,
+      '`heavy lifting`',
+      '2017-01-01 00:00:03',
+
+      '2017-01-04 00:04:08',
+      '00:06:08',
+      'flush it hard`',
+
+      'brown water dumped to the neighbour',
+      '`Déplacements`',
+      0.2,
+
+      0.25,
+      0.55,
+      1,
+      10),
+      (
+      'running the waterpipes',
+      2017-04-12,
+      'Worker',
+
+      15,
+      '`posture`',
+      '2017-01-01 08:00:03',
+
+      '2017-01-01 12:00:08',
+      '00:06:08',
+      'no water no fun',
+
+      'no water source so far',
+      '`Surprocessing ou setup inutiles`',
+      0.8,
+
+      0.15,
+      0.05,
+      2,
+      10),
+      (
+      'installation of the whirpool',
+      2017-04-01,
+      'Team',
+
+      1,
+      '`heavy lifting`',
+      '2017-04-01 12:00:03',
+
+      '2017-04-01 15:00:08',
+      '00:06:08',
+      'no treehouse without whirpool',
+
+      'Nelson forgot to bring the hookers, opening party canceled',
+      '`Sous‐utilisation des Compétences`',
+      0.9,
+
+      0.05,
+      0.05,
+      2,
+      10)
       ///////// tasks
       INSERT INTO samw_sql1.`tasks`(
       `tas_name`,

@@ -3,15 +3,112 @@
 <?php $this->start('main_content') ?>
 
 <p>
-    <strong><a href="<?= $this->url('output_output') ?> "title="home">visuals</a> - </strong>
+    <strong><a href="<?= $this->url('output_output') ?> "title="home">visuals</a> - text </strong>
 </p>
+
+<!-- ////////////////check for case if index 0 does not exist => php get keys////////////-->
+<h2>Title :     <strong><?= $allOutputFromProcess [0]['con_name']; ?></strong></h2>
+<table class='table'>
+    <!--
+    <caption>Title:<strong>< ?= $allOutputFromProcess [0]['con_name']; ?></strong></caption>
+    -->
+    <tr>
+        <td><strong>Building type:</strong></td>   
+        <td><?= $allOutputFromProcess [0]['con_type']; ?></td> 
+        <td><strong>Workers and Teams involved: </strong></td>
+        <td> <?= $allOutputFromProcess [0]['tea_name']; ?></td>
+    </tr>
+    <tr>
+        <td><strong>Commissioned by:</strong></td>   
+        <td><?= $allOutputFromProcess [0]['con_client']; ?></td> 
+    <!-- ////////////////add foreach/////////////-->
+        <td><strong>Team:</strong> remark / observation:</td>
+        <td> <?= $allOutputFromProcess [0]['tea_text']; ?></td>
+    </tr>
+    <tr>
+        <td><strong>City / country:</strong></td>   
+        <td><?= $allOutputFromProcess [0]['cit_name']; ?> / <?= $allOutputFromProcess [0]['cou_name']; ?></td> 
+        <td><strong>Process : </strong></td>
+        <td> <?= $allOutputFromProcess [0]['pro_name']; ?></td>
+    </tr>
+    <tr>
+        <td><strong>Construction:</strong> Remark / observation:</td>   
+        <td><?= $allOutputFromProcess [0]['con_text']; ?></td> 
+        <td><strong>Process :</strong> remark / observation:</td>
+        <td> <?= $allOutputFromProcess [0]['pro_text']; ?></td>
+    </tr>
+</table>
+
 <form action="" method="post">
     <input type="text" name="txt" placeholder="city"/>
     <input type="submit" name="insert" value="insert" onclick="insert()" />
 </form>
 
-<h2>output text</h2>
+<table class='table'>
+    <thead>
+        <tr>
 
+            <th>Task</th>
+            <th>Date</th>             
+            <th>Typologie</th>               
+            <th>Name</th>
+            <th>Value AV</th>            
+            <th>Value NAV</th>            
+            <th>Value NAV-N</th>            
+            <th>Repetition</th>
+
+            <th>Wastage</th>
+            <th>Hardship</th>            
+            <th>Observations</th>               
+            <th>Remarks</th>
+            <th>Started</th>            
+            <th>Stopped</th>
+
+            <th>Total time</th>               
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($allOutputFromProcess as $key => $value): ?>
+
+            <tr>
+
+                <!--Task  [tas_name] -->
+                <td><?= $value['tas_name'] ?></td>
+                <!--Task date [tas_date] -->
+                <td><?= $value['tas_date'] ?></td>
+                <!--Typologie [tas_typology] -->
+                <td><?= $value['tas_typology'] ?></td>
+                <!--Name [tea_name] -->
+                <td><?= $value['tea_name'] ?></td>
+                <!--Value [tas_va]--> 
+                <td><?= $value['tas_va'] ?></td>
+                <!--Value [tas_nva]--> 
+                <td><?= $value['tas_nva'] ?></td>
+                <!--Value [tas_nvau]--> 
+                <td><?= $value['tas_nvau'] ?></td>
+                <!--Repetition [tas_repeat] -->
+                <td><?= $value['tas_repeat'] ?></td>
+
+                <!--Wastage  [tas_wastage]-->
+                <td><?= $value['tas_wastage'] ?></td>
+                <!--Hardship [tas_penalitiy]-->
+                <td><?= $value['tas_penalitiy'] ?></td>
+                <!--Observations  [tas_text] -->
+                <td><?= $value['tas_text'] ?></td>
+                <!--Remarks [tas_remark] -->
+                <td><?= $value['tas_remark'] ?></td>
+                <!--Started  [tas_start] -->
+                <td><?= $value['tas_start'] ?></td>
+                <!--Stopped [tas_stop] --> 
+                <td><?= $value['tas_stop'] ?></td>
+
+                <!--Total time [tas_time] -->
+                <td><?= $value['tas_time'] ?></td>
+
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 <table class='table'>
     <thead>
         <tr>
