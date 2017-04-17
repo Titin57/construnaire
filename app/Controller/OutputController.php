@@ -9,14 +9,34 @@ class OutputController extends Controller {
 
     public function outputText() {
 
+        // all constructions 4 use with <select>        
+        $constructionModel = new \Model\ConstructionsModel();
+        $allConstructions = $constructionModel->findAll();
+        //debug($allConstructions);
+        
+        // all process 4 use with <select>        
+        $processModel = new \Model\ProcessModel();
+        $allProcess = $processModel->findAll();
+        //debug($allProcess);
+
 
         $model = new \Model\outputModel();
         
         // output ID still hardcoded
         $allOutputFromProcess = $model->getOutputFromProcess(10);
-          //debug($allOutputFromProcess);
+        //debug($allOutputFromProcess);
+        
+        // inserted here for testing purposes //????
+        $allOutputFromConstructions = $model->getOutputFromConstructions(10);
+        //debug($allOutputFromConstructions);
+        
+        
         $this->show('output/outputText', array(
-            'allOutputFromProcess' => $allOutputFromProcess
+            'allProcess' => $allProcess,
+            'allConstructions' => $allConstructions,
+            'allOutputFromProcess' => $allOutputFromProcess,
+            // inserted here for testing purposes //????
+            'allOutputFromConstructions' => $allOutputFromConstructions
         ));
 
 /*
