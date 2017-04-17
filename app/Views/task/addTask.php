@@ -46,18 +46,18 @@
 		</tr>
                 <tr>
                     <td>VA :&nbsp;</td>                 
-                    <td><div class="slider" name="tas_va" ></div></td>
-                    <td><input type="text" class="val"></td>
+                    <td><div class="slider"  ></div></td>
+                    <td><input type="text" class="val" name="tas_va" value=""></td>
 		</tr>
                 <tr>
                     <td>NVA :&nbsp;</td>
-                    <td><div class="slider2" name="tas_nva" ></div></td>
-                    <td><input type="text" class="val2"></td>
+                    <td><div class="slider2" ></div></td>
+                    <td><input type="text" class="val2" name="tas_nva"></td>
 		</tr>
                 <tr>
                     <td>NVAU :&nbsp;</td>
-                    <td><div class="slider3" name="nvau" ></div></td>
-                    <td><input type="text" class="val3"></td>
+                    <td><div class="slider3" ></div></td>
+                    <td><input type="text" class="val3" name="tas_nvau" ></td>
 		</tr>
                 <tr>
                     <td>Start :&nbsp;</td>
@@ -67,7 +67,10 @@
                     <td>stop :&nbsp;</td>
                     <td><textarea name="tas_stop" rows="5" cols="100"></textarea></td>
 		</tr>
-                
+                <tr>
+                    <td>Durée :&nbsp;</td>
+                    <td><input name="tas_time" value=""></textarea></td>
+		</tr>
                 <tr>
                     <td></td>
                     <td><input type="submit" value="Add"/></td>
@@ -82,7 +85,9 @@
 
 <script>
   $( function() {
-    $( "#datepicker" ).datepicker();
+    $( "#datepicker" ).datepicker({
+        dateFormat: "yy-mm-dd"
+    });
   } );
 </script>
 

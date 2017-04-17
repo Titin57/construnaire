@@ -27,6 +27,7 @@ class TasksController extends Controller
             $tas_nvau = (isset($_POST['tas_nvau']) ? trim($_POST['tas_nvau']) : '');       
             $tas_start = (isset($_POST['tas_start']) ? trim($_POST['tas_start']) : '');       
             $tas_stop = (isset($_POST['tas_stop']) ? trim($_POST['tas_stop']) : '');       
+            $tas_time = (isset($_POST['tas_time']) ? trim($_POST['tas_time']) : '');       
             
             //debug($wor_lastname);
             
@@ -44,6 +45,7 @@ class TasksController extends Controller
                 'tas_nvau' => $tas_nvau,
                 'tas_start' => $tas_start,
                 'tas_stop' => $tas_stop,
+                'tas_time' => $tas_time,
             );
                                                  
             
