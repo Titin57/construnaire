@@ -72,7 +72,7 @@ class ConstructionsController extends Controller {
                 $this->flash(join('<br>', $errorList), 'danger');
             }
         }
-        $this->show('construction/construction');
+        $this->show('construction/addconstruction');
     } // end of addconstruction function|method
     
     
