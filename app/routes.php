@@ -23,12 +23,12 @@ $w_routes = array(
     ['GET|POST', '/workers/add/', 'Workers#addworker', 'worker_addworker'],
     ['GET|POST', '/workers/mod/', 'Workers#modworker', 'worker_modworker'],
     ['GET|POST', '/workers/all/', 'Workers#allworker', 'worker_allworker'],
-<<<<<<< HEAD
+
     ['GET|POST', '/task/add/', 'Task#addtask', 'task_addtask'],
     
  
 
+
+
 );
-=======
-);
->>>>>>> f2060ac7fc49d8e8e965e8c6175caa35cf12ef31
+
