@@ -4,7 +4,7 @@ namespace Controller;
 
 use \W\Controller\Controller;
 
-class TaskController extends Controller
+class TasksController extends Controller
 {
 
 	/**
@@ -12,7 +12,7 @@ class TaskController extends Controller
 	 */
 	public function addtask(){
             
-             //debug($_POST);
+            //debug($_POST);
             
             $tas_name = (isset($_POST['tas_name']) ? trim($_POST['tas_name']) : '');
             $tas_date = (isset($_POST['tas_date']) ? trim($_POST['tas_date']) : '');
@@ -47,8 +47,8 @@ class TaskController extends Controller
             );
                                                  
             
-            //debug($data);
-            $model = new \Model\WorkersModel();  
+            debug($data);
+            $model = new \Model\TasksModel();  
             $addTask = $model->insert($data); 
             
 		$this->show('task/addtask');

@@ -24,7 +24,7 @@ $w_routes = array(
     ['GET|POST', '/workers/mod/', 'Workers#modworker', 'worker_modworker'],
     ['GET|POST', '/workers/all/', 'Workers#allworker', 'worker_allworker'],
 
-    ['GET|POST', '/task/add/', 'Task#addtask', 'task_addtask'],
+    ['GET|POST', '/task/add/', 'Tasks#addtask', 'task_addtask'],
     
     
 );
