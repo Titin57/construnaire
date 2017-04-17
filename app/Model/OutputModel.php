@@ -159,7 +159,7 @@ class OutputModel extends \W\Model\Model {
 
     public function calcTime() {
 
-        // if isset tas_start & tas_stop & tas_time  => recalculate  tas_time
+        // if isset tas_start & tas_stop & tas_time  => recalculate  tas_time -> point out difference if >10min
         // if isset tas_start & tas_stop             => calculate  tas_time
         // if isset tas_start            & tas_time  => calculate  tas_stop
         // if isset             tas_stop & tas_time  => calculate  tas_start
@@ -172,6 +172,29 @@ class OutputModel extends \W\Model\Model {
         // tas_nva * 100
         //  tas_nvau * 100
         // tas_va + tas_nva + tas_nvau = 100% else error!!
+    }
+    
+    public function exportCsv() {
+        // export getOutputFromConstructions($con_id)
+        // export getOutputFromProcess($pro_id)
+
+    }
+    
+    public function getConstructionTypesFromCsv() {
+        // import Csv
+        // link csv data con_type [INT]
+        // return names
+
+    }
+    public function importCsvToDb() {
+        // needed? => nice 2 have!!
+
+    }
+    
+    public function exportXls() {
+        // export getOutputFromConstructions($con_id)
+        // export getOutputFromProcess($pro_id)
+
     }
 
     /*
