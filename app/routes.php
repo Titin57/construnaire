@@ -22,8 +22,8 @@ $w_routes = array(
     // GET and POST ==> data is called from and added to the DB
     ['GET|POST', '/construction/', 'Construction#construction', 'construction_construction'],  
     
-    ['GET', '/output/text/', 'Output#outputText', 'output_outputText'],
-    ['GET', '/output/visuals/', 'Output#output', 'output_output'],
+    ['GET|POST', '/output/text/', 'Output#outputText', 'output_outputText'],
+    ['GET|POST', '/output/visuals/', 'Output#output', 'output_output'],
     
     ['GET|POST', '/workers/add/', 'Workers#addworker', 'worker_addworker'],
     ['GET|POST', '/workers/mod/', 'Workers#modworker', 'worker_modworker'],

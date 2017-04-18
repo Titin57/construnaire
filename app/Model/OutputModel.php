@@ -21,7 +21,7 @@ class OutputModel extends \W\Model\Model {
                     `tas_date`, 
                     `tas_typology`, 
                     `tas_repeat`, 
-                    `tas_penalitiy`,  
+                    `tas_penality`,  
                     `tas_start`, 
                     `tas_stop`, 
                     `tas_time`, 
@@ -61,14 +61,14 @@ class OutputModel extends \W\Model\Model {
                 LIMIT :limit
                 ';
         /* debug
+          INNER JOIN workers ON workers.wor_id = tasks.tas_id
           `tas_image1`, `tas_image2`, `tas_image3`,`tas_inserted`, `tas_vocal_message`, `con_inserted`,
           ambiguous: `teams_tea_id`,
 
 
           INNER JOIN workers ON workers.tasks_tas_id = tasks.tas_id
-          ORDER BY con_created
+          ORDER BY con_created */
 
-         */
 
         $stmt = $this->dbh->prepare($sql);
         $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
@@ -105,7 +105,7 @@ class OutputModel extends \W\Model\Model {
                     `tas_date`, 
                     `tas_typology`, 
                     `tas_repeat`, 
-                    `tas_penalitiy`,  
+                    `tas_penality`,  
                     `tas_start`, 
                     `tas_stop`, 
                     `tas_time`, 
@@ -155,48 +155,168 @@ class OutputModel extends \W\Model\Model {
         }
     }
 
-    ///////////////////////////////////////////// Todo s /////////////////////////////////
+    public function floatToPercent($floatToPercent) {
+        if (isset($floatToPercent)) {
+            // test if value existe then : tas_va * 100
+            if (!empty($floatToPercent)) {
 
-    public function calcTime() {
-
-        // if isset tas_start & tas_stop & tas_time  => recalculate  tas_time -> point out difference if >10min
-        // if isset tas_start & tas_stop             => calculate  tas_time
-        // if isset tas_start            & tas_time  => calculate  tas_stop
-        // if isset             tas_stop & tas_time  => calculate  tas_start
-        // add values to db  , recalculated values in brackets concatenated (possible? db restrictions value type?)
-    }
-
-    public function calcVA() {
-
-        // tas_va * 100
-        // tas_nva * 100
-        //  tas_nvau * 100
+                if ($floatToPercent <= 1) {
+                    $floatToPercent = 100 * $floatToPercent;
+                    return $floatToPercent;
+                } else {
+                    debug("Error: input to change from float to percent doesn't match expectations! expected: float");
+                }
+            } else {
+                debug('Error: no input to change from float to percent');
+            }
+        }
+        // test if value existe then :  tas_nva * 100
+        // test if value existe then :   tas_nvau * 100
         // tas_va + tas_nva + tas_nvau = 100% else error!!
     }
-    
-    public function exportCsv() {
-        // export getOutputFromConstructions($con_id)
-        // export getOutputFromProcess($pro_id)
 
-    }
-    
     public function getConstructionTypesFromCsv() {
+
+
+        $constructions = array();
+
+        // use __file__                         >>>>>>>>>>  ask ben
+        $file = fopen("../public/assets/csv/building.csv", "r");
+        //fgetcsv(file,length,separator,enclosure)
+        $constructions = \fgetcsv($file, 125, ',', "//");
+
+        return $constructions;
+
         // import Csv
         // link csv data con_type [INT]
         // return names
-
-    }
-    public function importCsvToDb() {
-        // needed? => nice 2 have!!
-
-    }
-    
-    public function exportXls() {
-        // export getOutputFromConstructions($con_id)
-        // export getOutputFromProcess($pro_id)
-
     }
 
+    //******************************************************************** VA - NVAU - NVAI *************************************************
+    // BETTER ALTERNATIVE BENEATH?? calculate wasted minutes per task (from the overall minutes per task with the percentage of wasted time : $tas_time *$tas_nva )
+    // input calculateWastedTimePerTask $tas_nva=>float , $tas_time=> in minutes (has to be calculated before)
+    public function calculateWastedTimePerTask($tas_nva, $tas_time) {
+        //tas_time has to be calculated before
+        // tas_time(of the entire task) is multiplied by the $tas_nva whicch is a float// result = wastedTime for this task
+        // I stack (one after the other) the results in an array
+        // I return the array of the times in minutes of every task in this process // first value in array corresponds to first task
+    }
+
+    // calculate wasted minutes per task (from the overall minutes per task with the percentage of wasted time : $tas_time *$tas_nva )
+    // input calculateWastedTimePerTask $tas_id=>INT, $tas_nva=>float , $tas_time=> in minutes (has to be calculated before), $tas_wastage=>STRING
+    public function calculateWastedTimePerTaskArray($tas_id, $tas_nva, $tas_time, $tas_wastage) {
+        //tas_time has to be calculated before
+        // tas_time(of the entire task) is multiplied by the $tas_nva which is a float// result = wastedTime for this task in minutes
+        // I stack (one after the other) the results in an array of arrays
+
+        /* format to return :
+
+          array=
+          (
+          [0]=>array
+          (
+          [$tas_id_1]
+          [$tas_nva_time_1]
+          [$tas_wastage_1]
+          )
+          [1]=>array
+          (
+          [$tas_id_2]
+          [$tas_nva_time_2]
+          [$tas_wastage_2]
+          )
+          )
+         */
+
+
+        // return the array oa arrays with the times in minutes of every task in this process
+        // return $WastedTimePerTaskArray
+    }
+
+    // calculate the sum of the wasted time NVAI for ONE process
+    // input = resunt from funtion calculateWastedTimePerTaskArray ()
+    public function calculateWastedTimePerProcess($WastedTimePerTaskArray) {
+        // addition of all the values for the wastage in minutes
+
+        /*
+          [$tas_nva_time_1] + [$tas_nva_time_2] + [$tas_nva_time_3] + ...
+         */
+
+        //return $WastedTimePerProcess 
+    }
+
+    // calculate the sum of the time for ONE process -> just a simple value to display
+    // input = tas_time (minutes) from innitial array
+    public function calculateTotalTimePerProcess($OutputFromProcess/*[tas_time]*/) {
+        // addition of all the values for the Time in minutes tas_time
+
+        /*
+          [$tas_nva_time_1] + [$tas_nva_time_2] + [$tas_nva_time_3] + ...
+         */
+
+        //return $timePerProcess 
+    }
+
+    // calculate the percentage of the wasted time NVAI (for every task of ONE process) in relation to $WastedTimePerProcess   
+    public function calculatePercentWastedTimePerProcess($WastedTimePerTaskArray, $WastedTimePerProcess) {
+        // calc the
+        
+        //$percentage= (part/whole) *100
+        //$tas_nva_percent= ($WastedTimePerTaskArray/$WastedTimePerProcess) *100
+
+/* format to return :
+
+          array=
+          (
+          [0]=>array
+          (
+          [$tas_id_1]
+          [$tas_nva_time_1]
+          [$tas_wastage_1]
+          [$tas_nva_percent_1]
+          )
+          [1]=>array
+          (
+          [$tas_id_2]
+          [$tas_nva_time_2]
+          [$tas_wastage_2]
+          [$tas_nva_percent_2]
+          )
+          )
+         */
+
+        //
+    }
+
+    ///////////////////////////////////////////// Todo s /////////////////////////////////
+    /*
+      public function calcTime() {
+
+      // if isset tas_start & tas_stop & tas_time  => recalculate  tas_time -> point out difference if >10min
+      // if isset tas_start & tas_stop             => calculate  tas_time
+      // if isset tas_start            & tas_time  => calculate  tas_stop
+      // if isset             tas_stop & tas_time  => calculate  tas_start
+      // add values to db  , recalculated values in brackets concatenated (possible? db restrictions value type?)
+      }
+
+
+      public function exportCsv() {
+      // export getOutputFromConstructions($con_id)
+      // export getOutputFromProcess($pro_id)
+
+      }
+
+      public function importCsvToDb() {
+      // needed? => nice 2 have!!
+
+      }
+
+      public function exportXls() {
+      // export getOutputFromConstructions($con_id)
+      // export getOutputFromProcess($pro_id)
+
+      }
+     */
     /*
       public function addConstruction($lastname, $firstname, $email, $birthdate, $friendliness, $sessionId, $cityId) {
       global $pdo;
@@ -326,7 +446,8 @@ class OutputModel extends \W\Model\Model {
       ('San Carlito', 2),
       ('New Carlolina', 2),
       ('Samtown', 3),
-      ('Imaginiville', 4)
+      ('Imaginiville', 4),
+      ('Springfield', 4)
      * 
 
       ///////// counties
@@ -339,7 +460,8 @@ class OutputModel extends \W\Model\Model {
       VALUES
       ('A-Team', 'best team ever', 1),
       ('css', 'better than A-Team', 1),
-      ('Top Dogs', 'Named after the famous WORMS Team', 2)
+      ('Top Dogs', 'Named after the famous WORMS Team', 2),
+      ('Everegreen Terrasse Team', 'inner circle of the simpsons cast', 10)
 
       ///////// process of TREEHOUSE of hooro XVII
       INSERT INTO `process`(
@@ -397,7 +519,7 @@ class OutputModel extends \W\Model\Model {
       `tas_typology`,
 
       `tas_repeat`,
-      `tas_penalitiy`,
+      `tas_penality`,
       `tas_start`,
 
       `tas_stop`,
@@ -528,7 +650,7 @@ class OutputModel extends \W\Model\Model {
       `tas_typology`,
 
       `tas_repeat`,
-      `tas_penalitiy`,
+      `tas_penality`,
       `tas_start`,
 
       `tas_stop`,
@@ -614,7 +736,7 @@ class OutputModel extends \W\Model\Model {
       `tas_typology`,
 
       `tas_repeat`,
-      `tas_penalitiy`,
+      `tas_penality`,
       `tas_start`,
 
       `tas_stop`,
