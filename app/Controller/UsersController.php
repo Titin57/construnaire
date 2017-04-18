@@ -51,7 +51,7 @@ class UsersController extends \W\Controller\Controller {
             $this->flash(join('<br>', $errorList), 'danger');
         }
 
-        $this->show('user/signin');
+        $this->show('default/home');
     }
 
 
