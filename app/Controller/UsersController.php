@@ -14,7 +14,7 @@ class UsersController extends \W\Controller\Controller {
     }
 
     public function signinPost() {
-        debug($_POST);
+        // debug($_POST);
         // Data is recovered in POST
         $email = isset($_POST['email']) ? trim(strip_tags($_POST['email'])) : '';
         $password = isset($_POST['password']) ? trim($_POST['password']) : '';
@@ -51,7 +51,7 @@ class UsersController extends \W\Controller\Controller {
             $this->flash(join('<br>', $errorList), 'danger');
         }
 
-        $this->show('user/signin');
+        $this->show('default/home');
     }
 
 
