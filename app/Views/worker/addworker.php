@@ -1,8 +1,6 @@
-<?php  $this->layout('layoutBootstrap', ['title' => ' - AddWorker', 'currentPage'=>'addWorker']) ?>
+<?php  $this->layout('layoutBootstrap', ['title' => ' - Worker', 'currentPage'=>'addworker']) ?>
 
 <?php  $this->start('main_content') ?>
-
-
 
 
 <form action="" method="post">

@@ -14,6 +14,8 @@
 
         <!-- jQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     </head>
     <body>
@@ -35,16 +37,21 @@
                                 <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('default_home') ?>">Tasks</a>
                                 </li>
-                                <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
-                                    <a href="<?= $this->url('default_home') ?>">A/M Task</a>
+                                <li<?php if ($currentPage == 'addtask'): ?> class="active"<?php endif; ?>>
+                                    <a href="<?= $this->url('task_addtask') ?>">A/M Task</a>
                                 </li>
                                 <li<?php if ($currentPage == 'contact'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('default_home') ?>">Process</a>
                                 </li>
                                 <li<?php if ($currentPage == 'output'): ?> class="active"<?php endif; ?>>
+<<<<<<< HEAD
                                     <a href="<?= $this->url('output_outputText') ?>">Summary</a>
+=======
+                                    <a href="<?= $this->url('output_output') ?>">Summery</a>
+>>>>>>> 71289fc3367436994b6c2f51b4522da09f5eb395
                                 </li>
-                                <li <?php if ($currentPage == 'addWorker'): ?>class="active"<?php endif; ?> ><a href="<?= $this->url('worker_addWorker') ?>">Worker</a></li>
+                                <li <?php if ($currentPage == 'addworker'): ?>class="active"<?php endif; ?> >
+                                    <a href="<?= $this->url('worker_addworker') ?>">Worker</a></li>
                                 <li role="separator" class="divider"></li>                                
                                 <?php if (empty($w_user)) : ?>
                                     <li<?php if ($currentPage == 'signin'): ?> class="active"<?php endif; ?>>
