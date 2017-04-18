@@ -12,7 +12,7 @@ class TasksController extends Controller
 	 */
 	public function addtask(){
             
-            //debug($_POST);
+            //debug($_POST['tas_time']);
             
             $tas_name = (isset($_POST['tas_name']) ? trim($_POST['tas_name']) : '');
             $tas_date = (isset($_POST['tas_date']) ? trim($_POST['tas_date']) : '');
@@ -27,9 +27,12 @@ class TasksController extends Controller
             $tas_nvau = (isset($_POST['tas_nvau']) ? trim($_POST['tas_nvau']) : '');       
             $tas_start = (isset($_POST['tas_start']) ? trim($_POST['tas_start']) : '');       
             $tas_stop = (isset($_POST['tas_stop']) ? trim($_POST['tas_stop']) : '');       
-            $tas_time = (isset($_POST['tas_time']) ? trim($_POST['tas_time']) : '');       
+            $tas_time2 = (isset($_POST['tas_time2']) ? trim($_POST['tas_time2']) : '');       
             
-            //debug($wor_lastname);
+            
+            $tas_start = date("Y-m-d").' '.$tas_start;   
+            $tas_stop = date("Y-m-d").' '.$tas_stop;   
+            debug($tas_start);
             
             $data = array(               
                 'tas_name' => $tas_name,
@@ -45,7 +48,7 @@ class TasksController extends Controller
                 'tas_nvau' => $tas_nvau,
                 'tas_start' => $tas_start,
                 'tas_stop' => $tas_stop,
-                'tas_time' => $tas_time,
+                'tas_time' => $tas_time2,
             );
                                                  
             
