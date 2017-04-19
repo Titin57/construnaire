@@ -31,6 +31,16 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
+                                <!--- this link for showing all constructions ---> 
+                                <li<?php if ($currentPage == 'construction'): ?> class="active"<?php endif; ?>>
+                                    <a href="<?= $this->url('construction_listconstruction') ?>">Constructions</a>
+                                </li>                                
+                                
+                                <!--- this link for adding / modifying construction name's ---> 
+                                <li<?php if ($currentPage == 'addconstruction'): ?> class="active"<?php endif; ?>>
+                                    <a href="<?= $this->url('default_home') ?>">A/M Construction</a>
+                                </li>                     
+                                
                                 <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('default_home') ?>">Teams</a>
                                 </li>
@@ -45,7 +55,7 @@
                                 </li>
                                 <li<?php if ($currentPage == 'output'): ?> class="active"<?php endif; ?>>
 
-                                    <a href="<?= $this->url('output_output') ?>">Summery</a>
+                                    <a href="<?= $this->url('output_output') ?>">Summary</a>
 
                                 </li>
                                 <li <?php if ($currentPage == 'addworker'): ?>class="active"<?php endif; ?> >

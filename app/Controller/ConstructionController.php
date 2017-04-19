@@ -7,7 +7,7 @@ namespace Controller;
  *
  * @author CS
  */
-class ConstructionaddController extends \W\Controller\Controller {
+class ConstructionController extends \W\Controller\Controller {
 
     // here starts the construction add method|function
     public function addConstruction() {
@@ -18,9 +18,7 @@ class ConstructionaddController extends \W\Controller\Controller {
             //debug($_POST);
             // recover data on POST 
             $name = isset($_POST['name']) ? trim(($_POST['name'])) : '';
-            // drop down menu for cties
             $city = isset($_POST['city']) ? trim($_POST['city']) : '';
-            // drop down menu for contries
             $country = isset($_POST['country']) ? trim($_POST['country']) : '';
             $type = isset($_POST['type']) ? trim($_POST['type']) : '';
             $client = isset($_POST['client']) ? trim($_POST['client']) : '';
@@ -29,24 +27,24 @@ class ConstructionaddController extends \W\Controller\Controller {
             // I validate inputs
             // construction name
             if (strlen($name) < 3) {
-                $errorList[] = 'Name must be at least 3 characters long !';
+                $errorList[] = 'Construction name must be at least 3 characters long !';
             }
             // city name
             if (strlen($city) < 3) {
-                $errorList[] = 'Name must be at least 3 characters long !';
+                $errorList[] = 'City name must be at least 3 characters long !';
             }
             // country name
             if (strlen($country) < 3) {
-                $errorList[] = 'Name must be at least 3 characters long !';
+                $errorList[] = 'Country name must be at least 3 characters long !';
             }
             // type name
             if (strlen($type) < 3) {
-                $errorList[] = 'Name must be at least 3 characters long !';
+                $errorList[] = 'Type must be at least 3 characters long !';
             }
 
             // client name
             if (strlen($client) < 3) {
-                $errorList[] = 'Name must be at least 3 characters long !';
+                $errorList[] = 'Client name must be at least 3 characters long !';
             }
 
 
@@ -61,7 +59,8 @@ class ConstructionaddController extends \W\Controller\Controller {
                     'con_client' => $client
                 ));
 
-                // If insertion worked out, redirection to construction main page
+                // If insertion worked out, 
+                // redirection to construction main page
                 if (!empty($addConstruction)) {
 
 
@@ -77,13 +76,27 @@ class ConstructionaddController extends \W\Controller\Controller {
 
         $this->show('construction/construction');
     }// end of function|method
-    
+    //
     // here starts the construction list method|function
     public function listConstruction() {
         // Remove all comments
         unset($_SESSION['flash']);
-        // code here to list all constructions from DB
+        // restrict access to this page to users and admin
+        // line $this->allowTo(.......) must be uncommented !!
+        // $this->allowTo(array('admin','user'));
         
-    }
-    
-}// end of class
+        // code here to list all constructions from DB
+        // 
+        $model = new \Model\ConstructionModel();
+        // $allconstructions recovers all data from method
+        // getAllDataFromConstructions()
+        $allconstructions = $model->getAllDataFromConstructions();
+        // for dev purpose only
+        // debug($allconstructions);
+        $this->show('construction/listconstruction', array(
+            // an associative table must be given to pass “variables”
+            'allConstruction' => $allconstructions
+        ));
+    }// end of function|method
+
+} // end of class

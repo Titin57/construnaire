@@ -8,6 +8,8 @@ class CityModel extends \W\Model\Model{
         parent::__construct();
         $this->setPrimaryKey('cit_id');
         
-    }// end of method|function     
+    }// end of method|function
+    
+    
     
 } // end of class
