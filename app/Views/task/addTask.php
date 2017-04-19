@@ -26,23 +26,23 @@
 		</tr>
 		<tr>
                     <td>wastage :&nbsp;</td>
-                    <td><textarea name="tas_wastage" rows="5" cols="100"></textarea></td>
+                    <td><input type="text" name="tas_watage" value=""/></td>
 		</tr>
                 <tr>
                     <td>repeat :&nbsp;</td>
-                    <td><textarea name="tas_repeat" rows="5" cols="100"></textarea></td>
+                    <td><input type="text" name="tas_repeat" value=""/></td>
 		</tr>
                 <tr>
                     <td>Observation :&nbsp;</td>
-                    <td><textarea name="tas_text" rows="5" cols="100"></textarea></td>
+                    <td><textarea name="tas_text" rows="5" cols="30"></textarea></td>
 		</tr>
                 <tr>
                     <td>Remarque :&nbsp;</td>
-                    <td><textarea name="tas_remark" rows="5" cols="100"></textarea></td>
+                    <td><textarea name="tas_remark" rows="5" cols="30"></textarea></td>
 		</tr>
                 <tr>
                     <td>Penality :&nbsp;</td>
-                    <td><textarea name="tas_penality" rows="5" cols="100"></textarea></td>
+                    <td><input type="text" name="tas_penality" value=""/></td>
 		</tr>
                 <tr>
                     <td>VA :&nbsp;</td>                 
@@ -60,13 +60,16 @@
                     <td><input type="text" class="val3" name="tas_nvau" ></td>
 		</tr>
                 <tr>
-                    <td>Start :&nbsp;</td>
-                    <td><textarea name="tas_start" rows="5" cols="100"></textarea></td>
+                    <td>Chrono :&nbsp;</td>
+                    <td><input type="time" name="tas_start" /></td>
+                    <td><input type="time" name="tas_stop" /></td>
+                    <!--<td><div id="start">Début</div></td>
+                    <td><div id="stop">Fin</div></td>
+                    <td><div id="reset">Reset</div></td>-->
 		</tr>
                 <tr>
-                    <td>stop :&nbsp;</td>
-                    <td><textarea name="tas_stop" rows="5" cols="100"></textarea></td>
-		</tr>
+                    <td>Durée chronometrée :&nbsp;</td>
+                    <td><div id="showtm" style="font-size:21px; font-weight:800;">0 : 0</div></td>
                 <tr>
                     <td>Durée :&nbsp;</td>
                     <td><input name="tas_time" value=""></textarea></td>
@@ -134,6 +137,78 @@
     });
     $(".val3").val($( ".slider3" ).slider("value"));
   });
+</script>
+
+<script type="text/javascript">
+
+// Here set the minutes, seconds, and tenths-of-second when you want the chronometer to stop
+// If all these values are set to 0, the chronometer not stop automatically
+var stmints = 0;
+var stseconds = 0;
+var stzecsec = 0;
+
+// function to be executed when the chronometer stops
+//function toAutoStop() {
+// alert('Your life goes on');
+//}
+
+// the initial tenths-of-second, seconds, and minutes
+var zecsec = 0;
+var seconds = 0;
+var mints = 0;
+
+var startchron = 0;
+
+function chronometer() {
+  if(startchron == 1) {
+    zecsec += 1;       // set tenths of a second
+
+    // set seconds
+    if(zecsec > 9) {
+      zecsec = 0;
+      seconds += 1;
+    }
+
+    // set minutes
+    if(seconds > 59) {
+      seconds = 0;
+      mints += 1;
+    }
+
+    // adds data in #showtm
+    document.getElementById('showtm').innerHTML = mints+ ' : '+ seconds;
+    
+    
+
+    // if the chronometer reaches to the values for stop, calls whenChrStop(), else, auto-calls chronometer()
+   if(zecsec == stzecsec && seconds == stseconds && mints == stmints) toAutoStop();
+   else setTimeout("chronometer()", 100);
+  }
+}
+
+function startChr() { startchron = 1; chronometer(); }      // starts the chronometer
+function stopChr() { startchron = 0; }                      // stops the chronometer
+function resetChr() {
+  zecsec = 0;  seconds = 00; mints = 00; startchron = 0; 
+  document.getElementById('showtm').innerHTML = mints+ ' : '+ seconds+ '<sub>'+ zecsec+ '</sub>';
+}
+
+// start the chronometer, delete this line if you want to not automatically start the stopwatch
+//startChr();
+</script>
+
+<script>
+$( "#start" ).click(function() {
+  startChr();
+});
+
+$( "#stop" ).click(function() {
+  stopChr();
+});
+
+$( "#reset" ).click(function() {
+  resetChr();
+});
 </script>
 
 
