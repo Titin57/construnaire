@@ -44,7 +44,9 @@
                                     <a href="<?= $this->url('default_home') ?>">Process</a>
                                 </li>
                                 <li<?php if ($currentPage == 'output'): ?> class="active"<?php endif; ?>>
+
                                     <a href="<?= $this->url('output_output') ?>">Summery</a>
+
                                 </li>
                                 <li <?php if ($currentPage == 'addworker'): ?>class="active"<?php endif; ?> >
                                     <a href="<?= $this->url('worker_addworker') ?>">Worker</a></li>
