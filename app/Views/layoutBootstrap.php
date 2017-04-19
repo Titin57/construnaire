@@ -40,8 +40,8 @@
                                 <li<?php if ($currentPage == 'addtask'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('task_addtask') ?>">A/M Task</a>
                                 </li>
-                                <li<?php if ($currentPage == 'contact'): ?> class="active"<?php endif; ?>>
-                                    <a href="<?= $this->url('default_home') ?>">Process</a>
+                                <li<?php if ($currentPage == 'process'): ?> class="active"<?php endif; ?>>
+                                    <a href="<?= $this->url('process_process') ?>">Process</a>
                                 </li>
                                 <li<?php if ($currentPage == 'output'): ?> class="active"<?php endif; ?>>
 
