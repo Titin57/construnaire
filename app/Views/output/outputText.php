@@ -62,8 +62,7 @@
 
 <h2>        <td> <?= $value ['tas_name']; ?></td></h2>
 
-    <!-- ask >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> benjamin if this is the way to do -->
-    <?php $accessToOutputModel = new \Model\OutputModel; ?>
+    <!-- ask >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> benjamin if this is the way to do<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
     <table class='table'
            style="border: 1px solid black;
            /*border-collapse: collapse;*/
@@ -84,7 +83,7 @@
                 <td>added value<!--1--></td>            
                 <td>valeur ajoutée<!--2--></td>
                 <td>VA<!--3--></td>
-                <td><?= $accessToOutputModel->floatToPercent($value['tas_va']); ?><!--4- value of VA out of the DB --></td>
+                <td><?= \Model\OutputModel::floatToPercent($value['tas_va']); ?><!--4- value of VA out of the DB --></td>
                 <td><!--5--></td>
                 <td><!--6--></td>
                 <td><!--7--></td>
@@ -102,7 +101,7 @@
                 <td>usefull no added value<!--1--></td>            
                 <td>non valeur ajoutée utile<!--2--></td>
                 <td>NVA-u<!--3--></td>
-                <td><?= $accessToOutputModel->floatToPercent($value['tas_nva']); ?><!--4- value of NVA out of the DB --></td>
+                <td><?= \Model\OutputModel::floatToPercent($value['tas_nva']); ?><!--4- value of NVA out of the DB --></td>
                 <td><!--5--></td>
                 <td>12<!--6--></td>
                 <td>Stocks Inutiles<!--7--></td>
@@ -111,7 +110,7 @@
                 <td>unusefull no added value<!--1--></td>            
                 <td>non valeur ajoutée inutile<!--2--></td>
                 <td>NVA-i<!--3--></td>
-                <td><?= $accessToOutputModel->floatToPercent($value['tas_nvau']); ?><!--4- value of NVAU out of the DB --></td>
+                <td><?= \Model\OutputModel::floatToPercent($value['tas_nvau']); ?><!--4- value of NVAU out of the DB --></td>
                 <td><!--5--></td>
                 <td>2<!--6--></td>
                 <td>Surproduction<!--7--></td>

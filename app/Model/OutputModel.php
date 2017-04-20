@@ -10,39 +10,115 @@ class OutputModel extends \W\Model\Model {
         $this->setPrimaryKey('pro_id');
     }
 
-    public function getOutputFromProcess($pro_id, $limit = 5) {
-        $sql = '
-            SELECT  
-                    `process_pro_id`,
-                    `pro_name`,
-                    `pro_text`,
-                    
-                    `tas_name`,
-                    `tas_date`, 
-                    `tas_typology`, 
-                    `tas_repeat`, 
-                    `tas_penality`,  
-                    `tas_start`, 
-                    `tas_stop`, 
-                    `tas_time`, 
-                    `tas_text`, 
-                    `tas_remark`,  
-                    `tas_wastage`, 
-                    `tas_va`, 
-                    `tas_nva`, 
-                    `tas_nvau`, 
-                    
-                    `tea_name`, 
-                    `tea_text`,
-                    
-                    `con_name`, 
-                    `con_client`, 
-                    `con_type`, 
-                    `con_text`, 
-                    
-                    `cit_name`,
-                    
-                    `cou_name`
+    public function sumWastedTimePerProcess($pro_id) {
+        $sql = 'SELECT tas_id, SUM(tas_time * tas_nva * tas_repeat) AS tas_timewasted
+                FROM tasks
+                WHERE process_pro_id =:pro_id';
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //$stmt->bindvalue(':limit', $limit, \PDO::PARAM_INT);
+        //$stmt = execute();
+        //debug($stmt);
+
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
+ 
+ 
+
+    public function calcWastedTimePerTask($pro_id, $column) {
+        $sql = 'SELECT tas_id, tas_time * :column * tas_repeat AS tas_timeVA
+                FROM tasks
+                WHERE process_pro_id = :pro_id';
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindParam(':pro_id', $pro_id, \PDO::PARAM_INT);
+       $stmt->bindParam(':column', $column,\PDO::PARAM_STR);
+//        $stmt->bindParam(':column', "'tas_va'");
+        //debug($stmt->bindvalue(':columnName', 'tas_va'));
+        //$stmt = execute();
+
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
+    public function calcWastedTimePerTaskVa($pro_id) {
+        $sql = 'SELECT tas_id, tas_time * tas_va * tas_repeat AS tas_timewasted
+                FROM tasks
+                WHERE process_pro_id =:pro_id';
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //$stmt->bindvalue(':columnName', $columnName);
+        //$stmt = execute();
+
+       $stmt->debugDumpParams();
+        //debug($stmt);
+
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
+    // remove later
+    public function calculateWastedTimePerProcess($pro_id) {
+//        $dataProcessRelatedTasks = getOutputFromProcess($pro_id);
+//        debug($dataProcessRelatedTasks);
+    }
+
+    /*
+     * values needed
+     * tas_time
+     * [tas_start & tas_stop => add later]
+     * tas_wastage (unit of the calculated time)
+     * tas_nvau (percentage of the tas_time which gives the resulting part of the process in minutes
+     * 
+     */
+
+
+    /*  WORKING function!!
+      CREATE FUNCTION TimeWasted ( tas_time INT, tas_nva FLOAT, tas_repeat INT)
+      RETURNS INT DETERMINISTIC
+      RETURN
+      (tas_time * tas_nva * tas_repeat)
+     */
+
+    // limit contraprocuctive??
+    public function getOutputFromProcess($pro_id, $limit = 50) {
+        $sql = 'SELECT `process_pro_id`,
+                        `pro_name`,
+                        `pro_text`,
+
+                        `tas_name`,
+                        `tas_date`, 
+                        `tas_typology`, 
+                        `tas_repeat`, 
+                        `tas_penality`,  
+                        `tas_start`, 
+                        `tas_stop`, 
+                        `tas_time`, 
+                        `tas_text`, 
+                        `tas_remark`,  
+                        `tas_wastage`, 
+                        `tas_va`, 
+                        `tas_nva`, 
+                        `tas_nvau`, 
+
+                        `tea_name`, 
+                        `tea_text`,
+
+                        `con_name`, 
+                        `con_client`, 
+                        `con_type`, 
+                        `con_text`, 
+
+                        `cit_name`,
+
+                        `cou_name`
                     
                     
 
@@ -60,6 +136,8 @@ class OutputModel extends \W\Model\Model {
 
                 LIMIT :limit
                 ';
+        
+        //debug()
         /* debug
           INNER JOIN workers ON workers.wor_id = tasks.tas_id
           `tas_image1`, `tas_image2`, `tas_image3`,`tas_inserted`, `tas_vocal_message`, `con_inserted`,
@@ -83,9 +161,7 @@ class OutputModel extends \W\Model\Model {
     }
 
     public function getOutputFromConstructions($con_id, $limit = 5) {
-        $sql = '
-            SELECT  
-                    `con_name`, 
+        $sql = 'SELECT `con_name`, 
                     `con_client`, 
                     `con_type`, 
                     `con_text`,
@@ -115,10 +191,6 @@ class OutputModel extends \W\Model\Model {
                     `tas_va`, 
                     `tas_nva`, 
                     `tas_nvau` 
-                    
-                    
-                    
-                 
                     
                 FROM constructions
                 INNER JOIN city ON constructions.city_cit_id = city.cit_id
@@ -155,7 +227,7 @@ class OutputModel extends \W\Model\Model {
         }
     }
 
-    public function floatToPercent($floatToPercent) {
+    public static function floatToPercent($floatToPercent) {
         if (isset($floatToPercent)) {
             // test if value existe then : tas_va * 100
             if (!empty($floatToPercent)) {
@@ -180,7 +252,7 @@ class OutputModel extends \W\Model\Model {
 
         $constructions = array();
 
-        // use __file__                         >>>>>>>>>>  ask ben
+        // use __file__                         >>>>>>>>>>  ask ben<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         $file = fopen("../public/assets/csv/building.csv", "r");
         //fgetcsv(file,length,separator,enclosure)
         $constructions = \fgetcsv($file, 125, ',', "//");
@@ -235,7 +307,7 @@ class OutputModel extends \W\Model\Model {
 
     // calculate the sum of the wasted time NVAI for ONE process
     // input = resunt from funtion calculateWastedTimePerTaskArray ()
-    public function calculateWastedTimePerProcess($WastedTimePerTaskArray) {
+    public function oldCalculateWastedTimePerProcess($WastedTimePerTaskArray) {
         // addition of all the values for the wastage in minutes
 
         /*
@@ -247,7 +319,7 @@ class OutputModel extends \W\Model\Model {
 
     // calculate the sum of the time for ONE process -> just a simple value to display
     // input = tas_time (minutes) from innitial array
-    public function calculateTotalTimePerProcess($OutputFromProcess/*[tas_time]*/) {
+    public function calculateTotalTimePerProcess($OutputFromProcess/* [tas_time] */) {
         // addition of all the values for the Time in minutes tas_time
 
         /*
@@ -258,13 +330,12 @@ class OutputModel extends \W\Model\Model {
     }
 
     // calculate the percentage of the wasted time NVAI (for every task of ONE process) in relation to $WastedTimePerProcess   
-    public function calculatePercentWastedTimePerProcess($WastedTimePerTaskArray, $WastedTimePerProcess) {
+    public function todoCalculatePercentWastedTimePerProcess($WastedTimePerTaskArray, $WastedTimePerProcess) {
         // calc the
-        
         //$percentage= (part/whole) *100
         //$tas_nva_percent= ($WastedTimePerTaskArray/$WastedTimePerProcess) *100
 
-/* format to return :
+        /* format to return :
 
           array=
           (
@@ -297,6 +368,11 @@ class OutputModel extends \W\Model\Model {
       // if isset tas_start            & tas_time  => calculate  tas_stop
       // if isset             tas_stop & tas_time  => calculate  tas_start
       // add values to db  , recalculated values in brackets concatenated (possible? db restrictions value type?)
+     * 
+     * 
+     * sql can do the calculation!!!!
+     * function sql 
+     * 
       }
 
 
@@ -815,6 +891,19 @@ class OutputModel extends \W\Model\Model {
       0.55,
       2,
       1)
+     * 
+     * 
+     * 
+     * SELECT wor_lastname 
+                    
+                    
+FROM teams
+ INNER JOIN teams_workers ON teams.tea_id = teams_workers.teams_tea_id
+ INNER JOIN workers ON teams_workers.workers_wor_id = workers.wor_id
+
+             
+ WHERE tea_id= 1
+
 
      */
 }

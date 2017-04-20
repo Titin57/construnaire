@@ -19,12 +19,30 @@ class OutputController extends Controller {
         //debug($allProcess);
 
 
-        $model = new \Model\outputModel();
 
+        $model = new \Model\outputModel();
         // output ID still hardcoded
-        $allOutputFromProcess = $model->getOutputFromProcess(10);
-        debug($allOutputFromProcess);
+                $allOutputFromProcess = $model->getOutputFromProcess(10);
+        //debug($allOutputFromProcess);
+ 
+        // output ID still hardcoded 
+        $sumWastedTimePerProcess = $model->sumWastedTimePerProcess(10);
+        //debug ($sumWastedTimePerProcess);       
+        $model = new \Model\outputModel();
+        $calcWastedTimePerTask = $model->calcWastedTimePerTask(10,'tas_nva');
+        //debug ($calcWastedTimePerTask);       
+        $calcWastedTimePerTask = $model->calcWastedTimePerTask(10,'tas_nvau');
+        //debug ($calcWastedTimePerTask);       
+        //$tasva=tas_va;
+        $calcWastedTimePerTask = $model->calcWastedTimePerTask(10,$tasva);
+        debug ($calcWastedTimePerTask);      
+        $calcWastedTimePerTaskVa = $model->calcWastedTimePerTaskVa(10);
+        debug ($calcWastedTimePerTaskVa);      
+     
         
+
+        
+
         
         // inserted here for testing purposes //????
         //$allOutputFromConstructions = $model->getOutputFromConstructions(10);
@@ -46,7 +64,7 @@ class OutputController extends Controller {
         
         */
         
-        /* call to  floatToPercent >>>workaround: added dirctly to the view >>>>>>>>>>>>>>>>>> ask Benjamin about it
+        /* call to  floatToPercent >>>workaround: added dirctly to the view >>>>>>>>>>>>>>>>>> ask Benjamin about it<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         foreach ($allOutputFromProcess as $key => $value){
             
             $value['tas_va']= $model->floatToPercent($value['tas_va']);
@@ -56,7 +74,7 @@ class OutputController extends Controller {
         };
         */
         $constructions= $model->getConstructionTypesFromCsv();
-        debug($constructions);
+        //debug($constructions);
         
         $this->show('output/outputText', array(
             'allProcess' => $allProcess,
