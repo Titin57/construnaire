@@ -31,14 +31,17 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
-                                    <a href="<?= $this->url('default_home') ?>">Teams</a>
+                                <li <?php if ($currentPage == 'addworker'): ?>class="active"<?php endif; ?> >
+                                    <a href="<?= $this->url('worker_addworker') ?>">Worker</a></li>
+                                <li role="separator" class="divider"></li> 
+                                <li<?php if ($currentPage == 'team'): ?> class="active"<?php endif; ?>>
+                                    <a href="<?= $this->url('team_addteam') ?>">Teams</a>
                                 </li>
                                 <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('default_home') ?>">Tasks</a>
                                 </li>
                                 <li<?php if ($currentPage == 'addtask'): ?> class="active"<?php endif; ?>>
-                                    <a href="<?= $this->url('task_addtask') ?>">A/M Task</a>
+                                    <a href="<?= $this->url('task_addtask') ?>">Task Observation</a>
                                 </li>
                                 <li<?php if ($currentPage == 'process'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('process_process') ?>">Process</a>
@@ -47,10 +50,7 @@
 
                                     <a href="<?= $this->url('output_output') ?>">Summery</a>
 
-                                </li>
-                                <li <?php if ($currentPage == 'addworker'): ?>class="active"<?php endif; ?> >
-                                    <a href="<?= $this->url('worker_addworker') ?>">Worker</a></li>
-                                <li role="separator" class="divider"></li>                                
+                                </li>                                                              
                                 <?php if (empty($w_user)) : ?>
                                     <li<?php if ($currentPage == 'signin'): ?> class="active"<?php endif; ?>>
                                         <a href="<?= $this->url('user_signin') ?>">Connexion</a>

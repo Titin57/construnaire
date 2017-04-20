@@ -1,4 +1,4 @@
-<?php  $this->layout('layoutBootstrap', ['title' => ' - A/M Task', 'currentPage'=>'addtask']) ?>
+<?php  $this->layout('layoutBootstrap', ['title' => ' Task observation', 'currentPage'=>'task observation']) ?>
 
 <?php  $this->start('main_content') ?>
 
@@ -26,7 +26,9 @@
 		</tr>
 		<tr>
                     <td>wastage :&nbsp;</td>
-                    <td><input type="text" name="tas_watage" value=""/></td>
+                    <td>
+                        <input type="text" name="tas_wastage" value=""/>
+                    </td>
 		</tr>
                 <tr>
                     <td>repeat :&nbsp;</td>
@@ -42,7 +44,9 @@
 		</tr>
                 <tr>
                     <td>Penality :&nbsp;</td>
-                    <td><input type="text" name="tas_penality" value=""/></td>
+                    <td>
+                        <input type="text" name="tas_penality" value=""/>
+                    </td>
 		</tr>
                 <tr>
                     <td>VA :&nbsp;</td>                 
@@ -61,11 +65,12 @@
 		</tr>
                 <tr>
                     <td>Chrono :&nbsp;</td>
-                    <td><input type="time" name="tas_start" /></td>
-                    <td><input type="time" name="tas_stop" /></td>
-                    <!--<td><div id="start">Début</div></td>
+                    <!--<td><input type="time" name="tas_start" /></td>
+                    <td><input type="time" name="tas_stop" /></td> -->
+                    <td><div id="start" name="tas_start">Début</div></td>
+                    <td><input type="hidden" value="<?php echo date('Y-m-d') ?>" name="tas_start"/></td>
                     <td><div id="stop">Fin</div></td>
-                    <td><div id="reset">Reset</div></td>-->
+                    <td><div id="reset">Reset</div></td>
 		</tr>
                 <tr>
                     <td>Durée chronometrée :&nbsp;</td>
@@ -76,7 +81,7 @@
 		</tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Add"/></td>
+                    <td><input type="submit" value="Add task"/></td>
 		</tr>	
             </table>
     </fieldset>
@@ -209,6 +214,31 @@ $( "#stop" ).click(function() {
 $( "#reset" ).click(function() {
   resetChr();
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+
+	// Intrerception de la soumission du start
+	$('#start').submit(function(e) {
+		e.preventDefault();
+
+			$.ajax({
+				url: 'construnaire\app\Controller\TasksController.php',
+				dataType: 'json',
+				type: 'post',
+				cache: false,
+				data: {
+					tas_start: date("Y-m-d")	
+				}
+			}).done(function(jsonData) {
+				
+				console.log(jsonData);
+			});
+		
+		
+	});
+    });
 </script>
 
 
