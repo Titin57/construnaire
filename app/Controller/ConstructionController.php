@@ -11,8 +11,10 @@ class ConstructionController extends \W\Controller\Controller {
 
     // here starts the construction add method|function
     public function addConstruction() {
+        
         // Remove all comments
         unset($_SESSION['flash']);
+        
         // If POST
         if (!empty($_POST)) {
             //debug($_POST);

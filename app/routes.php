@@ -16,11 +16,12 @@ $w_routes = array(
     ['GET', '/logout/', 'Users#logout', 'user_logout'],
     // End routes for users
     // routes for construnaire.dev/city
-    ['GET|POST', '/city/', 'City#city', 'city_addcity'],
+    ['GET|POST', '/city/', 'City#addCity', 'city_addcity'],
     
     // end routes for city
     // routes for construnaire.dev/country
-    ['GET|POST', '/country/', 'Country#country', 'country_addcountry'],
+    ['GET|POST', '/country/', 'Country#addCountry', 'country_addcountry'],
+    //['GET|POST', '/country/', 'Country#listCountry', 'country_addcountry'],
     
     // end routes for country
     // start routes for construction

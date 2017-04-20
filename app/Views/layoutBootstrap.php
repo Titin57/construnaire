@@ -36,11 +36,7 @@
                                     <a href="<?= $this->url('construction_listconstruction') ?>">Constructions</a>
                                 </li>                                
                                 
-                                <!--- this link for adding / modifying construction name's ---> 
-                                <li<?php if ($currentPage == 'addconstruction'): ?> class="active"<?php endif; ?>>
-                                    <a href="<?= $this->url('default_home') ?>">A/M Construction</a>
-                                </li>                     
-                                
+                               
                                 <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('default_home') ?>">Teams</a>
                                 </li>

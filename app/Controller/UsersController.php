@@ -7,6 +7,7 @@ class UsersController extends \W\Controller\Controller {
 
 
     public function signin() {
+
         // unset ==> Alerts are removed !
         unset($_SESSION['flash']);
 
@@ -137,7 +138,7 @@ class UsersController extends \W\Controller\Controller {
             // If everything is ok
             if (empty($errorList)) {
                 // Verification of the email address
-                // Here the model is instenced
+                // Here the model is instanced
                 $model = new \W\Model\UsersModel();
                 // I call the method|function to return the data for a given email address
                 $userData = $model->getUserByUsernameOrEmail($email);
@@ -153,7 +154,7 @@ class UsersController extends \W\Controller\Controller {
                     $model->update(array(
                         'usr_token' => $token,
                         'usr_token_created' => date('Y-m-d H:i:s')
-                            ), $userData['id']);
+                            ), $userData['usr_id']);
 
                     // Here the content of the email address is generated with a link to reset the password
                     $htmlContent = 'Hello,
