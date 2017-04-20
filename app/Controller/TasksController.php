@@ -52,11 +52,20 @@ class TasksController extends Controller
             );
                                                  
             
-            //debug($data);
+            debug($data);
             $model = new \Model\TasksModel();  
-            $addTask = $model->insert($data); 
+            $addTask = $model->insert($data);
             
-            $this->show('task/addtask');
+            $model2 = new \Model\WorkersModel();
+            $allWorker = $model2->findAll();
+            
+            $model3 = new \Model\TeamsModel();
+            $allTeam = $model3->findAll();
+            
+            $this->show('task/addtask', array(
+                'allWorker' => $allWorker,
+                'allTeam' => $allTeam
+            ));
 	}
 
 }

@@ -30,11 +30,18 @@ class WorkersController extends Controller
             );
                                                  
             
-            //debug($data);
-            $model = new \Model\WorkersModel();  
+            debug($data);
+            $model = new \Model\WorkersModel();
+            $allWorker = $model->findAll();
+            debug($allWorker);
             $addWorker = $model->insert($data); 
             
             $this->show('worker/addworker');
+            $this->show('team/addteam', array(
+                'allWorker' => $allWorker,
+                
+            ));
+            
 	}
         
         public function ModWorker() {
