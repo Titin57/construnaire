@@ -31,12 +31,21 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
+
                                 <li <?php if ($currentPage == 'addworker'): ?>class="active"<?php endif; ?> >
                                     <a href="<?= $this->url('worker_addworker') ?>">Worker</a></li>
                                 <li role="separator" class="divider"></li> 
                                 <li<?php if ($currentPage == 'team'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('team_addteam') ?>">Teams</a>
                                 </li>
+
+                                <!--- this link for showing all constructions ---> 
+                                <li<?php if ($currentPage == 'construction'): ?> class="active"<?php endif; ?>>
+                                    <a href="<?= $this->url('construction_listconstruction') ?>">Constructions</a>
+                                </li>                                
+                                
+                               
+
                                 <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('default_home') ?>">Tasks</a>
                                 </li>
@@ -48,7 +57,7 @@
                                 </li>
                                 <li<?php if ($currentPage == 'output'): ?> class="active"<?php endif; ?>>
 
-                                    <a href="<?= $this->url('output_output') ?>">Summery</a>
+                                    <a href="<?= $this->url('output_output') ?>">Summary</a>
 
                                 </li>                                                              
                                 <?php if (empty($w_user)) : ?>
