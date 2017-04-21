@@ -7,7 +7,7 @@ namespace Controller;
  *
  * @author CS
  */
-class ConstructionaddController extends \W\Controller\Controller {
+class ConstructionController extends \W\Controller\Controller {
 
     // here starts the construction add method|function
     public function addConstruction() {

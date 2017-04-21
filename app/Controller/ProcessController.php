@@ -21,7 +21,7 @@ class ProcessController extends Controller
             );
                                                  
             
-            debug($data);
+            //debug($data);
             $model = new \Model\ProcessModel();  
             $addProcess = $model->insert($data); 
             

@@ -19,17 +19,13 @@
                     </td>
 		</tr>
 		<tr>
-                    <td>Typologie :&nbsp;</td>
+                    <td>Typologie :&nbsp;</td> 
                     <td>
                         <select name="tas_typology">
                             <option value="">Worker</option>
                             <?php foreach ($allWorker as $curWorker) : ?>
                             <option name="tas_typology" value="<?php echo $curWorker['wor_lastname']; ?>"><?php echo $curWorker['wor_lastname']; ?></option>
                             <?php endforeach; ?>
-			</select>
-                    </td>
-                    <td>
-                        <select name="tas_typology">
                             <option value="">Team</option>
                             <?php foreach ($allTeam as $curTeam) : ?>
                             <option name="tas_typology" value="<?php echo $curTeam['tea_name']; ?>"><?php echo $curTeam['tea_name']; ?></option>
