@@ -23,7 +23,7 @@ class OutputController extends Controller {
         $model = new \Model\outputModel();
         // output ID still hardcoded
                 $allOutputFromProcess = $model->getOutputFromProcess(10);
-        //debug($allOutputFromProcess);
+        debug($allOutputFromProcess);
  
         // output ID still hardcoded 
         $sumWastedTimePerProcess = $model->sumWastedTimePerProcess(10);
@@ -34,13 +34,18 @@ class OutputController extends Controller {
         $calcWastedTimePerTask = $model->calcWastedTimePerTask(10,'tas_nvau');
         //debug ($calcWastedTimePerTask);       
         //$tasva=tas_va;
-        $calcWastedTimePerTask = $model->calcWastedTimePerTask(10,$tasva);
-        debug ($calcWastedTimePerTask);      
+//                debug (calcWastedTimePerTask(10,'tas_va'));  
+//        $calcWastedTimePerTask = $model->tasSql(10,calcWastedTimePerTask(10,'tas_va'));
+//        debug ($calcWastedTimePerTask);      
         $calcWastedTimePerTaskVa = $model->calcWastedTimePerTaskVa(10);
-        debug ($calcWastedTimePerTaskVa);      
+//        debug ($calcWastedTimePerTaskVa);      
      
         
-
+//        debug('debug outputcontroller readCsv' ,$construct);
+        $construct= $model->readCsv('building.csv');
+        debug($construct);
+        $constructions= $model->readCsv('buildings.csv',1);
+        debug($constructions);
         
 
         

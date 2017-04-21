@@ -26,19 +26,40 @@ class OutputModel extends \W\Model\Model {
             return $stmt->fetchAll();
         }
     }
- 
- 
 
     public function calcWastedTimePerTask($pro_id, $column) {
-        $sql = 'SELECT tas_id, tas_time * :column * tas_repeat AS tas_timeVA
-                FROM tasks
-                WHERE process_pro_id = :pro_id';
+
+        $sql = '
+               SELECT `tas_id`, `tas_time` * ';
+
+        if ($column === 'tas_va') {
+
+            $sql .= "`tas_va` * `tas_repeat` 
+                AS tas_timeVA FROM tasks WHERE `process_pro_id` = :pro_id";
+        }
+        if ($column === 'tas_nva') {
+
+            $sql .= "`tas_nva` * `tas_repeat` 
+                AS tas_timeNVA FROM tasks WHERE `process_pro_id` = :pro_id";
+        }
+        if ($column === 'tas_nvau') {
+
+            $sql .= "`tas_nvau` * `tas_repeat` 
+                AS tas_timeNVAU FROM tasks WHERE `process_pro_id` = :pro_id";
+        }
+
+//        tasSql / execTasSql($pro_id, $sql);
+    }
+
+    public function tasSql($pro_id, $sql) {
         $stmt = $this->dbh->prepare($sql);
-        $stmt->bindParam(':pro_id', $pro_id, \PDO::PARAM_INT);
-       $stmt->bindParam(':column', $column,\PDO::PARAM_STR);
+        $stmt->bindValue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //$stmt->bindValue(':column', $column, \PDO::PARAM_STR);
 //        $stmt->bindParam(':column', "'tas_va'");
         //debug($stmt->bindvalue(':columnName', 'tas_va'));
         //$stmt = execute();
+        debug($sql);
+        //$stmt->debugDumpParams();
 
         if ($stmt->execute() === false) {
             debug($stmt->errorInfo());
@@ -46,6 +67,7 @@ class OutputModel extends \W\Model\Model {
             return $stmt->fetchAll();
         }
     }
+
     public function calcWastedTimePerTaskVa($pro_id) {
         $sql = 'SELECT tas_id, tas_time * tas_va * tas_repeat AS tas_timewasted
                 FROM tasks
@@ -54,8 +76,7 @@ class OutputModel extends \W\Model\Model {
         $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
         //$stmt->bindvalue(':columnName', $columnName);
         //$stmt = execute();
-
-       $stmt->debugDumpParams();
+        //$stmt->debugDumpParams();
         //debug($stmt);
 
         if ($stmt->execute() === false) {
@@ -64,6 +85,7 @@ class OutputModel extends \W\Model\Model {
             return $stmt->fetchAll();
         }
     }
+
     // remove later
     public function calculateWastedTimePerProcess($pro_id) {
 //        $dataProcessRelatedTasks = getOutputFromProcess($pro_id);
@@ -115,30 +137,37 @@ class OutputModel extends \W\Model\Model {
                         `con_client`, 
                         `con_type`, 
                         `con_text`, 
-
                         `cit_name`,
 
-                        `cou_name`
-                    
-                    
+                        `cou_name`,
+                        `worker1`.`wor_id` AS team_worker_id,
+                        `unique_worker`.`wor_id` AS unique_worker_id,
+                        
+                         coalesce (`unique_worker`.`wor_id`,`worker1`.`wor_id`) AS test
+                        
+                         
 
-
-                    
                 FROM process
-                INNER JOIN tasks ON process.pro_id = tasks.process_pro_id
-                INNER JOIN teams ON teams.tea_id = tasks.teams_tea_id
-                INNER JOIN constructions ON constructions.con_id = teams.constructions_con_id
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+                INNER JOIN constructions ON tasks.constructions_con_id = constructions.con_id
                 INNER JOIN city ON constructions.city_cit_id = city.cit_id
                 INNER JOIN country ON country.cou_id = city.country_cou_id 
 
-             
+                LEFT JOIN teams ON tasks.teams_tea_id = teams.tea_id
+                LEFT JOIN teams_workers ON teams_workers.teams_tea_id= teams.tea_id
+                LEFT JOIN workers AS worker1 ON teams_workers.workers_wor_id = worker1.wor_id
+                LEFT JOIN workers AS unique_worker ON tasks.workers_wor_id = unique_worker.wor_id
+
                 WHERE pro_id= :pro_id
 
                 LIMIT :limit
                 ';
-        
-        //debug()
-        /* debug
+
+//                Left JOIN workers ON tasks.workers_wor_id = workers.wor_id
+        /*
+
+          //debug()
+          /* debug
           INNER JOIN workers ON workers.wor_id = tasks.tas_id
           `tas_image1`, `tas_image2`, `tas_image3`,`tas_inserted`, `tas_vocal_message`, `con_inserted`,
           ambiguous: `teams_tea_id`,
@@ -200,7 +229,7 @@ class OutputModel extends \W\Model\Model {
                 
                
                 INNER JOIN process ON process.pro_id = tasks.process_pro_id
-
+                          
              
                 WHERE pro_id= :con_id
 
@@ -227,6 +256,16 @@ class OutputModel extends \W\Model\Model {
         }
     }
 
+    // export getOutputFromConstructions($con_id)
+    // export getOutputFromProcess($pro_id)
+    public function exportCsv($array2csv, $filename) {
+        if (!empty($array2csv)) {
+            array_unshift($array2csv, array_keys($array[0]));
+            $filename = $filename;
+            //write ()
+        }
+    }
+
     public static function floatToPercent($floatToPercent) {
         if (isset($floatToPercent)) {
             // test if value existe then : tas_va * 100
@@ -247,6 +286,66 @@ class OutputModel extends \W\Model\Model {
         // tas_va + tas_nva + tas_nvau = 100% else error!!
     }
 
+    public function timeDiffMinutes($startDate, $endDate) {
+        debug($startDate);
+//       $startDate= new DateTime($startDate);
+//        $endDate = new DateTime($endDate);
+        /*
+          $mystartDateTime = \DateTime::createFromFormat('Y-m-d h:i:s', $startDate);
+          debug($mystartDateTime);
+          //        $startDate = $mystartDateTime->format('m/d/Y h:i:s');
+          debug($startDate);
+
+          $myEndDateTime = \DateTime::createFromFormat('Y-m-d h:i:s', $endDate);
+          //        $endDate = $myEndDateTime->format('m/d/Y h:i:s');
+          $date = date_diff($mystartDateTime  , $myEndDateTime, TRUE);
+         */
+        $date = ($startDate - $endDate);
+        return $date;
+    }
+
+    public function myDate($date) {
+        debug($date);
+        $date = date("d-m-y", strtotime($date));
+        return $date;
+    }
+
+    // opens a csv file in the public\assets\csv\ folder
+    // set multidata to 1 if there are several data parts in one row
+    public function readCsv($filename, $multiData = 0) {
+        $rows = array();
+        
+        // absolute path to PUBLIC dir 
+        // FrameworkW users: add following line to your "M:\__xampp\htdocs\construnaire\public\index.php"
+        //define ('BASEPATH', dirname(__FILE__)); 
+
+        $filepath = BASEPATH . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'csv' . DIRECTORY_SEPARATOR;
+        $filepath .= $filename;
+        if (file_exists($filepath)) {
+            if ($multiData !== 0) {
+                // if there is multiple data seperated by ',' per line in the csv
+                $file = fopen($filepath, "r");
+
+                foreach (file($filepath, FILE_IGNORE_NEW_LINES) as $line) {
+                    $rows[] = str_getcsv($line);
+                }
+                return $rows;
+                fclose($filepath);
+            } else {
+                // if there is only one data per line in the csv
+                $file = fopen($filepath, "r");
+                foreach (file($filepath, FILE_IGNORE_NEW_LINES) as $line) {
+                    $rows[] = $line;
+                }
+                return $rows;
+                fclose($filepath);
+            }
+        } else {
+            debug("does not exists");
+            // put a flush in here to give the user a nice error message 
+        }
+    }
+
     public function getConstructionTypesFromCsv() {
 
 
@@ -255,7 +354,7 @@ class OutputModel extends \W\Model\Model {
         // use __file__                         >>>>>>>>>>  ask ben<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         $file = fopen("../public/assets/csv/building.csv", "r");
         //fgetcsv(file,length,separator,enclosure)
-        $constructions = \fgetcsv($file, 125, ',', "//");
+        $constructions = \fgetcsv($file, 125, ',');
 
         return $constructions;
 
@@ -376,11 +475,7 @@ class OutputModel extends \W\Model\Model {
       }
 
 
-      public function exportCsv() {
-      // export getOutputFromConstructions($con_id)
-      // export getOutputFromProcess($pro_id)
 
-      }
 
       public function importCsvToDb() {
       // needed? => nice 2 have!!
@@ -895,14 +990,14 @@ class OutputModel extends \W\Model\Model {
      * 
      * 
      * SELECT wor_lastname 
-                    
-                    
-FROM teams
- INNER JOIN teams_workers ON teams.tea_id = teams_workers.teams_tea_id
- INNER JOIN workers ON teams_workers.workers_wor_id = workers.wor_id
 
-             
- WHERE tea_id= 1
+
+      FROM teams
+      INNER JOIN teams_workers ON teams.tea_id = teams_workers.teams_tea_id
+      INNER JOIN workers ON teams_workers.workers_wor_id = workers.wor_id
+
+
+      WHERE tea_id= 1
 
 
      */
