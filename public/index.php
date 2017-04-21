@@ -9,6 +9,9 @@ require '../app/config.php';
 // rares fonctions globales
 require '../W/globals.php';
 
+// absolute path to PUBLIC dir 
+define ('BASEPATH', dirname(__FILE__)); 
+
 //instancie notre appli en lui passant la config et les routes
 $app = new W\App($w_routes, $w_config);
 

@@ -26,28 +26,34 @@ $w_routes = array(
     ['GET|POST', '/country/', 'Country#country', 'country_addcountry'],
     // show all construction
 
-    ['GET|POST', '/construction/', 'Construction#listconstruction', 'construction_listconstruction'],  
-    
+    ['GET|POST', '/construction/', 'Construction#listconstruction', 'construction_listconstruction'],
+
+
     // construaire.dev/construction
-    // ['GET|POST', '/construction/', 'Construction#addconstruction', 'construction_addconstruction'], 
+    // ['GET|POST', '/construction/', 'Construction#addconstruction', 'construction_addconstruction'],
     //['GET', '/output/', 'Output#output', 'output_outputText'],
     ['GET', '/workers/', 'Workers#addWorker', 'worker_addWorker'],
- 
+
 
 
     ['GET|POST', '/construction/', 'Construction#construction', 'construction_construction'],
-    ['GET', '/output/text/', 'Output#outputText', 'output_outputText'],
-    ['GET', '/output/visuals/', 'Output#output', 'output_output'],
+
+
+    //['GET|POST', '/output/text/[a:process]/[a:id]', 'Output#outputText', 'output_outputText'],
+    ['GET|POST', '/output/text/', 'Output#outputText', 'output_outputText'],
+    ['GET|POST', '/output/visuals/', 'Output#output', 'output_output'],
+
+
     ['GET|POST', '/workers/add/', 'Workers#addworker', 'worker_addworker'],
     ['GET|POST', '/workers/mod/', 'Workers#modworker', 'worker_modworker'],
     ['GET|POST', '/workers/all/', 'Workers#allworker', 'worker_allworker'],
 
     ['GET|POST', '/task/add/', 'Tasks#addtask', 'task_addtask'],
     ['GET|POST', '/process/', 'Process#process', 'process_process'],
-    
+
     ['GET|POST', '/team/', 'Teams#addteam', 'team_addteam'],
-    
-    
+
+
 );
 
 
