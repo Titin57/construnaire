@@ -20,8 +20,8 @@ class ConstructionModel extends \W\Model\Model{
         $sql = '
             SELECT *
             FROM constructions
-            INNER JOIN city ON city.cit_id = constructions.city_cit_id
-            INNER JOIN country ON country.cou_id = city.country_cou_id
+            LEFT JOIN city ON city.cit_id = constructions.city_cit_id
+            LEFT JOIN country ON country.cou_id = city.country_cou_id
             ORDER BY con_startdate DESC
         ';
         $stmt = $this->dbh->prepare($sql);

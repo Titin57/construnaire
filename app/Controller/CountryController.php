@@ -14,42 +14,41 @@ class CountryController extends Controller {
         // Remove all comments
         unset($_SESSION['flash']);
 
-        //debug($_POST);
+        if (!empty($_POST)) {
+            //debug($_POST);
 
-        $cou_name = (isset($_POST['cou_name']) ? trim($_POST['cou_name']) : '');
+            $cou_name = (isset($_POST['cou_name']) ? trim($_POST['cou_name']) : '');
 
-        $data = array(
-            'cou_name' => $cou_name,
-        );
+            $errorList = array();
+            // I validate inputs
+            // construction name
+            if (strlen($cou_name) <= 0) {
+                $errorList[] = 'Enter a country name !';
+            }
 
+            // If all data is ok
+            if (empty($errorList)) {
+                // Data is inserted into DB
+                $data = array(
+                    'cou_name' => $cou_name,
+                );
+                // debug($data);
+                $model = new \Model\CountryModel();
+                $addCountry = $model->insert($data);
+                // If insertion worked out, 
+                // redirection to construction main page
+                if (!empty($addCountry)) {
 
-        // debug($data);
-        $model = new \Model\CountryModel();
-        $addCountry = $model->insert($data);
-
+                    // Redirection to construction list page
+                    $this->redirectToRoute('city_addcity');
+                } else {
+                    $this->flash('Error inserting into the DB !', 'danger');
+                }
+            } else {
+                $this->flash(join('<br>', $errorList), 'danger');
+            }
+        }
         $this->show('country/addcountry');
     }
-    
-    // here starts the country list method|function
-    public function listCountry() {
-        // Remove all comments
-        unset($_SESSION['flash']);
-        // restrict access to this page to users and admin
-        // line $this->allowTo(.......) must be uncommented !!
-        // $this->allowTo(array('admin','user'));
-        
-        // code here to list all constructions from DB
-        // 
-        $model = new \Model\CountryModel();
-        // $countries recovers all data from method
-        // getAllCountries()
-        $countries = $model->getAllCountries();
-        // for dev purpose only
-        debug($countries);
-        $this->show('country/listcountry', array(
-            // an associative table must be given to pass “variables”
-            'allCountries' => $countries
-        ));
-    }// end of function|method    
 
 }

@@ -21,12 +21,12 @@ $w_routes = array(
     // end routes for city
     // routes for construnaire.dev/country
     ['GET|POST', '/country/', 'Country#addCountry', 'country_addcountry'],
-    //['GET|POST', '/country/', 'Country#listCountry', 'country_addcountry'],
+
     
     // end routes for country
     // start routes for construction
     ['GET|POST', '/construction/', 'Construction#listconstruction', 'construction_listconstruction'],
-    ['GET|POST', '/construction/', 'Construction#addconstruction', 'construction_addconstruction'],
+    ['GET|POST', '/construction/add/', 'Construction#addconstruction', 'construction_addconstruction'],
     
     // end routes for construction
 

@@ -5,10 +5,8 @@
 <form action="" method="post">
     <fieldset>
         <input type="cou_name" class="form-control" name="cou_name" value="" placeholder="Add a country" /><br />
-        
-        
-        <input type="submit" class="btn btn-success btn-sm" value="Add country" />
     </fieldset>
+    <input type="submit" class="btn btn-success btn-sm" value="Add country" />
 </form>
 
 
