@@ -5,37 +5,87 @@ namespace Controller;
 use \W\Controller\Controller;
 use \Model\WorkersModel;
 
-class WorkersController extends Controller
-{
+class WorkersController extends Controller{
 
 	/**
 	 * Ajout d'un ouvrier
 	 */    
 	public function AddWorker(){
             
+            // Remove all comments
+            unset($_SESSION['flash']);
             //debug($_POST);
             
-            $wor_lastname = (isset($_POST['wor_lastname']) ? trim($_POST['wor_lastname']) : '');
-            $wor_firstname = (isset($_POST['wor_firstname']) ? trim($_POST['wor_firstname']) : '');
-            $wor_quality = (isset($_POST['wor_quality']) ? trim($_POST['wor_quality']) : '');
-            $wor_remark = (isset($_POST['wor_remark']) ? trim($_POST['wor_remark']) : '');       
-            
-            //debug($wor_lastname);
-            
-            $data = array(               
-                'wor_lastname' => $wor_lastname,
-                'wor_firstname' => $wor_firstname,
-                'wor_quality' => $wor_quality,
-                'wor_remark' => $wor_remark,
-            );
-                                                 
-            
-            //debug($data);
-            $model = new \Model\WorkersModel();  
-            $addWorker = $model->insert($data); 
-            
-            $this->show('worker/addworker');
-	}
+            if (!empty($_POST)) {
+                $wor_lastname = (isset($_POST['wor_lastname']) ? trim($_POST['wor_lastname']) : '');
+                $wor_firstname = (isset($_POST['wor_firstname']) ? trim($_POST['wor_firstname']) : '');
+                $wor_quality = (isset($_POST['wor_quality']) ? trim($_POST['wor_quality']) : '');
+                $wor_remark = (isset($_POST['wor_remark']) ? trim($_POST['wor_remark']) : '');       
+                
+                $errorList = array();
+                
+                if (strlen($wor_lastname) < 2) {
+                $errorList[] = 'Worker lastname must be at least 2 characters long !';
+                }
+                // city name
+                if (strlen($wor_firstname) < 2) {
+                    $errorList[] = 'Worker firstname must be at least 2 characters long !';
+                }
+
+                // type name
+                if (strlen($wor_quality) < 5) {
+                    $errorList[] = 'Worker Quality must be at least 5 characters long !';
+                }
+                
+                //debug($errorList);
+                
+                if(!empty($errorList)){
+                    $this->flash(join('<br>', $errorList), 'danger');           
+                }
+                
+                else {
+
+                    $data = array(               
+                        'wor_lastname' => $wor_lastname,
+                        'wor_firstname' => $wor_firstname,
+                        'wor_quality' => $wor_quality,
+                        'wor_remark' => $wor_remark,
+                    );
+
+
+                    //debug($data);
+                    $model = new \Model\WorkersModel();
+                    $allWorker = $model->findAll();
+                    //debug($allWorker);
+                    $addWorker = $model->insert($data); 
+                    //debug($addWorker);
+
+                    
+                    
+                    if (!empty($addWorker)) {
+
+                    // Redirection to construction list page
+                    //$this->redirectToRoute('construction_listconstruction');
+                        $this->flash('Insertion ok !', 'succes');
+                        $this->show('worker/addworker');
+                    }
+                    else {
+                        $this->flash('Error inserting into the DB !', 'danger');
+                    }
+                    
+                }
+                //else {
+                    //$this->flash(join('<br>', $errorList), 'danger');           
+                //}
+            }
+            else {
+                $this->show('worker/addworker');
+            }
+                    $this->show('worker/addworker');
+                    //$this->show('team/addteam', array(
+                    //    'allWorker' => $allWorker,
+                    //));
+        }
         
         public function ModWorker() {
             $wor_id = (isset($_POST['wor_id']) ? trim($_POST['wor_id']) : '');
@@ -91,41 +141,5 @@ class WorkersController extends Controller
                 'allWorker' => $allWorker
             ));
         }
-        
-        
-        
-        /**
-	 * Mod d'un ouvrier
-	 */  
-        /*public function ModWorker(){
-            
-            debug($_POST);
-            
-            $wor_lastname = (isset($_POST['wor_lastname_mod']) ? trim($_POST['wor_lastname_mod']) : '');
-            $wor_firstname = (isset($_POST['wor_firstname_mod']) ? trim($_POST['wor_firstname_mod']) : '');
-            $wor_quality = (isset($_POST['wor_quality_mod']) ? trim($_POST['wor_quality_mod']) : '');
-            $wor_remark = (isset($_POST['wor_remark_mod']) ? trim($_POST['wor_remark_mod']) : '');       
-            
-            //debug($wor_lastname);
-            
-            $data = array(               
-                'wor_lastname_mod' => $wor_lastname,
-                'wor_firstname_mod' => $wor_firstname,
-                'wor_quality_mod' => $wor_quality,
-                'wor_remark_mod' => $wor_remark,
-            );
-                                                 
-            
-            //debug($data);
-            $model = new \Model\WorkersModel();       
-            $worker = $model->update($data);
-            //debug($worker);
-            
-            $this->show('worker/worker');
-	}*/
-
 }
-//isset($_POST['wor_lastname']) ? intval(trim($_POST['wor_lastname'])) : 0
-//isset($_POST['wor_firstname']) ? intval(trim($_POST['wor_firstname'])) : 0
-//isset($_POST['wor_quality']) ? intval(trim($_POST['wor_quality'])) : 0
-//isset($_POST['wor_text']) ? trim($_POST['wor_text']) : ''
+

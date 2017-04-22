@@ -1,4 +1,4 @@
-<?php $this->layout('layoutBootstrap', ['title' => 'Construction', 'currentPage' => 'construction']) ?>
+<?php $this->layout('layoutBootstrap', ['title' => 'Construction', 'currentPage' => 'home']) ?>
 
 <?php $this->start('main_content') ?>
 <h3>Construction</h3>

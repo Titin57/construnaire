@@ -27,12 +27,12 @@ class TasksController extends Controller
             $tas_nvau = (isset($_POST['tas_nvau']) ? trim($_POST['tas_nvau']) : '');       
             $tas_start = (isset($_POST['tas_start']) ? trim($_POST['tas_start']) : '');       
             $tas_stop = (isset($_POST['tas_stop']) ? trim($_POST['tas_stop']) : '');       
-            $tas_time2 = (isset($_POST['tas_time2']) ? trim($_POST['tas_time2']) : '');       
+            $tas_time = (isset($_POST['tas_time']) ? trim($_POST['tas_time']) : '');       
             
             
             $tas_start = date("Y-m-d").' '.$tas_start;   
             $tas_stop = date("Y-m-d").' '.$tas_stop;   
-            debug($tas_start);
+            //debug($tas_start);
             
             $data = array(               
                 'tas_name' => $tas_name,
@@ -48,15 +48,24 @@ class TasksController extends Controller
                 'tas_nvau' => $tas_nvau,
                 'tas_start' => $tas_start,
                 'tas_stop' => $tas_stop,
-                'tas_time' => $tas_time2,
+                'tas_time' => $tas_time,
             );
                                                  
             
             debug($data);
             $model = new \Model\TasksModel();  
-            $addTask = $model->insert($data); 
+            $addTask = $model->insert($data);
             
-		$this->show('task/addtask');
+            $model2 = new \Model\WorkersModel();
+            $allWorker = $model2->findAll();
+            
+            $model3 = new \Model\TeamsModel();
+            $allTeam = $model3->findAll();
+            
+            $this->show('task/addtask', array(
+                'allWorker' => $allWorker,
+                'allTeam' => $allTeam
+            ));
 	}
 
 }
