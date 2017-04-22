@@ -10,7 +10,14 @@
             <table>
 		<tr>
                     <td>Process name :&nbsp;</td>
-                    <td><input type="text" name="pro_name" value=""/></td>
+                    <td>
+                        <select name="pro_name">
+                            <option value="">Nom du process</option>
+                            <?php foreach ($allProcess as $curProcess) : ?>
+                            <option name="pro_name" value="<?php echo $curProcess['pro_name']; ?>"><?php echo $curProcess['pro_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
 		</tr>
                 <tr>
 

@@ -18,6 +18,17 @@
 			<input type="text" name="tas_date" id="datepicker">     
                     </td>
 		</tr>
+                <tr>
+                    <td>Process :&nbsp;</td>
+                    <td>
+                        <select name="pro_name">
+                            <option value="">Nom du process</option>
+                            <?php foreach ($allProcess as $curProcess) : ?>
+                            <option name="pro_name" value="<?php echo $curProcess['pro_id']; ?>"><?php echo $curProcess['pro_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                </tr>
 		<tr>
                     <td>Typologie :&nbsp;</td> 
                     <td>

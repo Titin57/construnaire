@@ -16,6 +16,7 @@ class TasksController extends Controller
             
             $tas_name = (isset($_POST['tas_name']) ? trim($_POST['tas_name']) : '');
             $tas_date = (isset($_POST['tas_date']) ? trim($_POST['tas_date']) : '');
+            $process_pro_id = (isset($_POST['pro_name']) ? trim($_POST['pro_name']) : '');
             $tas_typology = (isset($_POST['tas_typology']) ? trim($_POST['tas_typology']) : '');
             $tas_wastage = (isset($_POST['tas_wastage']) ? trim($_POST['tas_wastage']) : '');
             $tas_repeat = (isset($_POST['tas_repeat']) ? trim($_POST['tas_repeat']) : '');       
@@ -37,6 +38,7 @@ class TasksController extends Controller
             $data = array(               
                 'tas_name' => $tas_name,
                 'tas_date' => $tas_date,
+                'process_pro_id' => $process_pro_id,
                 'tas_typology' => $tas_typology,
                 'tas_wastage' => $tas_wastage,
                 'tas_repeat' => $tas_repeat,
@@ -50,11 +52,12 @@ class TasksController extends Controller
                 'tas_stop' => $tas_stop,
                 'tas_time' => $tas_time,
             );
+            
+            
                                                  
             
-            debug($data);
-            $model = new \Model\TasksModel();  
-            $addTask = $model->insert($data);
+            //debug($data);
+            
             
             $model2 = new \Model\WorkersModel();
             $allWorker = $model2->findAll();
@@ -62,9 +65,18 @@ class TasksController extends Controller
             $model3 = new \Model\TeamsModel();
             $allTeam = $model3->findAll();
             
+            $model = new \Model\ProcessModel();  
+            $allProcess = $model->findAll();
+            
+            $model = new \Model\TasksModel();  
+            $addTask = $model->insert($data);
+            
+            debug($data);
+            
             $this->show('task/addtask', array(
                 'allWorker' => $allWorker,
-                'allTeam' => $allTeam
+                'allTeam' => $allTeam,
+                'allProcess' => $allProcess
             ));
 	}
 

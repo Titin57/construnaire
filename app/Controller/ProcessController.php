@@ -20,12 +20,16 @@ class ProcessController extends Controller
                 'pro_name' => $pro_name,              
             );
                                                  
-            
+            $model6 = new \Model\ProcessModel();
+            $allProcess = $model6->findAll();
             //debug($data);
             $model = new \Model\ProcessModel();  
             $addProcess = $model->insert($data); 
             
-		$this->show('process/process');
+		$this->show('process/process',array(
+                    'allProcess' => $allProcess
+                ));
+                
 	}
 
 }
