@@ -15,6 +15,9 @@ class TeamsController extends Controller
             // Remove all comments
             unset($_SESSION['flash']);
             
+            $model = new \Model\WorkersModel();
+            $allWorker = $model->findAll();
+            
             //debug($_POST['tea_id']);
         if (!empty($_POST)) {    
             $tea_id = (isset($_POST['tea_id']) ? trim($_POST['tea_id']) : '');
@@ -25,8 +28,7 @@ class TeamsController extends Controller
             $tea_worker3 = (isset($_POST['wor_id3']) ? ($_POST['wor_id3']) : '');
             $tea_worker4 = (isset($_POST['wor_id4']) ? ($_POST['wor_id4']) : '');
             
-            $model = new \Model\WorkersModel();
-            $allWorker = $model->findAll();
+            
             
             $errorList = array();
                 
