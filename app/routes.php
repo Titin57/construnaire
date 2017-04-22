@@ -50,6 +50,8 @@ $w_routes = array(
     ['GET|POST', '/process/', 'Process#process', 'process_process'],
 
     ['GET|POST', '/team/', 'Teams#addteam', 'team_addteam'],
+    //['GET|POST', '/team/', 'Teams#addteam', 'team_addteam'],
+    //['GET|POST', '/team/mod', 'Teams#modteam', 'team_modteam'],
 
 
 );
