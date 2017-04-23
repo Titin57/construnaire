@@ -26,30 +26,56 @@ class OutputModel extends \W\Model\Model {
             return $stmt->fetchAll();
         }
     }
+//    
+//    
+//      `tas_time` * `tas_va` * `tas_repeat`)   AS `tas_timeVA` 
+//        }
+//        elseif ($column === 'tas_nva') {
+//
+//            $sql .= "`tas_nva` * `tas_repeat` 
+//                AS tas_timeNVA FROM tasks WHERE `process_pro_id` = :pro_id";
+//        }
+//        elseif ($column === 'tas_nvau') {
+//
+//            $sql .= "`tas_nvau` * `tas_repeat` 
+//                AS tas_timeNVAU FROM tasks WHERE `process_pro_id` = :pro_id";
 
     public function calcWastedTimePerTask($pro_id, $column) {
-
-        $sql = '
-               SELECT `tas_id`, `tas_time` * ';
-
+//        $sql = 'SELECT `tas_id`, `tas_time` * ';
+        $sql = 'SELECT `tas_time` * ';
         if ($column === 'tas_va') {
 
             $sql .= "`tas_va` * `tas_repeat` 
                 AS tas_timeVA FROM tasks WHERE `process_pro_id` = :pro_id";
         }
-        if ($column === 'tas_nva') {
+        elseif ($column === 'tas_nva') {
 
             $sql .= "`tas_nva` * `tas_repeat` 
                 AS tas_timeNVA FROM tasks WHERE `process_pro_id` = :pro_id";
         }
-        if ($column === 'tas_nvau') {
+        elseif ($column === 'tas_nvau') {
 
             $sql .= "`tas_nvau` * `tas_repeat` 
                 AS tas_timeNVAU FROM tasks WHERE `process_pro_id` = :pro_id";
         }
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindValue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //$stmt->bindValue(':column', $column, \PDO::PARAM_STR);
+//        $stmt->bindParam(':column', "'tas_va'");
+        //debug($stmt->bindvalue(':columnName', 'tas_va'));
+        //$stmt = execute();
+//        debug($sql);
+        //$stmt->debugDumpParams();
+
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
 
 //        tasSql / execTasSql($pro_id, $sql);
-    }
+    
 
     public function tasSql($pro_id, $sql) {
         $stmt = $this->dbh->prepare($sql);
@@ -110,8 +136,19 @@ class OutputModel extends \W\Model\Model {
      */
 
     // limit contraprocuctive??
-    public function getOutputFromProcess($pro_id, $limit = 50) {
-        $sql = 'SELECT `process_pro_id`,
+    
+/*
+        funny fact :[
+    DATE_FORMAT(FROM_UNIXTIME(`tas_start`) , "%d-%m-%Y" ) AS `tas_start_date`,
+            ] works in mysql but not through a php mysql requet
+
+ * 
+ */
+     public function getOutputFromProcess($pro_id, $limit = 50) {
+ 
+        $sql = 'SELECT `pro_id`,
+                        `tas_id`,
+                        
                         `pro_name`,
                         `pro_text`,
 
@@ -119,10 +156,16 @@ class OutputModel extends \W\Model\Model {
                         `tas_date`, 
                         `tas_typology`, 
                         `tas_repeat`, 
-                        `tas_penality`,  
-                        `tas_start`, 
-                        `tas_stop`, 
-                        `tas_time`, 
+                        `tas_penality`,
+                        DATE_FORMAT(`tas_start` , "%H:%i" ) AS `tas_start`,
+                        DATE_FORMAT(`tas_start` , "%d-%m-%Y" ) AS `tas_start_date`,
+                        DATE_FORMAT(`tas_stop` , "%H:%i" ) AS `tas_stop`,
+                        DATE_FORMAT(`tas_stop` , "%d-%m-%Y" ) AS `tas_stop_date`,
+
+                        `tas_time`,
+                        ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`, 
+                        TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
+
                         `tas_text`, 
                         `tas_remark`,  
                         `tas_wastage`, 
@@ -142,8 +185,22 @@ class OutputModel extends \W\Model\Model {
                         `cou_name`,
                         `worker1`.`wor_id` AS team_worker_id,
                         `unique_worker`.`wor_id` AS unique_worker_id,
+                        coalesce (`unique_worker`.`wor_id`,`worker1`.`wor_id`) AS single_unique_worker,
                         
-                         coalesce (`unique_worker`.`wor_id`,`worker1`.`wor_id`) AS test
+                        (ROUND(TIME_TO_SEC(`tas_time`)/60)  * `tas_repeat`) AS `tas_timeTotal`,
+                        (TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`)  * `tas_repeat`) AS `tas_calc_timeTotal`,
+                        
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_va`)) AS `tas_timeVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva`)) AS `tas_timeNVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nvau`)) AS `tas_timeNVAU`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_va` * `tas_repeat`)) AS `tas_total_timeVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva` * `tas_repeat`)) AS `tas_total_timeNVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nvau` * `tas_repeat`)) AS `tas_total_timeNVAU`,
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_va` * `tas_repeat`)) AS `tas_calc_timeVA`,
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nva` * `tas_repeat`)) AS `tas_calc_timeNVA`,
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nvau` * `tas_repeat`)) AS `tas_calc_timeNVAU`
+                         
+                         
                         
                          
 

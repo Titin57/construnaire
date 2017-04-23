@@ -10,8 +10,11 @@ class OutputController extends Controller {
     public function outputText() {
 
         //all constructions 4 use with <select>        
-        $constructionModel = new \Model\ConstructionsModel();
+        $constructionModel = new \Model\ConstructionModel();
+        
+
         $allConstructions = $constructionModel->findAll();
+//        
         //debug($allConstructions);
         // all process 4 use with <select>        
         $processModel = new \Model\ProcessModel();
@@ -22,17 +25,44 @@ class OutputController extends Controller {
 
         $model = new \Model\outputModel();
         // output ID still hardcoded
-                $allOutputFromProcess = $model->getOutputFromProcess(10);
+        $allOutputFromProcess = $model->getOutputFromProcess(10);
         debug($allOutputFromProcess);
  
         // output ID still hardcoded 
         $sumWastedTimePerProcess = $model->sumWastedTimePerProcess(10);
         //debug ($sumWastedTimePerProcess);       
-        $model = new \Model\outputModel();
-        $calcWastedTimePerTask = $model->calcWastedTimePerTask(10,'tas_nva');
-        //debug ($calcWastedTimePerTask);       
-        $calcWastedTimePerTask = $model->calcWastedTimePerTask(10,'tas_nvau');
-        //debug ($calcWastedTimePerTask);       
+
+//       calculate Task time partial
+        //////////////////////////////////
+        $sumVATimePerProcess = $model->calcWastedTimePerTask(10, 'tas_va');
+//        debug ($sumVATimePerProcess);  
+        $sumNVATimePerProcess = $model->calcWastedTimePerTask(10, 'tas_nva');
+//        debug ($sumNVATimePerProcess);  
+        $sumNVAUTimePerProcess = $model->calcWastedTimePerTask(10, 'tas_nvau');
+//        debug ($sumNVAUTimePerProcess);          
+//        $merged = ($sumVATimePerProcess + $sumNVAUTimePerProcess);
+    
+//        $merged =array_push($sumVATimePerProcess,$sumNVATimePerProcess);
+//        $merged = array_merge_recursive($sumVATimePerProcess,$sumNVATimePerProcess);
+//        $merged = $sumVATimePerProcess ;
+//        $merged [] += $sumNVAUTimePerProcess;
+//        debug($merged);
+        
+//        for ($i=0; $i < count($sumNVAUTimePerProcess); $i++){
+//            $nvaData=$sumVATimePerProcess;
+//            $nvaData[][]= $sumNVAUTimePerProcess[$i];
+//            $nvaDataB []= $sumNVAUTimePerProcess[$i];
+//            $nvaDataB [$i]= $sumNVATimePerProcess[$i];
+//            $nvaData= array_push($nvaData[$i][], $sumNVAUTimePerProcess[$i]);
+//            array_push($nvaData[$i], $sumNVAUTimePerProcess[$i]);
+//            array_push($nvaData[$i], $sumNVATimePerProcess[$i]);
+//        };
+   
+//        $merged =array_merge($sumVATimePerProcess,$sumNVATimePerProcess,$sumNVAUTimePerProcess);
+//        debug($nvaDataB);
+//       old stuff -> delete?
+        //////////////////////////////////        
+     
         //$tasva=tas_va;
 //                debug (calcWastedTimePerTask(10,'tas_va'));  
 //        $calcWastedTimePerTask = $model->tasSql(10,calcWastedTimePerTask(10,'tas_va'));
@@ -40,12 +70,13 @@ class OutputController extends Controller {
         $calcWastedTimePerTaskVa = $model->calcWastedTimePerTaskVa(10);
 //        debug ($calcWastedTimePerTaskVa);      
      
-        
+//       Csv stuff
+        //////////////////////////////////        
 //        debug('debug outputcontroller readCsv' ,$construct);
         $construct= $model->readCsv('building.csv');
-        debug($construct);
+//        debug($construct);
         $constructions= $model->readCsv('buildings.csv',1);
-        debug($constructions);
+//        debug($constructions);
         
 
         
@@ -85,6 +116,10 @@ class OutputController extends Controller {
             'allProcess' => $allProcess,
             'allConstructions' => $allConstructions,
             'allOutputFromProcess' => $allOutputFromProcess,
+            //            partial time VA, NVA ,NVAU
+            'sumVATimePerProcess' => $sumVATimePerProcess,
+            'sumNVATimePerProcess' => $sumNVATimePerProcess,
+            'sumNVAUTimePerProcess' => $sumNVAUTimePerProcess
             // inserted here for testing purposes //????
         //    'allOutputFromConstructions' => $allOutputFromConstructions
         ));
@@ -94,7 +129,36 @@ class OutputController extends Controller {
     }
 
     public function output() {
-        $this->show('output/output');
+        $model = new \Model\outputModel();
+        
+//       calculate Task time partial
+        //////////////////////////////////        
+//        $sumVATimePerProcess = $model->calcWastedTimePerTask();
+        $sumVATimePerProcess = $model->calcWastedTimePerTask(10, 'tas_va');
+//        debug ($sumVATimePerProcess);  
+        $sumNVATimePerProcess = $model->calcWastedTimePerTask(10, 'tas_nva');
+//        debug ($sumNVATimePerProcess);  
+        $sumNVAUTimePerProcess = $model->calcWastedTimePerTask(10, 'tas_nvau');
+//        debug ($sumNVAUTimePerProcess);  
+
+//       fetch general process data
+        //////////////////////////////////        
+        // output ID still hardcoded
+        
+                $allOutputFromProcess = $model->getOutputFromProcess(10);
+//        debug($allOutputFromProcess);
+        
+        $this->show('output/output', array(
+//            'allProcess' => $allProcess,
+//            'allConstructions' => $allConstructions,
+            'allOutputFromProcess' => $allOutputFromProcess,
+//            partial time VA, NVA ,NVAU
+            'sumVATimePerProcess' => $sumVATimePerProcess,
+            'sumNVATimePerProcess' => $sumNVATimePerProcess,
+            'sumNVAUTimePerProcess' => $sumNVAUTimePerProcess
+            // inserted here for testing purposes //????
+        //    'allOutputFromConstructions' => $allOutputFromConstructions
+        ));
     }
 
 }
