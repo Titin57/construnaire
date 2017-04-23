@@ -19,6 +19,17 @@
                     </td>
 		</tr>
                 <tr>
+                    <td>Chantier :&nbsp;</td>
+                    <td>
+                        <select name="con_id">
+                            <option value="">Nom du chantier</option>
+                            <?php foreach ($allConstruc as $curConstruc) : ?>
+                            <option name="con_id" value="<?php echo $curConstruc['con_id']; ?>"><?php echo $curConstruc['con_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td>Process :&nbsp;</td>
                     <td>
                         <select name="pro_name">

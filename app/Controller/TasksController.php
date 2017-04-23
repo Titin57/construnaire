@@ -12,10 +12,26 @@ class TasksController extends Controller
 	 */
 	public function addtask(){
             
-            //debug($_POST['tas_time']);
+            // Remove all comments
+            unset($_SESSION['flash']);
             
+            $model2 = new \Model\WorkersModel();
+            $allWorker = $model2->findAll();
+            
+            $model3 = new \Model\TeamsModel();
+            $allTeam = $model3->findAll();
+            
+            $model = new \Model\ProcessModel();  
+            $allProcess = $model->findAll();
+            
+
+            $model = new \Model\ConstructionModel();
+            $allConstruc = $model->findAll();
+            //debug($_POST['tas_time']);
+        if (!empty($_POST)) {    
             $tas_name = (isset($_POST['tas_name']) ? trim($_POST['tas_name']) : '');
             $tas_date = (isset($_POST['tas_date']) ? trim($_POST['tas_date']) : '');
+            $constructions_con_id = (isset($_POST['con_id']) ? trim($_POST['con_id']) : '');
             $process_pro_id = (isset($_POST['pro_name']) ? trim($_POST['pro_name']) : '');
             $tas_typology = (isset($_POST['tas_typology']) ? trim($_POST['tas_typology']) : '');
             $tas_wastage = (isset($_POST['tas_wastage']) ? trim($_POST['tas_wastage']) : '');
@@ -35,9 +51,33 @@ class TasksController extends Controller
             $tas_stop = date("Y-m-d").' '.$tas_stop;   
             //debug($tas_start);
             
+            $errorList = array();
+            
+                if (strlen($tas_name) < 2) {
+                $errorList[] = 'Tasks name must be at least 2 characters long !';
+                }
+                // city name
+                if (strlen($tas_wastage) < 2) {
+                    $errorList[] = 'wastage must be at least 2 characters long !';
+                }
+
+                // type name
+                if (strlen($tas_penality) < 2) {
+                    $errorList[] = 'Penality must be at least 2 characters long !';
+                }
+                
+                //debug($errorList);
+                
+                if(!empty($errorList)){
+                    $this->flash(join('<br>', $errorList), 'danger');           
+                }
+                
+                else {
+            
             $data = array(               
                 'tas_name' => $tas_name,
                 'tas_date' => $tas_date,
+                'constructions_con_id' => $constructions_con_id,
                 'process_pro_id' => $process_pro_id,
                 'tas_typology' => $tas_typology,
                 'tas_wastage' => $tas_wastage,
@@ -68,15 +108,46 @@ class TasksController extends Controller
             $model = new \Model\ProcessModel();  
             $allProcess = $model->findAll();
             
-            $model = new \Model\TasksModel();  
-            $addTask = $model->insert($data);
+
+            $model = new \Model\ConstructionModel();
+            $allConstruc = $model->findAll();
             
-            debug($data);
+             $model = new \Model\TasksModel();  
+            $addTask = $model->insert($data);
+            //debug($data);
+            
+            if (!empty($addTask)) {
+                $this->flash('Insertion ok !', 'succes');
+                $this->show('task/addtask', array(
+                'allWorker' => $allWorker,
+                'allTeam' => $allTeam,
+                'allProcess' => $allProcess,
+                'allConstruc' => $allConstruc
+                    
+            ));
+                }
+                    else {
+                        $this->flash('Error inserting into the DB !', 'danger');
+                    } 
+                }
+            }
+            else{
+                $this->show('task/addtask', array(
+                'allWorker' => $allWorker,
+                'allTeam' => $allTeam,
+                'allProcess' => $allProcess,
+                'allConstruc' => $allConstruc
+                    
+            ));
+            }
+            
             
             $this->show('task/addtask', array(
                 'allWorker' => $allWorker,
                 'allTeam' => $allTeam,
-                'allProcess' => $allProcess
+                'allProcess' => $allProcess,
+                'allConstruc' => $allConstruc
+                    
             ));
 	}
 
