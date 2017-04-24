@@ -11,7 +11,24 @@ class ProcessModel extends \W\Model\Model{
         $this->setPrimaryKey('pro_id');
     }
     
-    
+    public function getTasksFromProcess($process_pro_id){
+        $sql = '
+            SELECT tas_name
+            FROM tasks
+            WHERE process_pro_id = :id
+        ';
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindValue(':id', $process_pro_id, \PDO::PARAM_INT);
+        
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        }
+        else {
+            return $stmt->fetchAll();
+        }
+        
+        return false;
+    }
        
 
     

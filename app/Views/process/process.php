@@ -11,7 +11,7 @@
 		<tr>
                     <td>Process name :&nbsp;</td>
                     <td>
-                        <select name="pro_name">
+                        <select name="pro_id">
                             <option value="">Nom du process</option>
                             <?php foreach ($allProcess as $curProcess) : ?>
                             <option name="pro_name" value="<?php echo $curProcess['pro_id']; ?>"><?php echo $curProcess['pro_name']; ?></option>
@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Add Process"/></td>
+                    <td><input type="submit" value="Valider"/></td>
 		</tr>	
             </table>
     </fieldset>
@@ -34,12 +34,42 @@
 
 
 <ul id="sortable">
-    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><input type="text" value=""/></li>
-    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>tâche 2 : Préparer le beton</li>
-    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>tâche 3 : Pose du beton</li>
-    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>tâche 4 : Pose des agglos</li>
-    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>tâche 5 : Mise à niveau</li>
-    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>tâche 6 : Nettoyage des joints</li>
+    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><select name="tas_name">
+                            <option value="">Nom du la tache</option>
+                            <?php foreach ($allTasks as $curTask) : ?>
+                            <option name="pro_id" value="<?php echo $curTask['pro_id']; ?>"><?php echo $curTask['tas_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select></li>
+    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><select name="tas_name">
+                            <option value="">Nom du la tache</option>
+                            <?php foreach ($allTasks as $curTask) : ?>
+                            <option name="pro_id" value="<?php echo $curTask['pro_id']; ?>"><?php echo $curTask['tas_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select></li>
+    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><select name="tas_name">
+                            <option value="">Nom du la tache</option>
+                            <?php foreach ($allTasks as $curTask) : ?>
+                            <option name="pro_id" value="<?php echo $curTask['pro_id']; ?>"><?php echo $curTask['tas_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select></li>
+    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><select name="tas_name">
+                            <option value="">Nom du la tache</option>
+                            <?php foreach ($allTasks as $curTask) : ?>
+                            <option name="pro_id" value="<?php echo $curTask['pro_id']; ?>"><?php echo $curTask['tas_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select></li>
+    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><select name="tas_name">
+                            <option value="">Nom du la tache</option>
+                            <?php foreach ($allTasks as $curTask) : ?>
+                            <option name="pro_id" value="<?php echo $curTask['pro_id']; ?>"><?php echo $curTask['tas_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select></li>
+    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><select name="tas_name">
+                            <option value="">Nom du la tache</option>
+                            <?php foreach ($allTasks as $curTask) : ?>
+                            <option name="pro_id" value="<?php echo $curTask['pro_id']; ?>"><?php echo $curTask['tas_name']; ?></option>
+                            <?php endforeach; ?>
+                        </select></li>
 </ul>
 
 <style>
