@@ -3,21 +3,27 @@
 <?php $this->start('main_content') ?>
 
 <p>
-    <strong><a href="<?= $this->url('output_output') ?> "title="home">visuals</a> - text </strong>
+    <strong><a href="<?= $this->url('output_outputText') ?> "title="home">visuals</a> - text </strong>
 </p>
-<form action="" method="post">
-    <select name="select">
+<form action="<?=$this->url('output_outputText')?>" method="get">
+<!--    <select name="select">
         <option value"">choose construction</option> 
-        <?php foreach ($allConstructions as $key => $value): ?>
-            <option value="<?= $value['con_id'] ?>"><?= $value['con_name'] ?></option> 
-        <?php endforeach; ?>
-    </select>
-    <select name="select">
-        <option value"">choose process</option> 
-        <?php foreach ($allProcess as $key => $value): ?>
-            <option value="<?= $value['pro_id'] ?>"><?= $value['pro_name'] ?></option> 
-        <?php endforeach; ?>
-    </select>    
+        <? php foreach ($allConstructions as $key => $value): ?>
+            <option value="< ?= $value['con_id'] ?>">< ?= $value['con_name'] ?></option> 
+        < ?php endforeach; ?>
+    </select>-->
+ 
+        <!--<input type="hidden" name="pro_id"/>-->
+        <select name="">
+<!--        <input type="hidden" name="pro_id"/>
+        <select name="select"  name="pro_id">-->
+            <option>choose process</option> 
+            <?php foreach ($allProcess as $key => $value): ?>
+                <option  value="<?= $value['pro_id'] ?>" ><?= $value['pro_id'] ?>.' '. <?= $value['pro_name'] ?></option> 
+            <?php endforeach; ?>
+        </select>
+        <input type="submit" value="Submit">
+        
 </form>
 <!-- ////////////////check for case if index 0 does not exist => php get keys////////////-->
 <h2>Construction Title :     <strong><?= $allOutputFromProcess [1]['con_name']; ?></strong></h2>
@@ -152,7 +158,7 @@
                 <td>
                     <?= $value['tas_total_timeNVA']; ?> <br><!--7-->
                     <!-- if both values are set, and not 0, and their difference is within +/- 10 minutes -->
-                    <?php if ((isset($value['tas_calc_timeNVA']) && isset($value['tas_total_timeNVA'])) && (($value['tas_calc_timeNVA'] !== 0) && ($value['tas_total_timeNVA'] !== 0)) && ((($value['tas_calc_timeNVA'] - $value['tas_total_timeNVA']) <= -10) || (($value['tas_calc_timeNVA'] - $value['tas_total_timeNVA']) >= 10))):?>
+                    <?php if ((isset($value['tas_calc_timeNVA']) && isset($value['tas_total_timeNVA'])) && (($value['tas_calc_timeNVA'] !== 0) && ($value['tas_total_timeNVA'] !== 0)) && ((($value['tas_calc_timeNVA'] - $value['tas_total_timeNVA']) <= -10) || (($value['tas_calc_timeNVA'] - $value['tas_total_timeNVA']) >= 10))): ?>
                         calc. difference:<br>
                         <?= ($value['tas_calc_timeNVA'] - $value['tas_total_timeNVA']); ?> <!--7-->
                     <?php endif; ?>
@@ -203,8 +209,8 @@
                 <td><!--7--></td>
             </tr>
             <tr style="background-color: lightgray"><!--f-->
-                <td>Timer date:<?=$value['tas_start_date'].' ' ;?><br>until<?=' '.$value['tas_stop_date'];?><!--1--></td>            
-                <td>From:<?=$value['tas_start'].' ' ;?><br>till<?=' '.$value['tas_stop'];?><!--2--></td>
+                <td>Timer date:<?= $value['tas_start_date'] . ' '; ?><br>until<?= ' ' . $value['tas_stop_date']; ?><!--1--></td>            
+                <td>From:<?= $value['tas_start'] . ' '; ?><br>till<?= ' ' . $value['tas_stop']; ?><!--2--></td>
                 <td><b>Time :</b><!--3--></td>
                 <td><?= \Model\OutputModel::floatToPercent($value['tas_va']) + \Model\OutputModel::floatToPercent($value['tas_nvau']) + \Model\OutputModel::floatToPercent($value['tas_nva']); ?> % <!--4- value of VA out of the DB --></td>
                 <td>

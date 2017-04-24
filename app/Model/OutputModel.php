@@ -26,6 +26,7 @@ class OutputModel extends \W\Model\Model {
             return $stmt->fetchAll();
         }
     }
+
 //    
 //    
 //      `tas_time` * `tas_va` * `tas_repeat`)   AS `tas_timeVA` 
@@ -47,13 +48,11 @@ class OutputModel extends \W\Model\Model {
 
             $sql .= "`tas_va` * `tas_repeat` 
                 AS tas_timeVA FROM tasks WHERE `process_pro_id` = :pro_id";
-        }
-        elseif ($column === 'tas_nva') {
+        } elseif ($column === 'tas_nva') {
 
             $sql .= "`tas_nva` * `tas_repeat` 
                 AS tas_timeNVA FROM tasks WHERE `process_pro_id` = :pro_id";
-        }
-        elseif ($column === 'tas_nvau') {
+        } elseif ($column === 'tas_nvau') {
 
             $sql .= "`tas_nvau` * `tas_repeat` 
                 AS tas_timeNVAU FROM tasks WHERE `process_pro_id` = :pro_id";
@@ -75,7 +74,7 @@ class OutputModel extends \W\Model\Model {
     }
 
 //        tasSql / execTasSql($pro_id, $sql);
-    
+
 
     public function tasSql($pro_id, $sql) {
         $stmt = $this->dbh->prepare($sql);
@@ -127,7 +126,58 @@ class OutputModel extends \W\Model\Model {
      * 
      */
 
+    public function getTasksProcessNVA($pro_id) {
 
+        $sql = 'SELECT 
+                        `tas_id`,
+                        `tas_name`,                        
+                        
+                        `pro_name`,
+                        ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`, 
+                        TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
+                        `tas_nva`
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+
+                        
+                WHERE pro_id= :pro_id';
+
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //debug ($stmt);
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
+        public function getNormalizingProcessNVA($pro_id) {
+
+        $sql = 'SELECT 
+                        SUM(`tas_nva`)AS `tas_sum_nva`
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+
+                        
+                WHERE pro_id= :pro_id';
+
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //debug ($stmt);
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
+//                            (`tas_nva`/(SUM(`tas_nva`))) AS `tas_factor_nva`,
+//                        (`tas_nva`*(`tas_nva`/(SUM(`tas_nva`)))) AS `tas_normailzed_nva`,
+//                        SUM(
+//                            `tas_nva` * `tas_nva`/ (SUM(`tas_nva`)   )
+//                                              ) AS `tas_control_nva`
+    
     /*  WORKING function!!
       CREATE FUNCTION TimeWasted ( tas_time INT, tas_nva FLOAT, tas_repeat INT)
       RETURNS INT DETERMINISTIC
@@ -136,16 +186,16 @@ class OutputModel extends \W\Model\Model {
      */
 
     // limit contraprocuctive??
-    
-/*
-        funny fact :[
-    DATE_FORMAT(FROM_UNIXTIME(`tas_start`) , "%d-%m-%Y" ) AS `tas_start_date`,
-            ] works in mysql but not through a php mysql requet
 
- * 
- */
-     public function getOutputFromProcess($pro_id, $limit = 50) {
- 
+    /*
+      funny fact :[
+      DATE_FORMAT(FROM_UNIXTIME(`tas_start`) , "%d-%m-%Y" ) AS `tas_start_date`,
+      ] works in mysql but not through a php mysql requet
+
+     * 
+     */
+    public function getOutputFromProcess($pro_id, $limit = 50) {
+
         $sql = 'SELECT `pro_id`,
                         `tas_id`,
                         
@@ -371,7 +421,7 @@ class OutputModel extends \W\Model\Model {
     // set multidata to 1 if there are several data parts in one row
     public function readCsv($filename, $multiData = 0) {
         $rows = array();
-        
+
         // absolute path to PUBLIC dir 
         // FrameworkW users: add following line to your "M:\__xampp\htdocs\construnaire\public\index.php"
         //define ('BASEPATH', dirname(__FILE__)); 
