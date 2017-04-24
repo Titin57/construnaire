@@ -27,15 +27,13 @@ class WorkersController extends Controller{
                 if (strlen($wor_lastname) < 2) {
                 $errorList[] = 'Worker lastname must be at least 2 characters long !';
                 }
-                // city name
                 if (strlen($wor_firstname) < 2) {
                     $errorList[] = 'Worker firstname must be at least 2 characters long !';
                 }
-
-                // type name
-                if (strlen($wor_quality) < 5) {
-                    $errorList[] = 'Worker Quality must be at least 5 characters long !';
+                if (strlen($wor_quality) < 2) {
+                    $errorList[] = 'Worker Quality must be at least 2 characters long !';
                 }
+                
                 
                 //debug($errorList);
                 
@@ -115,13 +113,7 @@ class WorkersController extends Controller{
             debug($selectworker);
             
             $ListWorker = array();
-            
-            /*foreach ($allWorker as $currentWorker) {
-                $ListWorker[] = $currentWorker['wor_lastname'];
-            }*/
-            
-            //debug($ListWorker);
-            
+                       
             $this->show('worker/modworker',array(
                 'allWorker' => $allWorker
             ));

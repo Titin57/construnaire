@@ -32,17 +32,23 @@ class TeamsController extends Controller
             
             $errorList = array();
                 
+                if (strlen($tea_name) < 3) {
+                $errorList[] = 'Team name must be at least 3 characters long !';
+                }
+                if (strlen($tea_text) < 3) {
+                    $errorList[] = 'Team fonction must be at least 3 characters long !';
+                }
                 if (strlen($tea_worker1) < 2) {
                 $errorList[] = 'Worker 1 lastname must be at least 2 characters long !';
                 }
-                // city name
                 if (strlen($tea_worker2) < 2) {
                     $errorList[] = 'Worker 2 lastname must be at least 2 characters long !';
                 }
-
-                // type name
                 if (strlen($tea_worker3) < 2) {
                     $errorList[] = 'Worker 3 lastname must be at least 2 characters long !';
+                }
+                if (strlen($tea_worker4) < 2) {
+                    $errorList[] = 'Worker 4 lastname must be at least 2 characters long !';
                 }
                 
                 //debug($errorList);
@@ -52,11 +58,7 @@ class TeamsController extends Controller
                 }
                 
                 else {
-            //debug($tea_name);
-            //debug($tea_worker1);
-            //debug($_POST);
-            //debug($tea_name);
-            //debug($_POST['wor_id1']);
+           
             
             $data = array(
                 'tea_id' => $tea_id,
@@ -66,7 +68,7 @@ class TeamsController extends Controller
             
             //$teamWorkerId = getId($tea_name);
             
-            debug($errorList);
+            //debug($errorList);
             
             
             $teamList = array();
@@ -87,66 +89,55 @@ class TeamsController extends Controller
             $model2 = new \Model\TeamsWorkersModel();
             $teamId = $model2->getId($tea_name);
             
-            //debug($teamId['0']['tea_id']);
             
             $data2 = array(
                 'teams_tea_id' => $teamId['0']['tea_id'],
                 'workers_wor_id' => $tea_worker1
             );
            
-            //debug($data2);
+
             
             
             $addTeamsWorker = $model2->insert($data2);
             
             
-            //debug($teamList);
                         
             $model3 = new \Model\TeamsWorkersModel();
             $teamId = $model3->getId($tea_name);
             
-            //debug($teamId['0']['tea_id']);
             
             $data3 = array(
                 'teams_tea_id' => $teamId['0']['tea_id'],
                 'workers_wor_id' => $tea_worker2
             );
            
-            //debug($data2);
             
             
             $addTeamsWorker = $model3->insert($data3);
             
-            //debug($teamList);
             
             $model4 = new \Model\TeamsWorkersModel();
             $teamId = $model4->getId($tea_name);
             
-            //debug($teamId['0']['tea_id']);
             
             $data4 = array(
                 'teams_tea_id' => $teamId['0']['tea_id'],
                 'workers_wor_id' => $tea_worker3
             );
            
-            //debug($data4);
-            
             
             $addTeamsWorker = $model4->insert($data4);
             
-            //debug($teamList);
             
             $model5 = new \Model\TeamsWorkersModel();
             $teamId = $model5->getId($tea_name);
             
-            //debug($teamId['0']['tea_id']);
             
             $data5 = array(
                 'teams_tea_id' => $teamId['0']['tea_id'],
                 'workers_wor_id' => $tea_worker4
             );
            
-            //debug($data5);
             
             
             $addTeamsWorker = $model5->insert($data5);
