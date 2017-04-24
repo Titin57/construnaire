@@ -75,9 +75,9 @@ class UsersModel extends Model
 	}
 
 	/**
-	 * Teste si un pseudo est présent en base de données
-	 * @param string $username Le pseudo à tester
-	 * @return boolean true si présent en base de données, false sinon
+	 * Check if pseudo is present in DB
+	 * @param string $username  pseudo is to be tested
+	 * @return boolean true if in DB, else  false
 	 */
 	public function usernameExists($username)
 	{
