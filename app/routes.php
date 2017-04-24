@@ -17,6 +17,8 @@ $w_routes = array(
     // End routes for users
     // routes for construnaire.dev/city
     ['GET|POST', '/city/', 'City#addCity', 'city_addcity'],
+    // this part under construction - todo
+    // ['GET|POST', '/city/mod/', 'City#modCity', 'city_modcity'],
     
     // end routes for city
     // routes for construnaire.dev/country
@@ -26,6 +28,8 @@ $w_routes = array(
     // start routes for construction
     ['GET|POST', '/construction/', 'Construction#listconstruction', 'construction_listconstruction'],
     ['GET|POST', '/construction/add/', 'Construction#addconstruction', 'construction_addconstruction'],
+    // this part under construction - todo
+    // ['GET|POST', '/construction/mod/', 'Construction#modconstruction', 'construction_modconstruction'],
     
     // end routes for construction
 

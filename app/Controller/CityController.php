@@ -12,6 +12,9 @@ class CityController extends Controller {
     public function addCity() {
         // Remove all comments
         unset($_SESSION['flash']);
+        
+        // Access restriction - remove comment
+        // $this->allowTo(array('admin', 'user'));        
 
         // check if fields are not empty
         if (!empty($_POST)) {
@@ -57,11 +60,11 @@ class CityController extends Controller {
     public function listCities() {
         // Remove all comments
         unset($_SESSION['flash']);
+
         // restrict access to this page to users and admin
         // line $this->allowTo(.......) must be uncommented !!
         // $this->allowTo(array('admin','user'));
-        // code here to list all constructions from DB
-        // 
+
         $model = new \Model\CityModel();
         // $countries recovers all data from method
         // getAllCountries()
