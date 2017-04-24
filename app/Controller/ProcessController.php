@@ -17,7 +17,7 @@ class ProcessController extends Controller
             $pro_name = (isset($_POST['pro_name']) ? trim($_POST['pro_name']) : '');
             $process_pro_id = (isset($_POST['pro_id']) ? trim($_POST['pro_id']) : '');
             
-            debug($_POST);
+            //debug($_POST);
             
             $data = array(               
                 'pro_name' => $pro_name,              
@@ -36,7 +36,9 @@ class ProcessController extends Controller
             
 		$this->show('process/process',array(
                     'allProcess' => $allProcess,
-                    'allTasks' => $allTasks
+                    'allTasks' => $allTasks,
+                    'process_pro_id' => $process_pro_id,
+                    'pro_name' => $pro_name
                 ));
                 
 	}

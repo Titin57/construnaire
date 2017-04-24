@@ -6,29 +6,37 @@
 <form action="" method="post">
     <legend>Add a Process</legend>
     <fieldset>
-	<input type="hidden" name="pro_id" value="" />
             <table>
 		<tr>
                     <td>Process name :&nbsp;</td>
                     <td>
-                        <select name="pro_id">
+                        <select name="pro_name">
                             <option value="">Nom du process</option>
                             <?php foreach ($allProcess as $curProcess) : ?>
-                            <option name="pro_name" value="<?php echo $curProcess['pro_id']; ?>"><?php echo $curProcess['pro_name']; ?></option>
+                            <option value="<?php echo $curProcess['pro_name']; ?>"><?php echo $curProcess['pro_name'].$curProcess['pro_id']; ?></option>               
                             <?php endforeach; ?>
                         </select>
+                        <select name="pro_id">
+                            <option value="">Numero du process</option>
+                            <?php foreach ($allProcess as $curProcess) : ?>
+                            <option value="<?php echo $curProcess['pro_id']; ?>"><?php echo $curProcess['pro_id']; ?></option>               
+                            <?php endforeach; ?>
+                        </select>  
                     </td>
 		</tr>
                 <tr>
-
+                    <td>Process :&nbsp;</td>
+                    <td><?php echo $pro_name ?></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td><input type="submit" value="Valider"/></td>
 		</tr>	
-            </table>
+            </table>  
     </fieldset>
 </form>	
+
+
 
 
 
