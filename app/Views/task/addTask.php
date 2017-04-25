@@ -85,12 +85,12 @@
                     <tr>
                         <td>VA :&nbsp;</td>                 
                         <td><div class="slider"  ></div></td>
-                        <td><input class="form-control" type="text" class="val" name="tas_va" value=""></td>
+                        <td><input style="border: 2px solid green" class="form-control" type="text" class="val" name="tas_va" value=""></td>
                     </tr>
                     <tr>
                         <td>NVA :&nbsp;</td>
                         <td><div class="slider2" ></div></td>
-                        <td><input class="form-control" type="text" class="val2" name="tas_nva"></td>
+                        <td><input style="border: 2px solid red" class="form-control" type="text" class="val2" name="tas_nva"></td>
                     </tr>
                     <tr>
                         <td>NVAU :&nbsp;</td>
