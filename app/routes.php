@@ -39,15 +39,20 @@ $w_routes = array(
 
 
     //['GET|POST', '/output/text/[a:process]/[a:id]', 'Output#outputText', 'output_outputText'],
-    ['GET|POST', '/output/text/', 'Output#outputText', 'output_outputText'],
-    ['GET|POST', '/output/visuals/', 'Output#output', 'output_output'],
+//    ['GET', '/output/text/process/', 'Output#outputText', 'output_outputText'],
+    ['GET|POST', '/output/', 'Output#output', 'output_output'],
+    ['GET',         '/output/process/text/[i:id]/', 'Output#outputText', 'output_outputText'],
+    ['GET|POST', '/output/process/visuals/[i:id]/', 'Output#outputVisuals', 'output_outputVisuals'],
 
 
+    
     ['GET|POST', '/workers/add/', 'Workers#addworker', 'worker_addworker'],
     ['GET|POST', '/workers/mod/', 'Workers#modworker', 'worker_modworker'],
     ['GET|POST', '/workers/all/', 'Workers#allworker', 'worker_allworker'],
 
+    ['GET|POST', '/task/view/', 'tasks#viewtasks', 'tasks_viewtasks'],
     ['GET|POST', '/task/add/', 'Tasks#addtask', 'task_addtask'],
+    
     ['GET|POST', '/process/', 'Process#process', 'process_process'],
 
     ['GET|POST', '/team/add', 'Teams#addteam', 'team_addteam'],

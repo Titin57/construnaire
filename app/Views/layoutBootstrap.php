@@ -52,6 +52,9 @@
                                 <li<?php if ($currentPage == 'addtask'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('task_addtask') ?>">Task Observation</a>
                                 </li>
+                                <li<?php if ($currentPage == 'viewtasks'): ?> class="active"<?php endif; ?>>
+                                    <a href="<?= $this->url('tasks_viewtasks') ?>">Task Overview</a>
+                                </li>
                                 <li<?php if ($currentPage == 'process'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('process_process') ?>">Process</a>
                                 </li>
