@@ -1,0 +1,117 @@
+                        SUM(
+                            `tas_nva` * `tas_nva`/ (SUM(`tas_nva`)   )
+                                              ) AS `tas_control_nva`
+
+
+
+
+
+
+
+SELECT `pro_id`,
+                        `tas_id`,
+                        `tas_name`,                        
+                        
+                        `pro_name`,
+                        ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`, 
+                        TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
+                        `tas_nva`,
+
+                        SUM(`tas_nva`)AS `tas_sum_nva`,
+                        (`tas_nva`/(SUM(`tas_nva`))) AS `tas_factor_nva`,
+                        (`tas_nva`*(`tas_nva`/(SUM(`tas_nva`)))) AS `tas_normailzed_nva`
+
+
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+
+                        
+                WHERE pro_id= 10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// not working-> group function
+        $sql = 'SELECT `pro_id`,
+                        `tas_id`,
+                        `tas_name`,                        
+                        
+                        `pro_name`,
+                        ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`, 
+                        TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
+                        `tas_nva`,
+                        SUM(`tas_nva`)AS `tas_sum_nva`,
+                        (`tas_nva`/(SUM(`tas_nva`))) AS `tas_factor_nva`,
+                        (`tas_nva`*(`tas_nva`/(SUM(`tas_nva`)))) AS `tas_normailzed_nva`,
+                        SUM(
+                            `tas_nva` * `tas_nva`/ (SUM(`tas_nva`)   )
+                                              ) AS `tas_control_nva`
+
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+
+                        
+                WHERE pro_id= :pro_id';
+
+
+//working
+
+SELECT                  `pro_id`,
+                        `tas_id`,
+                        `tas_name`,                        
+
+                        `pro_name`,
+                        ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`, 
+                        TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
+                        `tas_nva`,
+
+                        SUM(`tas_nva`)AS `tas_sum_nva`
+
+
+
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+
+                        
+                WHERE pro_id= 10
+
+$getTasksProcessNVA
+    [26] => Array
+        (
+            [tas_id] => 109
+            [tas_name] => Pose de fenetres
+            [pro_name] => `installation of the whirlpool`
+            [tas_time_input] => 166
+            [tas_time_calc] => 
+            [tas_nva] => 10
+        )
+
+)
+
+$getNormalizingProcessNVA
+Array
+(
+    [0] => Array
+        (
+            [tas_sum_nva] => 47.1500001847744
+        )
+
+)

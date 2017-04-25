@@ -135,5 +135,23 @@ class TasksController extends Controller{
                     
             ));
 	}
+        
+/**
+	 * Page d'ajout d'une nouvelle tâche
+	 */
+        public function viewtasks(){
+            $model = new \Model\TasksModel();
+            $tasksFromConstructions = $model->getTasksFromConstructions();
+//            debug($tasksFromConstructions);
+            
+            $model = new \Model\ProcessModel();  
+            $allProcess = $model->findAll();
+            
+            $this->show('task/viewtask', array(
+                'tasksFromConstructions'  => $tasksFromConstructions,
+
+                    
+            ));
+        }        
 
 }

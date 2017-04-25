@@ -15,7 +15,7 @@ class CountryController extends Controller {
         unset($_SESSION['flash']);
         
         // Access restriction - remove comment
-        // $this->allowTo(array('admin', 'user'));        
+        $this->allowTo(array('admin', 'user'));        
 
         if (!empty($_POST)) {
             //debug($_POST);

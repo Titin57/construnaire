@@ -14,7 +14,7 @@ class CityController extends Controller {
         unset($_SESSION['flash']);
         
         // Access restriction - remove comment
-        // $this->allowTo(array('admin', 'user'));        
+        $this->allowTo(array('admin', 'user'));        
 
         // check if fields are not empty
         if (!empty($_POST)) {
@@ -63,7 +63,7 @@ class CityController extends Controller {
 
         // restrict access to this page to users and admin
         // line $this->allowTo(.......) must be uncommented !!
-        // $this->allowTo(array('admin','user'));
+        $this->allowTo(array('admin','user'));
 
         $model = new \Model\CityModel();
         // $countries recovers all data from method

@@ -16,17 +16,17 @@ class Utils {
     public static function sendEmail($to, $subject, $htmlContent, $textContent='') {
         $mail = new PHPMailer();
 
-        //$mail->SMTPDebug = 3;                               // Enable verbose debug output
+        $mail->SMTP = 3; // Enable verbose debug output
 
         $mail->isSMTP(); // Set mailer to use SMTP
         $mail->Host = 'smtp.googlemail.com';  // Specify main and backup SMTP servers
         $mail->SMTPAuth = true; // Enable SMTP authentication
-        $mail->Username = 'carlo.specchio@gmail.com';                 // SMTP username
+        $mail->Username = 'charlesmirror4@gmail.com';                 // SMTP username
         $mail->Password = file_get_contents('C:\xampp\htdocs\construnaire\inc\myText.txt');                           // SMTP password
         $mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
         $mail->Port = 587; // TCP port to connect to
 
-        $mail->setFrom('carlo.specchio@gmail.com', 'Carlo');
+        $mail->setFrom('charlesmirror4@gmail.com', 'Carlo');
         $mail->addAddress($to); // Add a recipient
 
         $mail->isHTML(true); // Set email format to HTML

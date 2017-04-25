@@ -27,29 +27,54 @@ class OutputModel extends \W\Model\Model {
         }
     }
 
+//    
+//    
+//      `tas_time` * `tas_va` * `tas_repeat`)   AS `tas_timeVA` 
+//        }
+//        elseif ($column === 'tas_nva') {
+//
+//            $sql .= "`tas_nva` * `tas_repeat` 
+//                AS tas_timeNVA FROM tasks WHERE `process_pro_id` = :pro_id";
+//        }
+//        elseif ($column === 'tas_nvau') {
+//
+//            $sql .= "`tas_nvau` * `tas_repeat` 
+//                AS tas_timeNVAU FROM tasks WHERE `process_pro_id` = :pro_id";
+
     public function calcWastedTimePerTask($pro_id, $column) {
-
-        $sql = '
-               SELECT `tas_id`, `tas_time` * ';
-
+//        $sql = 'SELECT `tas_id`, `tas_time` * ';
+        $sql = 'SELECT `tas_time` * ';
         if ($column === 'tas_va') {
 
             $sql .= "`tas_va` * `tas_repeat` 
                 AS tas_timeVA FROM tasks WHERE `process_pro_id` = :pro_id";
-        }
-        if ($column === 'tas_nva') {
+        } elseif ($column === 'tas_nva') {
 
             $sql .= "`tas_nva` * `tas_repeat` 
                 AS tas_timeNVA FROM tasks WHERE `process_pro_id` = :pro_id";
-        }
-        if ($column === 'tas_nvau') {
+        } elseif ($column === 'tas_nvau') {
 
             $sql .= "`tas_nvau` * `tas_repeat` 
                 AS tas_timeNVAU FROM tasks WHERE `process_pro_id` = :pro_id";
         }
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindValue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //$stmt->bindValue(':column', $column, \PDO::PARAM_STR);
+//        $stmt->bindParam(':column', "'tas_va'");
+        //debug($stmt->bindvalue(':columnName', 'tas_va'));
+        //$stmt = execute();
+//        debug($sql);
+        //$stmt->debugDumpParams();
+
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
 
 //        tasSql / execTasSql($pro_id, $sql);
-    }
+
 
     public function tasSql($pro_id, $sql) {
         $stmt = $this->dbh->prepare($sql);
@@ -101,7 +126,58 @@ class OutputModel extends \W\Model\Model {
      * 
      */
 
+    public function getTasksProcessNVA($pro_id) {
 
+        $sql = 'SELECT 
+                        `tas_id`,
+                        `tas_name`,                        
+                        
+                        `pro_name`,
+                        ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`, 
+                        TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
+                        `tas_nva`
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+
+                        
+                WHERE pro_id= :pro_id';
+
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //debug ($stmt);
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
+        public function getNormalizingProcessNVA($pro_id) {
+
+        $sql = 'SELECT 
+                        SUM(`tas_nva`)AS `tas_sum_nva`
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+
+                        
+                WHERE pro_id= :pro_id';
+
+        $stmt = $this->dbh->prepare($sql);
+        $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
+        //debug ($stmt);
+        if ($stmt->execute() === false) {
+            debug($stmt->errorInfo());
+        } else {
+            return $stmt->fetchAll();
+        }
+    }
+//                            (`tas_nva`/(SUM(`tas_nva`))) AS `tas_factor_nva`,
+//                        (`tas_nva`*(`tas_nva`/(SUM(`tas_nva`)))) AS `tas_normailzed_nva`,
+//                        SUM(
+//                            `tas_nva` * `tas_nva`/ (SUM(`tas_nva`)   )
+//                                              ) AS `tas_control_nva`
+    
     /*  WORKING function!!
       CREATE FUNCTION TimeWasted ( tas_time INT, tas_nva FLOAT, tas_repeat INT)
       RETURNS INT DETERMINISTIC
@@ -110,8 +186,20 @@ class OutputModel extends \W\Model\Model {
      */
 
     // limit contraprocuctive??
+
+    /*
+      funny fact :[
+      DATE_FORMAT(FROM_UNIXTIME(`tas_start`) , "%d-%m-%Y" ) AS `tas_start_date`,
+      ] works in mysql but not through a php mysql requet
+
+     * 
+     */
     public function getOutputFromProcess($pro_id, $limit = 50) {
-        $sql = 'SELECT `process_pro_id`,
+        debug($pro_id);
+        
+        $sql = 'SELECT `pro_id`,
+                        `tas_id`,
+                        
                         `pro_name`,
                         `pro_text`,
 
@@ -119,10 +207,16 @@ class OutputModel extends \W\Model\Model {
                         `tas_date`, 
                         `tas_typology`, 
                         `tas_repeat`, 
-                        `tas_penality`,  
-                        `tas_start`, 
-                        `tas_stop`, 
-                        `tas_time`, 
+                        `tas_penality`,
+                        DATE_FORMAT(`tas_start` , "%H:%i" ) AS `tas_start`,
+                        DATE_FORMAT(`tas_start` , "%d-%m-%Y" ) AS `tas_start_date`,
+                        DATE_FORMAT(`tas_stop` , "%H:%i" ) AS `tas_stop`,
+                        DATE_FORMAT(`tas_stop` , "%d-%m-%Y" ) AS `tas_stop_date`,
+
+                        `tas_time`,
+                        ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`, 
+                        TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
+
                         `tas_text`, 
                         `tas_remark`,  
                         `tas_wastage`, 
@@ -142,8 +236,22 @@ class OutputModel extends \W\Model\Model {
                         `cou_name`,
                         `worker1`.`wor_id` AS team_worker_id,
                         `unique_worker`.`wor_id` AS unique_worker_id,
+                        coalesce (`unique_worker`.`wor_id`,`worker1`.`wor_id`) AS single_unique_worker,
                         
-                         coalesce (`unique_worker`.`wor_id`,`worker1`.`wor_id`) AS test
+                        (ROUND(TIME_TO_SEC(`tas_time`)/60)  * `tas_repeat`) AS `tas_timeTotal`,
+                        (TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`)  * `tas_repeat`) AS `tas_calc_timeTotal`,
+                        
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_va`)) AS `tas_timeVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva`)) AS `tas_timeNVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nvau`)) AS `tas_timeNVAU`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_va` * `tas_repeat`)) AS `tas_total_timeVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva` * `tas_repeat`)) AS `tas_total_timeNVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nvau` * `tas_repeat`)) AS `tas_total_timeNVAU`,
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_va` * `tas_repeat`)) AS `tas_calc_timeVA`,
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nva` * `tas_repeat`)) AS `tas_calc_timeNVA`,
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nvau` * `tas_repeat`)) AS `tas_calc_timeNVAU`
+                         
+                         
                         
                          
 
@@ -166,8 +274,7 @@ class OutputModel extends \W\Model\Model {
 //                Left JOIN workers ON tasks.workers_wor_id = workers.wor_id
         /*
 
-          //debug()
-          /* debug
+           debug
           INNER JOIN workers ON workers.wor_id = tasks.tas_id
           `tas_image1`, `tas_image2`, `tas_image3`,`tas_inserted`, `tas_vocal_message`, `con_inserted`,
           ambiguous: `teams_tea_id`,
@@ -176,6 +283,7 @@ class OutputModel extends \W\Model\Model {
           INNER JOIN workers ON workers.tasks_tas_id = tasks.tas_id
           ORDER BY con_created */
 
+          debug($sql);
 
         $stmt = $this->dbh->prepare($sql);
         $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
@@ -314,7 +422,7 @@ class OutputModel extends \W\Model\Model {
     // set multidata to 1 if there are several data parts in one row
     public function readCsv($filename, $multiData = 0) {
         $rows = array();
-        
+
         // absolute path to PUBLIC dir 
         // FrameworkW users: add following line to your "M:\__xampp\htdocs\construnaire\public\index.php"
         //define ('BASEPATH', dirname(__FILE__)); 
