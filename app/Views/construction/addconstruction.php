@@ -32,7 +32,16 @@
 
 
         <!--- <input type="country" class="form-control" name="country" value="Luxembourg" placeholder="" /><br /> -->
-        <input type="type" class="form-control" name="type" value="" placeholder="Construction type" /><br />
+        <!--- make drop down list for construction type data from CSV file -->    
+        <div class="form-group">
+            <label>Construction type</label>
+            <select name="type" class="form-control">
+                <option value="">Construction type</option>
+                <?php foreach ($constructype as $key=>$typeInfos) : ?>
+                    <option value='<?= $key?>'><?=$typeInfos ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>          
         <input type="client" class="form-control" name="client" value="" placeholder="Client name" /><br />     
         <input type="con_startdate" class="form-control" name="con_startdate" id="datepicker" value="" placeholder="Start date" /><br /> 
         <input type="con_enddate" class="form-control" name="con_enddate" value="" placeholder="End date" /><br />         

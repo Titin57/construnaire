@@ -24,7 +24,8 @@ class ConstructionController extends \W\Controller\Controller {
             $client = isset($_POST['client']) ? trim($_POST['client']) : '';
             $startdate = isset($_POST['con_startdate']) ? trim($_POST['con_startdate']) : '';
             $enddate = isset($_POST['con_enddate']) ? trim($_POST['con_enddate']) : '';
-
+            //debug($type);
+            //exit;
             $errorList = array();
             // I validate inputs
             // construction name
@@ -34,11 +35,6 @@ class ConstructionController extends \W\Controller\Controller {
             // city name
             if (intval($city) <= 0) {
                 $errorList[] = 'City not in DB !';
-            }
-
-            // type name
-            if (intval($type) <= 0) {
-                $errorList[] = 'Type must be at least 3 characters long !';
             }
 
             // client name
@@ -79,8 +75,15 @@ class ConstructionController extends \W\Controller\Controller {
 
         $model = new \Model\CityModel();
         $cities = $model->getAllCities();
+        $model = new \Model\OutputModel();
+        $constructype = $model->readCsv('building.csv');
+        // debug to get values
+        // debug($constructype);
+        // exit;
+
         $this->show('construction/addconstruction', array(
-            'cities' => $cities
+        'cities' => $cities,
+        'constructype' => $constructype
         ));
     }
 
@@ -91,11 +94,11 @@ class ConstructionController extends \W\Controller\Controller {
     public function listConstruction() {
         // Remove all comments
         unset($_SESSION['flash']);
-        
-        // restrict access to this page to users and admin
+
+        // restrict access to users and admin
         // line $this->allowTo(.......) must be uncommented !!
-        $this->allowTo(array('admin','user'));
-       
+        $this->allowTo(array('admin', 'user'));
+
         // code here to list all constructions from DB
 
         $model = new \Model\ConstructionModel();
