@@ -17,8 +17,9 @@
                 in order to make an hyperlink from this to a other page's
                 the link to the page must be added as php here 
                 -->
-
-                <td><a href="<?= $this->url('construction_listconstruction', array('con_id' => $currentConstruction['con_id'], 'conName' => $currentConstruction['con_name'])); ?>"><?= $currentConstruction['con_name'] ?></a></td>
+                <!--- in this part the link to the tasks overview is defined
+                to do next: link to the task(s) related to the construction -->
+                <td><a href="<?= $this->url('tasks_viewtasks'); ?>"><?= $currentConstruction['con_name'] ?></a></td>
                 <td><?= $currentConstruction['con_startdate'] ?></td>
             </tr>
         <?php endforeach; ?>
