@@ -121,7 +121,7 @@ Highcharts.chart('containerBubbles', {
 <?php foreach ($tasksFromConstructions as $key => $value): ?>
             { x: <?=$value['tas_diff']?>, y: <?=$value['process_pro_id']?>, z: <?=$value['tas_id']?>, name: '<a href="https://github.com/"><?=$value['tas_name']?></a>', country: ' <?=$value['pro_name']?>' },
 <?php endforeach ; ?>
-            { x: 0, y: 0, z: 2, name: '<a href="<?= $this->url('task_addtask') ?>">add Task</a>', country: 'Germany' },
+            { x: 0, y: 3, z: 2, name: '<a href="http://localhost<?= $this->url('task_addtask') ?>">add Task</a>', country: 'debug!!!!' },
             { x: 5, y: 0, z: 2, name: '<a href="http://localhost/construnaire/public/task/add/">Task Observation</a>', country: 'Germany' },
             { x: 10, y: 5, z: 2, name: '<a href="http://wf3.progweb.fr/">wf3</a>', country: 'Germany' },
 //< ?php foreach ($tasksFromConstructions as $key => $value): ?>
