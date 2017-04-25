@@ -2,3 +2,7 @@ body{
     background-image: url(http://modulhabitat.com/wp-content/uploads/2014/01/Suivre-son-chantier-de-construction.jpg);
 }
 
+.panel-primary{
+    width: 50%;
+    background-color: rgba(255,255,255,0.6)
+}
