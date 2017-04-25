@@ -16,7 +16,7 @@ class Utils {
     public static function sendEmail($to, $subject, $htmlContent, $textContent='') {
         $mail = new PHPMailer();
 
-        $mail->SMTPDebug = 3;                               // Enable verbose debug output
+        $mail->SMTP = 3; // Enable verbose debug output
 
         $mail->isSMTP(); // Set mailer to use SMTP
         $mail->Host = 'smtp.googlemail.com';  // Specify main and backup SMTP servers
