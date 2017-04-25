@@ -37,11 +37,11 @@ Highcharts.chart('containerBubbles', {
     },
 
     title: {
-        text: 'Sugar and fat intake per country'
+        text: 'Overview of all the existing tasks'
     },
 
     subtitle: {
-        text: 'Source: <a href="http://www.euromonitor.com/">Euromonitor</a> and <a href="https://data.oecd.org/">OECD</a>'
+        text: 'tasks are distributed'
     },
 
     xAxis: {
@@ -119,7 +119,7 @@ Highcharts.chart('containerBubbles', {
     series: [{
         data: [
 <?php foreach ($tasksFromConstructions as $key => $value): ?>
-            { x: <?=$value['tas_diff']?>, y: <?=$value['process_pro_id']?>, z: <?=$value['tas_id']?>, name: '<a href="https://github.com/"><?=$value['tas_name']?></a>', country: ' <?=$value['pro_name']?>' },
+            { x: <?=$value['tas_diff']?>, y: <?=$value['process_pro_id']?>, z: <?=$value['tas_id']?>, name: '<a href="http://localhost<?= $this->url('task_addtask') ?>><?=$value['tas_name']?></a>', Process: ' <?=$value['pro_name']?>' },
 <?php endforeach ; ?>
             { x: 0, y: 3, z: 2, name: '<a href="http://localhost<?= $this->url('task_addtask') ?>">add Task</a>', country: 'debug!!!!' },
             { x: 5, y: 0, z: 2, name: '<a href="http://localhost/construnaire/public/task/add/">Task Observation</a>', country: 'Germany' },
