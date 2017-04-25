@@ -14,8 +14,8 @@
             [tas_stop] => 12:00
             [tas_stop_date] => 01-02-2017
             [tas_time] => 04:00:00
-            [tas_time_input] => 240
-            [tas_time_calc] => 240
+            [tas_time_input] => 240             // ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`,
+            [tas_time_calc] => 240              //TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
             [tas_text] => cleotus s wood is of inferior quality: overprocessing`
             [tas_remark] => the accident with Ralph Wiggum could have been prevented with basic security measures
             [tas_wastage] => Surprocessing ou setup inutiles
@@ -36,12 +36,109 @@
             [tas_timeTotal] => 480
             [tas_calc_timeTotal] => 480
             [tas_timeVA] => 96
-            [tas_timeNVA] => 60
+                    [tas_timeNVA] => 60
             [tas_timeNVAU] => 84
             [tas_total_timeVA] => 192
-            [tas_total_timeNVA] => 120
+                     [tas_total_timeNVA] => 120         //(ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva` * `tas_repeat`)) AS `tas_total_timeNVA`,
             [tas_total_timeNVAU] => 168
             [tas_calc_timeVA] => 192
-            [tas_calc_timeNVA] => 120
+                     [tas_calc_timeNVA] => 120          //ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nva` * `tas_repeat`)) AS `tas_calc_timeNVA`,
             [tas_calc_timeNVAU] => 168
-        )
+        
+
+
+SELECT `pro_id`,
+                        `tas_id`,
+                        
+                        `pro_name`,
+                        `pro_text`,
+
+                        `tas_name`,
+                        `tas_date`, 
+                        `tas_typology`, 
+                        `tas_repeat`, 
+                        `tas_penality`,
+                        DATE_FORMAT(`tas_start` , "%H:%i" ) AS `tas_start`,
+                        DATE_FORMAT(`tas_start` , "%d-%m-%Y" ) AS `tas_start_date`,
+                        DATE_FORMAT(`tas_stop` , "%H:%i" ) AS `tas_stop`,
+                        DATE_FORMAT(`tas_stop` , "%d-%m-%Y" ) AS `tas_stop_date`,
+
+                        `tas_time`,
+                        ROUND(TIME_TO_SEC(`tas_time`)/60) AS `tas_time_input`, 
+                        TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) AS `tas_time_calc`,
+
+                        `tas_text`, 
+                        `tas_remark`,  
+                        `tas_wastage`, 
+                        `tas_va`, 
+                        `tas_nva`, 
+                        `tas_nvau`, 
+
+                        `tea_name`, 
+                        `tea_text`,
+
+                        `con_name`, 
+                        `con_client`, 
+                        `con_type`, 
+                        `con_text`, 
+                        `cit_name`,
+
+                        `cou_name`,
+                        `worker1`.`wor_id` AS team_worker_id,
+                        `unique_worker`.`wor_id` AS unique_worker_id,
+                        coalesce (`unique_worker`.`wor_id`,`worker1`.`wor_id`) AS single_unique_worker,
+                        
+                        (ROUND(TIME_TO_SEC(`tas_time`)/60)  * `tas_repeat`) AS `tas_timeTotal`,
+                        (TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`)  * `tas_repeat`) AS `tas_calc_timeTotal`,
+                        
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_va`)) AS `tas_timeVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva`)) AS `tas_timeNVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nvau`)) AS `tas_timeNVAU`,
+                        
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_va` * `tas_repeat`)) AS `tas_total_timeVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva` * `tas_repeat`)) AS `tas_total_timeNVA`,
+                        (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nvau` * `tas_repeat`)) AS `tas_total_timeNVAU`,
+                        
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_va` * `tas_repeat`)) AS `tas_calc_timeVA`,
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nva` * `tas_repeat`)) AS `tas_calc_timeNVA`,
+                        ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nvau` * `tas_repeat`)) AS `tas_calc_timeNVAU`
+                         
+                         
+                        
+                         
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+                INNER JOIN constructions ON tasks.constructions_con_id = constructions.con_id
+                INNER JOIN city ON constructions.city_cit_id = city.cit_id
+                INNER JOIN country ON country.cou_id = city.country_cou_id 
+
+                LEFT JOIN teams ON tasks.teams_tea_id = teams.tea_id
+                LEFT JOIN teams_workers ON teams_workers.teams_tea_id= teams.tea_id
+                LEFT JOIN workers AS worker1 ON teams_workers.workers_wor_id = worker1.wor_id
+                LEFT JOIN workers AS unique_worker ON tasks.workers_wor_id = unique_worker.wor_id
+
+                WHERE pro_id= 10
+
+
+SELECT `pro_id`,
+tasks.teams_tea_id,
+teams.tea_id,
+teams_workers.teams_tea_id,
+teams_workers.workers_wor_id,
+tasks.workers_wor_id,
+unique_worker.wor_id
+
+
+                FROM process
+                INNER JOIN tasks ON tasks.process_pro_id = process.pro_id 
+                INNER JOIN constructions ON tasks.constructions_con_id = constructions.con_id
+                INNER JOIN city ON constructions.city_cit_id = city.cit_id
+                INNER JOIN country ON country.cou_id = city.country_cou_id 
+
+                LEFT JOIN teams ON tasks.teams_tea_id = teams.tea_id
+                LEFT JOIN teams_workers ON teams_workers.teams_tea_id= teams.tea_id
+                LEFT JOIN workers AS worker1 ON teams_workers.workers_wor_id = worker1.wor_id
+                LEFT JOIN workers AS unique_worker ON tasks.workers_wor_id = unique_worker.wor_id
+
+                WHERE pro_id= 10

@@ -3,10 +3,11 @@
 <?php $this->start('main_content') ?>
 
 <p>
-    <strong>visuals - </strong><a href="<?= $this->url('output_outputText') ?>">Text</a>
+        <strong>
+        visuals - <a href=" <?= $this->url('output_outputText', array('id' => $pro_id_visual)) ?> " title="home">text </a>
+    </strong>
 </p>
 
-<h2>output visuals</h2>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-3d.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
