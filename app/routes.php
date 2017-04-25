@@ -35,7 +35,7 @@ $w_routes = array(
     // end routes for construction
 
 
-    ['GET', '/workers/', 'Workers#addWorker', 'worker_addWorker'],
+    //['GET', '/workers/', 'Workers#addWorker', 'worker_addWorker'],
 
 
     //['GET|POST', '/output/text/[a:process]/[a:id]', 'Output#outputText', 'output_outputText'],
@@ -46,12 +46,12 @@ $w_routes = array(
 
 
     
-    ['GET|POST', '/workers/add/', 'Workers#addworker', 'worker_addworker'],
+    ['GET|POST', '/workers/add', 'Workers#addworker', 'worker_addworker'],
     ['GET|POST', '/workers/mod/', 'Workers#modworker', 'worker_modworker'],
     ['GET|POST', '/workers/all/', 'Workers#allworker', 'worker_allworker'],
 
     ['GET|POST', '/task/view/', 'tasks#viewtasks', 'tasks_viewtasks'],
-    ['GET|POST', '/task/add/', 'Tasks#addtask', 'task_addtask'],
+    ['GET|POST', '/task/add', 'Tasks#addtask', 'task_addtask'],
     
     ['GET|POST', '/process/', 'Process#process', 'process_process'],
 
