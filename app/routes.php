@@ -39,7 +39,7 @@ $w_routes = array(
 
     //['GET|POST', '/output/text/[a:process]/[a:id]', 'Output#outputText', 'output_outputText'],
 //    ['GET', '/output/text/process/', 'Output#outputText', 'output_outputText'],
-    ['GET', '/output/', 'Output#output', 'output_output'],
+    ['GET|POST', '/output/', 'Output#output', 'output_output'],
     ['GET',         '/output/process/text/[i:id]/', 'Output#outputText', 'output_outputText'],
     ['GET|POST', '/output/process/visuals/[i:id]/', 'Output#outputVisuals', 'output_outputVisuals'],
 

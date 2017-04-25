@@ -8,6 +8,14 @@ use Model\OutputModel;
 class OutputController extends Controller {
 
     public function output() {
+        
+         if(! empty($_POST) ){
+                  $pro_id = (isset($_POST['pro_id']) ? trim($_POST['pro_id']) : '');
+
+                  $this->redirectToRoute('output_outputText',array('id'=>$pro_id));
+        debug($pro_id);   
+        exit;
+         }
         $processModel = new \Model\ProcessModel();
         $allProcess = $processModel->findAll();
         $this->show('output/output', array(
@@ -19,7 +27,7 @@ class OutputController extends Controller {
 
     public function outputText() {
 
-        $pro_id = (isset($_GET['id']) ? trim($_GET['id']) : '');
+        $pro_id = (isset($_POST['id']) ? trim($_POST['id']) : '');
         //$pro_id = $_POST['pro_id']; 
         debug($pro_id);
         //$ro_id = $_GET['id']; 
@@ -45,16 +53,16 @@ class OutputController extends Controller {
         $model = new \Model\outputModel();
         // output ID still hardcoded
         $allOutputFromProcess = $model->getOutputFromProcess(10);
-//        debug($allOutputFromProcess);
+        debug($allOutputFromProcess);
 // 
         // output ID still hardcoded 
-        $sumWastedTimePerProcess = $model->sumWastedTimePerProcess(10);
+        $sumWastedTimePerProcess = $model->sumWastedTimePerProcess($pro_id);
         //debug ($sumWastedTimePerProcess);       
 //       
 //       
 //       //       calculate Task time partial
         //////////////////////////////////
-        $sumVATimePerProcess = $model->calcWastedTimePerTask(10, 'tas_va');
+        $sumVATimePerProcess = $model->calcWastedTimePerTask($pro_id, 'tas_va');
 //        debug ($sumVATimePerProcess);  
         $sumNVATimePerProcess = $model->calcWastedTimePerTask(10, 'tas_nva');
 //        debug ($sumNVATimePerProcess);  

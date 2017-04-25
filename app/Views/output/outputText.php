@@ -27,10 +27,10 @@
 </form>
 <!-- ////////////////check for case if index 0 does not exist => php get keys////////////-->
 <h2>Construction Title :     <strong><?= $allOutputFromProcess [1]['con_name']; ?></strong></h2>
-<h5><strong>...<?= $allOutputFromProcess [1]['con_text']; ?></strong></h5>
+<h5><strong>...<?= $allOutputFromProcess ['con_text']; ?></strong></h5>
 <br>
-<h4>Process :<strong><?= $allOutputFromProcess [1]['pro_name']; ?></strong></h4>
-<h5><strong>...<?= $allOutputFromProcess [1]['pro_text']; ?></strong></h5>
+<h4>Process :<strong><?= $allOutputFromProcess ['pro_name']; ?></strong></h4>
+<h5><strong>...<?= $allOutputFromProcess ['pro_text']; ?></strong></h5>
 <br>
 
 <!--****************General Information**************************-->

@@ -195,7 +195,8 @@ class OutputModel extends \W\Model\Model {
      * 
      */
     public function getOutputFromProcess($pro_id, $limit = 50) {
-
+        debug($pro_id);
+        
         $sql = 'SELECT `pro_id`,
                         `tas_id`,
                         
@@ -273,8 +274,7 @@ class OutputModel extends \W\Model\Model {
 //                Left JOIN workers ON tasks.workers_wor_id = workers.wor_id
         /*
 
-          //debug()
-          /* debug
+           debug
           INNER JOIN workers ON workers.wor_id = tasks.tas_id
           `tas_image1`, `tas_image2`, `tas_image3`,`tas_inserted`, `tas_vocal_message`, `con_inserted`,
           ambiguous: `teams_tea_id`,
@@ -283,6 +283,7 @@ class OutputModel extends \W\Model\Model {
           INNER JOIN workers ON workers.tasks_tas_id = tasks.tas_id
           ORDER BY con_created */
 
+          debug($sql);
 
         $stmt = $this->dbh->prepare($sql);
         $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);
