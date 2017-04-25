@@ -134,17 +134,8 @@ Highcharts.chart('containerBubbles', {
             dataLabels: {
                 enabled: true,
                 format: '{point.name}'
-            },   
-            cursor: 'pointer',
-            point: {
-                events: {
-                    click: function () {
-                        location.href = 'http://localhost/construnaire/public/task/add/';
-                    }
-                }
             }
         }
-        
     },
 
     series: [{
