@@ -2,15 +2,18 @@
 
 namespace Controller;
 
-
 class ConstructionController extends \W\Controller\Controller {
 
     // here starts the construction add method|function
     public function addConstruction() {
-        
+
+
         // Remove all comments
         unset($_SESSION['flash']);
-        
+
+        // Access restriction - remove comment
+        // $this->allowTo(array('admin', 'user'));
+
         // If POST
         if (!empty($_POST)) {
             // debug($_POST);
@@ -19,8 +22,8 @@ class ConstructionController extends \W\Controller\Controller {
             $city = isset($_POST['cit_id']) ? trim($_POST['cit_id']) : '';
             $type = isset($_POST['type']) ? trim($_POST['type']) : '';
             $client = isset($_POST['client']) ? trim($_POST['client']) : '';
-            $startdate = isset ($_POST['con_startdate']) ? trim($_POST['con_startdate']) : '';
-            $enddate = isset ($_POST['con_enddate']) ? trim($_POST['con_enddate']) : '';
+            $startdate = isset($_POST['con_startdate']) ? trim($_POST['con_startdate']) : '';
+            $enddate = isset($_POST['con_enddate']) ? trim($_POST['con_enddate']) : '';
 
             $errorList = array();
             // I validate inputs
@@ -32,7 +35,7 @@ class ConstructionController extends \W\Controller\Controller {
             if (intval($city) <= 0) {
                 $errorList[] = 'City not in DB !';
             }
- 
+
             // type name
             if (intval($type) <= 0) {
                 $errorList[] = 'Type must be at least 3 characters long !';
@@ -47,7 +50,7 @@ class ConstructionController extends \W\Controller\Controller {
             if (empty($errorList)) {
                 // Data is inserted into DB
 
-                
+
                 $constructionModel = new \Model\ConstructionModel();
                 $addConstruction = $constructionModel->insert(array(
                     'con_name' => $name,
@@ -57,7 +60,7 @@ class ConstructionController extends \W\Controller\Controller {
                     'con_startdate' => $startdate,
                     'con_enddate' => $enddate
                 ));
-                
+
                 // If insertion worked out, 
                 // redirection to construction main page
                 if (!empty($addConstruction)) {
@@ -67,32 +70,34 @@ class ConstructionController extends \W\Controller\Controller {
                 } else {
                     $this->flash('Error inserting into the DB !', 'danger');
                 }
-            
             } else {
                 $this->flash(join('<br>', $errorList), 'danger');
-                
             }
         }
-        
+
         //todo get all cities by $cities
 
         $model = new \Model\CityModel();
         $cities = $model->getAllCities();
         $this->show('construction/addconstruction', array(
-            'cities'=>$cities
+            'cities' => $cities
         ));
-    }// end of function|method
+    }
+
+// end of function|method
     //
     // here starts the construction list method|function
+
     public function listConstruction() {
         // Remove all comments
         unset($_SESSION['flash']);
+        
         // restrict access to this page to users and admin
         // line $this->allowTo(.......) must be uncommented !!
         // $this->allowTo(array('admin','user'));
-        
+       
         // code here to list all constructions from DB
-        // 
+
         $model = new \Model\ConstructionModel();
         // $allconstructions recovers all data from method
         // getAllDataFromConstructions()
@@ -103,6 +108,9 @@ class ConstructionController extends \W\Controller\Controller {
             // an associative table must be given to pass “variables”
             'allConstruction' => $allconstructions
         ));
-    }// end of function|method
+    }
 
-} // end of class
+// end of function|method
+}
+
+// end of class
