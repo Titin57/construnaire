@@ -12,7 +12,7 @@ class ConstructionController extends \W\Controller\Controller {
         unset($_SESSION['flash']);
 
         // Access restriction - remove comment
-        // $this->allowTo(array('admin', 'user'));
+        $this->allowTo(array('admin', 'user'));
 
         // If POST
         if (!empty($_POST)) {
@@ -94,7 +94,7 @@ class ConstructionController extends \W\Controller\Controller {
         
         // restrict access to this page to users and admin
         // line $this->allowTo(.......) must be uncommented !!
-        // $this->allowTo(array('admin','user'));
+        $this->allowTo(array('admin','user'));
        
         // code here to list all constructions from DB
 
