@@ -12,7 +12,6 @@
 
 
 <script>
-    var $toto= '<a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/var"></a>'
 //    prnt_r ($tasksFromConstructions);
 Highcharts.chart('containerBubbles', {
 
@@ -95,9 +94,8 @@ Highcharts.chart('containerBubbles', {
                 style: {
                     fontStyle: 'italic'
                 },
-                text: 'mark a process'
+                text: 'mark a process',
                 /*
-                ,
                 x: -10
                 */
             },
@@ -107,26 +105,12 @@ Highcharts.chart('containerBubbles', {
 
     tooltip: {
         useHTML: true,
-//                headerFormat: '<a href= "http://localhost><table>',
-//        pointFormat:
-//            '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
-//            "<tr><th>Process:</th><td>{point.textName}</td></tr>"+ 
-//            '<tr><th>start date :</th><td>{point.startdate}</td></tr>' +
-//            '<tr><th>stop date :</th><td>{point.stopdate}</td></tr>' +
-//            '<tr><th>Construction name:</th><td>{point.con_name}</td></tr>'
-//            ,
-//        footerFormat: '</table></a>',
         headerFormat: '<table>',
         pointFormat:
-            '<tr><th colspan="2"><h3>{point.name}</h3></th></tr>' +
-            "<tr><th>Process:</th><td>{point.textName}</td></tr>"+ 
-            '<tr><th>start date :</th><td>{point.startdate}</td></tr>' +
-            '<tr><th>stop date :</th><td>{point.stopdate}</td></tr>' +
-            '<tr><th>Construction name:</th><td>{point.con_name}</td></tr>'
+            '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>'
             ,
-//                                '<tr><th colspan="2"><h3><a href= "http://localhost">click</a></h3></th></tr>' +
         footerFormat: '</table>',
-        followPointer: false
+        followPointer: true
     },
 
     plotOptions: {
@@ -134,32 +118,22 @@ Highcharts.chart('containerBubbles', {
             dataLabels: {
                 enabled: true,
                 format: '{point.name}'
-            },   
-            cursor: 'pointer',
-            point: {
-                events: {
-                    click: function () {
-                        location.href = 'http://localhost/construnaire/public/task/add/';
-                    }
-                }
             }
         }
-        
     },
 
     series: [{
         data: [
-<?php foreach ($tasksFromConstructions as $key => $value): ?>
-            { x: <?=$value['tas_diff']?>, 
-                y: <?=$value['process_pro_id']?>, 
-                z: <?=$value['tas_id']?>, 
-                con_name: "<?=$value['con_name']?>", 
-                textName: "<?=$value['tas_name']?>", 
-                startdate: "<?=$value['tas_start']?>", 
-                stopdate: "<?=$value['tas_stop']?>", 
-                name: '<a href= "http://localhost<?=$this->url('task_addtask')?>" >    <?=$value['tas_name']?>     </a>', 
-                Process: ' <?=$value['pro_name']?>' },
-<?php endforeach ; ?>
+
+            { x: 8, 
+                y: 20, 
+                z: 24, 
+                con_name: "< ?=$value['con_name']?>", 
+                textName: "< ?=$value['tas_name']?>", 
+                startdate: "< ?=$value['tas_start']?>", 
+                stopdate: "< ?=$value['tas_stop']?>", 
+                name: "<a href= http://www.wf3.fr/ > wf3.fr</a>", 
+                process: " < ?=$value['pro_name']?>" }
         ]
     }],
                 credits: {
