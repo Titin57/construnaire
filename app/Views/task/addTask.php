@@ -131,49 +131,52 @@
 </script>
 
 <script>
-  $( function() {
-    $( ".slider" ).slider({
+ $(function() {
+    $(".slider").slider({
+        value: 50,
         min: 0,
         max: 100,
-        step: 10,
+        //step: 10,
+        slide: function(event, ui) {
+            $(".slider2").slider("value", 100-($(".slider").slider("value")));
+            updateValues();
+        }
+    }); 
+   $(".slider2").slider({
         value: 50,
-        slide: function( event, ui){
-            $(".val").val(ui.value );
+        min: 0,
+        max: 100,
+        //step: 10,
+        slide: function(event, ui) {
+            $(".slider3").slider("value", 100- (($(".slider").slider("value"))+($(".slider2").slider("value"))) );
+            
+            updateValues();
         }
     });
-    $(".val").val($( ".slider" ).slider("value"));
-  });
+    $(".slider3").slider({
+        value: 0,
+        min: 0,
+        max: 100,
+        //step: 10,
+        slide: function(event, ui) {
+            updateValues();
+        }
+    });
+});
+function updateValues()
+{
+    $(".val").val($(".slider").slider("value"));
+    $(".val2").val($(".slider2").slider("value"));
+    $(".val3").val($(".slider3").slider("value"));
+}
 </script>
 
-<script>
-  $( function() {
-    $( ".slider2" ).slider({
-        min: 0,
-        max: 100,
-        step: 10,
-        value: 50,
-        slide: function( event, ui){
-            $(".val2").val(ui.value );
-        }
-    });
-    $(".val2").val($( ".slider2" ).slider("value"));
-  });
-</script>
 
-<script>
-  $( function() {
-    $( ".slider3" ).slider({
-        min: 0,
-        max: 100,
-        step: 10,
-        value: 50,
-        slide: function( event, ui){
-            $(".val3").val(ui.value );
-        }
-    });
-    $(".val3").val($( ".slider3" ).slider("value"));
-  });
-</script>
+
+
+
+
+
 
 <script type="text/javascript">
 
@@ -182,11 +185,6 @@
 var stmints = 0;
 var stseconds = 0;
 var stzecsec = 0;
-
-// function to be executed when the chronometer stops
-//function toAutoStop() {
-// alert('Your life goes on');
-//}
 
 // the initial tenths-of-second, seconds, and minutes
 var zecsec = 0;
@@ -228,9 +226,6 @@ function resetChr() {
   zecsec = 0;  seconds = 00; mints = 00; startchron = 0; 
   document.getElementById('showtm').innerHTML = mints+ ' : '+ seconds+ '<sub>'+ zecsec+ '</sub>';
 }
-
-// start the chronometer, delete this line if you want to not automatically start the stopwatch
-//startChr();
 </script>
 
 <script>
@@ -247,30 +242,7 @@ $( "#reset" ).click(function() {
 });
 </script>
 
-<script>
-    $(document).ready(function() {
 
-	// Intrerception de la soumission du start
-	$('#start').submit(function(e) {
-		e.preventDefault();
-
-			$.ajax({
-				url: 'construnaire\app\Controller\TasksController.php',
-				dataType: 'json',
-				type: 'post',
-				cache: false,
-				data: {
-					tas_start: date("Y-m-d")	
-				}
-			}).done(function(jsonData) {
-				
-				console.log(jsonData);
-			});
-		
-		
-	});
-    });
-</script>
 
 
 

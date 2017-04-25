@@ -4,36 +4,43 @@
 
 
 <form action="" method="post">
-    <legend>Add a worker</legend>
-    <fieldset>
-	<input type="hidden" name="wor_id" value="" />
-            <table>
-		<tr>
-                    <td>Lastname :&nbsp;</td>
-                    <td><input type="text" name="wor_lastname" value=""/></td>
-		</tr>
-		<tr>
-                    <td>Firstname :&nbsp;</td>
-                    <td>                     
-			<input type="text" name="wor_firstname" value=""/>     
-                    </td>
-		</tr>
-		<tr>
-                    <td>Buisness :&nbsp;</td>
-                    <td>
-                        <input type="text" name="wor_quality" value=""/>
-                    </td>
-		</tr>
-		<tr>
-                    <td>Remarque :&nbsp;</td>
-                    <td><textarea name="wor_remark" rows="5" cols="100"></textarea></td>
-		</tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Add"/></td>
-		</tr>	
-            </table>
-    </fieldset>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">Add a worker</div>
+        </div>
+            <fieldset>                
+                    <table>
+                        <tr>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">Lastname :&nbsp;</span>
+                                <input type="text" name="wor_lastname" class="form-control" aria-describedby="basic-addon1">
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">Firstname :&nbsp;</span>
+                                <input type="text" name="wor_firstname" class="form-control" aria-describedby="basic-addon1">
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">Buisness :&nbsp;</span>
+                                <input type="text" name="wor_quality" class="form-control" aria-describedby="basic-addon1">
+                            </div>
+                        </tr>
+                        <tr>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">Remarque :&nbsp;</span>
+                                <textarea name="wor_remark" rows="5" cols="120" class="form-control" aria-describedby="basic-addon1"></textarea>
+                            </div>   
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" value="Add"/></td>
+                        </tr>	
+                    </table>
+            </fieldset>
+    </div>
 </form>	
 
 <?php $this->stop('main_content') ?>

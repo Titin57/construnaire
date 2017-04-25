@@ -85,7 +85,7 @@ class TasksController extends Controller{
                     'tas_time' => $tas_time,
                     );
                    
-                    debug($data);
+                    //debug($data);
 
                 $model2 = new \Model\WorkersModel();
                 $allWorker = $model2->findAll();
