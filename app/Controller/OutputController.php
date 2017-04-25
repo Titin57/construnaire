@@ -8,32 +8,35 @@ use Model\OutputModel;
 class OutputController extends Controller {
 
     public function output() {
-        
-         if(! empty($_POST) ){
-                  $pro_id = (isset($_POST['pro_id']) ? trim($_POST['pro_id']) : '');
 
-                  $this->redirectToRoute('output_outputText',array('id'=>$pro_id));
-        debug($pro_id);   
-        exit;
-         }
+        if (!empty($_POST)) {
+            $pro_id = (isset($_POST['pro_id']) ? trim($_POST['pro_id']) : '');
+            $pro_id_visual = (isset($_POST['pro_id_visual']) ? trim($_POST['pro_id_visual']) : '');
+            
+            if (!empty($pro_id)){
+            $this->redirectToRoute('output_outputText', array('id' => $pro_id));
+            }
+            if (!empty($pro_id_visual)){
+            $this->redirectToRoute('output_outputVisuals', array('id' => $pro_id_visual));
+            }                     
+            else {
+                $this->show('output_output');                                                                           /// not working as expected!!!!!!!!!!!!
+            }
+            
+//            debug($pro_id);
+//            $allOutputFromProcess = $model->getOutputFromProcess(10);
+//        debug($allOutputFromProcess);
+//            exit;
+        }
         $processModel = new \Model\ProcessModel();
         $allProcess = $processModel->findAll();
         $this->show('output/output', array(
-  
             'allProcess' => $allProcess,
-
         ));
     }
 
-    public function outputText() {
+    public function outputText($pro_id) {
 
-        $pro_id = (isset($_POST['id']) ? trim($_POST['id']) : '');
-        //$pro_id = $_POST['pro_id']; 
-        debug($pro_id);
-        //$ro_id = $_GET['id']; 
-        debug($pro_id);
-        debug($pro_id);
-        debug($pro_id);
 
 
         //all constructions 4 use with <select>        
@@ -52,8 +55,8 @@ class OutputController extends Controller {
 
         $model = new \Model\outputModel();
         // output ID still hardcoded
-        $allOutputFromProcess = $model->getOutputFromProcess(10);
-        debug($allOutputFromProcess);
+        $allOutputFromProcess = $model->getOutputFromProcess($pro_id);
+        //debug($allOutputFromProcess);
 // 
         // output ID still hardcoded 
         $sumWastedTimePerProcess = $model->sumWastedTimePerProcess($pro_id);
@@ -140,7 +143,8 @@ class OutputController extends Controller {
             //            partial time VA, NVA ,NVAU
             'sumVATimePerProcess' => $sumVATimePerProcess,
             'sumNVATimePerProcess' => $sumNVATimePerProcess,
-            'sumNVAUTimePerProcess' => $sumNVAUTimePerProcess
+            'sumNVAUTimePerProcess' => $sumNVAUTimePerProcess,
+                'pro_id_visual'=> $pro_id
                 // inserted here for testing purposes //????
                 //    'allOutputFromConstructions' => $allOutputFromConstructions
         ));
@@ -149,11 +153,11 @@ class OutputController extends Controller {
          */
     }
 
-    public function outputVisuals() {
+    public function outputVisuals($pro_id_visual) {
         $model = new \Model\outputModel();
 //       calculate partial NVA process parts
         //////////////////////////////////
-        $pro_id = (isset($_POST['pro_id']) ? trim($_POST['pro_id']) : '');
+//        $pro_id = (isset($_POST['pro_id']) ? trim($_POST['pro_id']) : '');
 
         $getTasksProcessNVA = $model->getTasksProcessNVA(10);
 //        debug ($getTasksProcessNVA);  
@@ -172,10 +176,10 @@ class OutputController extends Controller {
         //////////////////////////////////        
         // output ID still hardcoded
 
-        $allOutputFromProcess = $model->getOutputFromProcess(10);
+        $allOutputFromProcess = $model->getOutputFromProcess($pro_id_visual);
 //        debug($allOutputFromProcess);
 
-        $this->show('output/output', array(
+        $this->show('output/outputVisuals', array(
             'getTasksProcessNVA' => $getTasksProcessNVA,
             'getNormalizingProcessNVA' => $getNormalizingProcessNVA,
 //            'allProcess' => $allProcess,
@@ -184,7 +188,8 @@ class OutputController extends Controller {
 //            partial time VA, NVA ,NVAU
             'sumVATimePerProcess' => $sumVATimePerProcess,
             'sumNVATimePerProcess' => $sumNVATimePerProcess,
-            'sumNVAUTimePerProcess' => $sumNVAUTimePerProcess
+            'sumNVAUTimePerProcess' => $sumNVAUTimePerProcess,
+                'pro_id_visual'=> $pro_id_visual
                 // inserted here for testing purposes //????
                 //    'allOutputFromConstructions' => $allOutputFromConstructions
         ));

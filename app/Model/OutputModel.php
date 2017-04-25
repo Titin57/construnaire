@@ -195,7 +195,7 @@ class OutputModel extends \W\Model\Model {
      * 
      */
     public function getOutputFromProcess($pro_id, $limit = 50) {
-        debug($pro_id);
+        //debug($pro_id);
         
         $sql = 'SELECT `pro_id`,
                         `tas_id`,
@@ -244,9 +244,11 @@ class OutputModel extends \W\Model\Model {
                         (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_va`)) AS `tas_timeVA`,
                         (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva`)) AS `tas_timeNVA`,
                         (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nvau`)) AS `tas_timeNVAU`,
+                        
                         (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_va` * `tas_repeat`)) AS `tas_total_timeVA`,
                         (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nva` * `tas_repeat`)) AS `tas_total_timeNVA`,
                         (ROUND((TIME_TO_SEC(`tas_time`)/60) * `tas_nvau` * `tas_repeat`)) AS `tas_total_timeNVAU`,
+                        
                         ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_va` * `tas_repeat`)) AS `tas_calc_timeVA`,
                         ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nva` * `tas_repeat`)) AS `tas_calc_timeNVA`,
                         ROUND((TIMESTAMPDIFF(MINUTE,`tas_start`,`tas_stop`) * `tas_nvau` * `tas_repeat`)) AS `tas_calc_timeNVAU`
@@ -283,7 +285,7 @@ class OutputModel extends \W\Model\Model {
           INNER JOIN workers ON workers.tasks_tas_id = tasks.tas_id
           ORDER BY con_created */
 
-          debug($sql);
+//          debug($sql);
 
         $stmt = $this->dbh->prepare($sql);
         $stmt->bindvalue(':pro_id', $pro_id, \PDO::PARAM_INT);

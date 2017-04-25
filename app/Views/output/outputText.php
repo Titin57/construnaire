@@ -3,34 +3,18 @@
 <?php $this->start('main_content') ?>
 
 <p>
-    <strong><a href="<?= $this->url('output_outputText') ?> "title="home">visuals</a> - text </strong>
+    <!--<strong><a href="< ?= $this->url('output_outputText') ?> "title="home">visuals</a> - text </strong>-->
+    <strong>
+        <a href=" <?= $this->url('output_outputVisuals', array('id' => $pro_id_visual)) ?> " title="home">visuals</a> - text 
+    </strong>
 </p>
-<form action="<?=$this->url('output_outputText')?>" method="get">
-<!--    <select name="select">
-        <option value"">choose construction</option> 
-        <? php foreach ($allConstructions as $key => $value): ?>
-            <option value="< ?= $value['con_id'] ?>">< ?= $value['con_name'] ?></option> 
-        < ?php endforeach; ?>
-    </select>-->
- 
-        <!--<input type="hidden" name="pro_id"/>-->
-        <select name="">
-<!--        <input type="hidden" name="pro_id"/>
-        <select name="select"  name="pro_id">-->
-            <option>choose process</option> 
-            <?php foreach ($allProcess as $key => $value): ?>
-                <option  value="<?= $value['pro_id'] ?>" ><?= $value['pro_id'] ?>.' '. <?= $value['pro_name'] ?></option> 
-            <?php endforeach; ?>
-        </select>
-        <input type="submit" value="Submit">
-        
-</form>
+
 <!-- ////////////////check for case if index 0 does not exist => php get keys////////////-->
-<h2>Construction Title :     <strong><?= $allOutputFromProcess [1]['con_name']; ?></strong></h2>
-<h5><strong>...<?= $allOutputFromProcess ['con_text']; ?></strong></h5>
+<h2>Construction Title :     <strong><?= $allOutputFromProcess [0]['con_name']; ?></strong></h2>
+<h5><strong>...<?= $allOutputFromProcess [0]['con_text']; ?></strong></h5>
 <br>
-<h4>Process :<strong><?= $allOutputFromProcess ['pro_name']; ?></strong></h4>
-<h5><strong>...<?= $allOutputFromProcess ['pro_text']; ?></strong></h5>
+<h4>Process :<strong><?= $allOutputFromProcess [0]['pro_name']; ?></strong></h4>
+<h5><strong>...<?= $allOutputFromProcess [0]['pro_text']; ?></strong></h5>
 <br>
 
 <!--****************General Information**************************-->
@@ -40,11 +24,11 @@
     -->
     <tr>
         <td><strong>Building type:</strong></td>   
-        <td><?= $allOutputFromProcess [1]['con_type']; ?></td> 
+        <td><?= $allOutputFromProcess [0]['con_type']; ?></td> 
     </tr>
     <tr>
         <td><strong>Commissioned by:</strong></td>   
-        <td><?= $allOutputFromProcess [1]['con_client']; ?></td> 
+        <td><?= $allOutputFromProcess [0]['con_client']; ?></td> 
     </tr>
     <tr>
         <td><strong>City:</strong></td>   
@@ -73,21 +57,21 @@
         </td>
         <td><strong>composed of the workers: </strong></td>
         <td>
-            Bug Error<br>
+<!--            Bug Error<br>
             Bug Error<br>
             Bug Error<br>
             Bug Error<br>
             Bugs Bunny<br>
-            Bug Error<br>
+            Bug Error<br>-->
             <?php foreach ($allOutputFromProcess as $key => $value): ?>
-                <?= $value ['team_worker_id']; ?><br>
+                ..<?= $value ['team_worker_id']; ?><br>
             <?php endforeach; ?>
         </td>
 
 
         <td><strong>Workers involved: </strong></td>
         <td> 
-            Bug Error<br>
+<!--            Bug Error<br>
             Bug Error<br>
             Bug Error<br>
             Bug Error<br>
@@ -95,9 +79,9 @@
             Bug Error<br>
             Bug Error<br>
             Bug Error<br>
-            Bug Error<br>            
+            Bug Error<br>            -->
             <?php foreach ($allOutputFromProcess as $key => $value): ?>
-                <?= $value ['unique_worker_id']; ?><br>
+                ..<?= $value ['unique_worker_id']; ?><br>
             <?php endforeach; ?>
         </td>
     </tr>
@@ -152,6 +136,11 @@
                 <td><?= \Model\OutputModel::floatToPercent($value['tas_nvau']); ?> % <!--4- value of NVAU out of the DB --></td>
                 <td>
                     stopped:(<?= ($value['tas_timeNVA']); ?><!--5 - NAV--> *<br>
+                    <!-- if both values are set, and not 0, and their difference is within +/- 10 minutes -->
+                    <?php if ((isset($value['tas_calc_timeNVA']) && isset($value['tas_total_timeNVA'])) && (($value['tas_calc_timeNVA'] !== 0) && ($value['tas_total_timeNVA'] !== 0)) && ((($value['tas_calc_timeNVA'] - $value['tas_total_timeNVA']) <= -10) || (($value['tas_calc_timeNVA'] - $value['tas_total_timeNVA']) >= 10))): ?>
+                        calc. difference:<br>
+                        <?= ($value['tas_calc_timeNVA'] - $value['tas_total_timeNVA']); ?> <!--7-->
+                    <?php endif; ?>
                     input:<?= ($value['tas_calc_timeNVA']); ?><!--5 - NAV-->
                 </td>
                 <td><?= ($value['tas_repeat']); ?>      )=   <!--6--> </td>
