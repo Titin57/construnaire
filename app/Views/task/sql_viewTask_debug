@@ -1,0 +1,105 @@
+(
+    [0] => Array
+        (
+            [tas_name] => cutting the framework
+            [tas_id] => 1
+            [con_id] => 1
+            [con_name] => treehouse of horror
+            [con_type] => 0
+            [process_pro_id] => 10
+            [pro_name] => `installation of the whirlpool`
+            [tas_stop] => 2017-04-07 12:00:00
+            [tas_date] => 0000-00-00
+            [tas_start] => 2017-02-01 08:00:00
+            [tas_diff] => 19
+        )
+
+    [1] => Array
+        (
+            [tas_name] => assembling the Framework
+            [tas_id] => 2
+            [con_id] => 1
+            [con_name] => treehouse of horror
+            [con_type] => 0
+            [process_pro_id] => 10
+            [pro_name] => `installation of the whirlpool`
+            [tas_stop] => 2017-04-25 00:00:00
+            [tas_date] => 0000-00-00
+            [tas_start] => 2017-01-01 08:00:03
+            [tas_diff] => 1
+        )
+
+    [2] => Array
+        (
+            [tas_name] => laying the floor panels
+            [tas_id] => 3
+            [con_id] => 1
+            [con_name] => treehouse of horror
+            [con_type] => 0
+            [process_pro_id] => 10
+            [pro_name] => `installation of the whirlpool`
+            [tas_stop] => 2017-04-05 19:10:02
+            [tas_date] => 0000-00-00
+            [tas_start] => 0000-00-00 00:00:00
+            [tas_diff] => 21
+        )
+
+    [3] => Array
+        (
+            [tas_name] => laying the floor panels
+            [tas_id] => 4
+            [con_id] => 1
+            [con_name] => treehouse of horror
+            [con_type] => 0
+            [process_pro_id] => 10
+            [pro_name] => `installation of the whirlpool`
+            [tas_stop] => 2017-04-05 19:10:02
+            [tas_date] => 0000-00-00
+            [tas_start] => 0000-00-00 00:00:00
+            [tas_diff] => 21
+        )
+
+    [4] => Array
+        (
+            [tas_name] => laying the floor panels
+            [tas_id] => 5
+            [con_id] => 1
+            [con_name] => treehouse of horror
+            [con_type] => 0
+            [process_pro_id] => 10
+            [pro_name] => `installation of the whirlpool`
+            [tas_stop] => 2017-04-06 19:10:02
+            [tas_date] => 0000-00-00
+            [tas_start] => 0000-00-00 00:00:00
+            [tas_diff] => 20
+        )
+
+    [5] => Array
+        (
+            [tas_name] => task 1
+            [tas_id] => 6
+            [con_id] => 1
+            [con_name] => treehouse of horror
+            [con_type] => 0
+            [process_pro_id] => 9
+            [pro_name] => `installation of the toilet`
+            [tas_stop] => 2017-04-20 04:14:00
+            [tas_date] => 0000-00-00
+            [tas_start] => 2017-04-20 00:00:00
+            [tas_diff] => 6
+        )
+
+    [6] => Array
+        (
+            [tas_name] => task 1
+            [tas_id] => 7
+            [con_id] => 1
+            [con_name] => treehouse of horror
+            [con_type] => 0
+            [process_pro_id] => 10
+            [pro_name] => `installation of the whirlpool`
+            [tas_stop] => 2017-04-20 16:26:00
+            [tas_date] => 0000-00-00
+            [tas_start] => 2017-04-20 00:00:00
+            [tas_diff] => 6
+        )
