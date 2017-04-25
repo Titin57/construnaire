@@ -25,7 +25,8 @@ $w_routes = array(
     ['GET|POST', '/country/', 'Country#addCountry', 'country_addcountry'],
 
     // end routes for country
-    // start routes for construction
+    // start routes for construction  
+    // ['GET|POST', '/construction/', 'Construction#construction', 'construction_construction'],
     ['GET|POST', '/construction/', 'Construction#listconstruction', 'construction_listconstruction'],
     ['GET|POST', '/construction/add/', 'Construction#addconstruction', 'construction_addconstruction'],
     // this part under construction - todo
@@ -35,10 +36,6 @@ $w_routes = array(
 
 
     ['GET', '/workers/', 'Workers#addWorker', 'worker_addWorker'],
-
-
-
-    ['GET|POST', '/construction/', 'Construction#construction', 'construction_construction'],
 
 
     //['GET|POST', '/output/text/[a:process]/[a:id]', 'Output#outputText', 'output_outputText'],

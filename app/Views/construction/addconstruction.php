@@ -31,7 +31,7 @@
 
 
 
-<!--- <input type="country" class="form-control" name="country" value="Luxembourg" placeholder="" /><br /> -->
+        <!--- <input type="country" class="form-control" name="country" value="Luxembourg" placeholder="" /><br /> -->
         <input type="type" class="form-control" name="type" value="" placeholder="Construction type" /><br />
         <input type="client" class="form-control" name="client" value="" placeholder="Client name" /><br />     
         <input type="con_startdate" class="form-control" name="con_startdate" id="datepicker" value="" placeholder="Start date" /><br /> 

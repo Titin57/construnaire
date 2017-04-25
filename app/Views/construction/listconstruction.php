@@ -12,19 +12,23 @@
     <tbody>
 
         <?php foreach ($allConstruction as $currentConstruction) : ?>
-                <tr>
-                    <!--- 
-                    in order to make an hyperlink from this to a other page's
-                    the link to the page must be added as php here 
-                    put all data in two or three columns            
-                    -->
-                    <td><?= $currentConstruction['con_name'] ?></td>
-                    <td><?= $currentConstruction['con_startdate'] ?></td>
+            <tr>
+                <!--- 
+                in order to make an hyperlink from this to a other page's
+                the link to the page must be added as php here 
+                -->
 
-                </tr>
-            <?php endforeach; ?>
+                <td><a href="<?= $this->url('construction_listconstruction', array('con_id' => $currentConstruction['con_id'], 'conName' => $currentConstruction['con_name'])); ?>"><?= $currentConstruction['con_name'] ?></a></td>
+                <td><?= $currentConstruction['con_startdate'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+    <!--- code for buttons to display page addconstruction -->
+    <ul class="nav nav-pills">
+        <li role="presentation" class=""><a href="add/">Add new construction</a></li>
 
-    </tbody>
+    </ul>
+
+</tbody>
 </table>
 
 <?php $this->stop('main_content') ?>

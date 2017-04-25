@@ -100,7 +100,7 @@ class UsersController extends \W\Controller\Controller {
                         'usr_password' => $hashedPassword,
                         'usr_role' => 'user',
                     ));
-                    debug($insertedUser);
+                    // debug($insertedUser);
                     // Si l'insertion a fonctionné, je redirige sur signin
                     if (!empty($insertedUser)) {
                         // Ajoute un message de succès à afficher
@@ -139,10 +139,12 @@ class UsersController extends \W\Controller\Controller {
             if (empty($errorList)) {
                 // Verification of the email address
                 // Here the model is instanced
-                $model = new \W\Model\UsersModel();
+                $model = new \Model\UsersModel();
                 // I call the method|function to return the data for a given email address
                 $userData = $model->getUserByUsernameOrEmail($email);
-
+                //debug($email);
+                //debug($userData);
+                //exit;
                 // If there is an account
                 if ($userData === false) {
                     $this->flash('Email address does not exist !', 'danger');

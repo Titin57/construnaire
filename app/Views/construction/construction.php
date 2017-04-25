@@ -14,7 +14,7 @@
         <?php foreach ($allConstruction as $currentConstruction) : ?>
             <tr>
                 <td><?= $currentConstruction['con_id'] ?></td>
-                <td><?= $this->url('construction_construction', array('con_id' => $currentConstruction['con_id'], 'conName' => $currentConstruction['con_name'])); ?>"><?= $currentConstruction['con_name'] ?></a></td>
+                <td><a href="<?= $this->url('construction_listconstruction', array('con_id' => $currentConstruction['con_id'], 'conName' => $currentConstruction['con_name'])); ?>"><?= $currentConstruction['con_name'] ?></a></td>
                 <td><?= $currentConstruction['con_startdate'] ?></td>
             </tr>
         <?php endforeach; ?>
