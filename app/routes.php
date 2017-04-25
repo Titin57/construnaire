@@ -46,11 +46,14 @@ $w_routes = array(
     ['GET|POST', '/output/visuals/', 'Output#output', 'output_output'],
 
 
+    
     ['GET|POST', '/workers/add/', 'Workers#addworker', 'worker_addworker'],
     ['GET|POST', '/workers/mod/', 'Workers#modworker', 'worker_modworker'],
     ['GET|POST', '/workers/all/', 'Workers#allworker', 'worker_allworker'],
 
+    ['GET|POST', '/task/view/', 'tasks#viewtasks', 'tasks_viewtasks'],
     ['GET|POST', '/task/add/', 'Tasks#addtask', 'task_addtask'],
+    
     ['GET|POST', '/process/', 'Process#process', 'process_process'],
 
     ['GET|POST', '/team/add', 'Teams#addteam', 'team_addteam'],
