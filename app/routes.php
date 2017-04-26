@@ -38,8 +38,6 @@ $w_routes = array(
     //['GET', '/workers/', 'Workers#addWorker', 'worker_addWorker'],
 
 
-    //['GET|POST', '/output/text/[a:process]/[a:id]', 'Output#outputText', 'output_outputText'],
-//    ['GET', '/output/text/process/', 'Output#outputText', 'output_outputText'],
     ['GET|POST', '/output/', 'Output#output', 'output_output'],
     ['GET|POST', '/output/process/text/[i:id]/', 'Output#outputText', 'output_outputText'],
     ['GET|POST', '/output/process/visuals/[i:id]/', 'Output#outputVisuals', 'output_outputVisuals'],
@@ -52,6 +50,8 @@ $w_routes = array(
 
     ['GET|POST', '/task/view/', 'tasks#viewtasks', 'tasks_viewtasks'],
     ['GET|POST', '/task/add', 'Tasks#addtask', 'task_addtask'],
+//    ['GET|POST', '/task/add/', 'Tasks#addtask', 'task_addtask'],  change the route above or uncomment this one
+    ['GET|POST', '/task/mod/[i:id]/', 'Tasks#modtask', 'task_modtask'],
     
     ['GET|POST', '/process/', 'Process#process', 'process_process'],
 
