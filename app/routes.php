@@ -51,7 +51,8 @@ $w_routes = array(
     ['GET|POST', '/task/view/', 'tasks#viewtasks', 'tasks_viewtasks'],
     ['GET|POST', '/task/add', 'Tasks#addtask', 'task_addtask'],
 //    ['GET|POST', '/task/add/', 'Tasks#addtask', 'task_addtask'],  change the route above or uncomment this one
-    ['GET|POST', '/task/mod/[i:id]/', 'Tasks#modtask', 'task_modtask'],
+//    ['GET|POST', '/task/mod/[i:id]/', 'Tasks#modtask', 'task_modtask'],
+    ['GET|POST', '/task/mod/', 'Tasks#modtask', 'task_modtask'],
     
     ['GET|POST', '/process/', 'Process#process', 'process_process'],
 

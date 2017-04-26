@@ -153,7 +153,7 @@ Highcharts.chart('containerBubbles', {
                 startdate: "<?=$value['tas_start']?>", 
                 stopdate: "<?=$value['tas_stop']?>", 
                 name: '<a href= "http://localhost<?=$this->url('task_modtask')?>" >    <?=$value['tas_name']?>     </a>', 
-                url: 'http://localhost<?=$this->url('task_modtask')?><?=$value['tas_id']?>/', 
+                url: 'http://localhost<?=$this->url('task_modtask')?>', 
                 Process: ' <?=$value['pro_name']?>' },
 <?php endforeach ; ?>
         ]

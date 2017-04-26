@@ -155,7 +155,7 @@ class TasksController extends Controller{
         public function viewtasks(){
             $model = new \Model\TasksModel();
             $tasksFromConstructions = $model->getTasksFromConstructions();
-            debug($tasksFromConstructions);
+//            debug($tasksFromConstructions);
             
             $model = new \Model\ProcessModel();  
             $allProcess = $model->findAll();
