@@ -49,29 +49,29 @@
                 <?= $value ['tas_name']; ?><br>
             <?php endforeach; ?>
         </td>
-        <td><strong>Teams involved: </strong></td>   
+<!--        <td><strong>Teams involved: </strong></td>   
         <td> 
-            <?php foreach ($allOutputFromProcess as $key => $value): ?>
-                <?= $value ['tea_name']; ?><br>
-            <?php endforeach; ?>
+            < ?php foreach ($allOutputFromProcess as $key => $value): ?>
+                < ?= $value ['tea_name']; ?><br>
+            < ?php endforeach; ?>
         </td>
         <td><strong>composed of the workers: </strong></td>
         <td>
-<!--            Bug Error<br>
+            Bug Error<br>
             Bug Error<br>
             Bug Error<br>
             Bug Error<br>
             Bugs Bunny<br>
-            Bug Error<br>-->
-            <?php foreach ($allOutputFromProcess as $key => $value): ?>
-                ..<?= $value ['team_worker_id']; ?><br>
-            <?php endforeach; ?>
+            Bug Error<br>
+            < ?php foreach ($allOutputFromProcess as $key => $value): ?>
+                ..< ?= $value ['team_worker_id']; ?><br>
+            < ?php endforeach; ?>
         </td>
 
 
         <td><strong>Workers involved: </strong></td>
         <td> 
-<!--            Bug Error<br>
+            Bug Error<br>
             Bug Error<br>
             Bug Error<br>
             Bug Error<br>
@@ -79,11 +79,11 @@
             Bug Error<br>
             Bug Error<br>
             Bug Error<br>
-            Bug Error<br>            -->
-            <?php foreach ($allOutputFromProcess as $key => $value): ?>
-                ..<?= $value ['unique_worker_id']; ?><br>
-            <?php endforeach; ?>
-        </td>
+            Bug Error<br>            
+            < ?php foreach ($allOutputFromProcess as $key => $value): ?>
+                ..< ?= $value ['unique_worker_id']; ?><br>
+            < ?php endforeach; ?>
+        </td>-->
     </tr>
 </table>
 <br>

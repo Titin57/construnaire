@@ -32,18 +32,17 @@
             Tasks related to the process <?= $allOutputFromProcess[0]['pro_name'] ?>
         </h3>
     </div>
-    <div id="containerArea">
-    </div>
 </div>
 
 
 <!--<div class = "panel-body">-->
-<div id="taskCharts" class="panel-body">
+<div class="panel panel-default">
+        <div id="taskCharts">
     <!--    <div id="taskCharts" class="panel-body" style="margin: auto 10px">-->
     <?php foreach ($allOutputFromProcess as $key => $value): ?>
-        <div id="chart<?= $key ?>" style="min-width: 40%; height: 400px; max-width: 600px; margin: auto; display: inline-block"></div>
+            <div id="chart<?= $key ?>" style="min-width: 40%; height: 400px; max-width: 600px; margin: auto; display: inline-block"></div>
     <?php endforeach; ?>
-</div>
+        </div>
 </div>
 <script>
 //        Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
@@ -409,7 +408,7 @@
             
                         <?php foreach ($getTasksProcessNVA as $key => $value) : ?>
                     {
-            name: '<?=$value['tas_name'].' '.$value['tas_time_input'] ?>',
+            name: '<?=$value['tas_name'].' <br> '.$value['tas_time_input'] .'.min  <br>'?>',
             y: <?= (100/$getNormalizingProcessNVA[0]['tas_sum_nva'])* $value['tas_time_input'] ?>
             },
                         <?php endforeach; ?>

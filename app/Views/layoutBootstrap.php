@@ -43,12 +43,6 @@
                                 <li<?php if ($currentPage == 'construction'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('construction_listconstruction') ?>">Constructions</a>
                                 </li>                                
-                                
-                               
-
-                                <li<?php if ($currentPage == 'home'): ?> class="active"<?php endif; ?>>
-                                    <a href="<?= $this->url('default_home') ?>">Tasks</a>
-                                </li>
                                 <li<?php if ($currentPage == 'addtask'): ?> class="active"<?php endif; ?>>
                                     <a href="<?= $this->url('task_addtask') ?>">Task Observation</a>
                                 </li>
