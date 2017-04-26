@@ -9,6 +9,19 @@ class TasksController extends Controller{
 	/**
 	 * Page d'ajout d'une nouvelle tâche
 	 */
+	public function modtask(){
+            $this->show('task/modtask', array(
+//                'allWorker' => $allWorker,
+//                'allTeam' => $allTeam,
+//                'allProcess' => $allProcess,
+//                'allConstruc' => $allConstruc
+                    
+            ));
+        }
+        /**
+        
+	 * Page d'ajout d'une nouvelle tâche
+	 */
 	public function addtask(){
             
             // Remove all comments
@@ -142,7 +155,7 @@ class TasksController extends Controller{
         public function viewtasks(){
             $model = new \Model\TasksModel();
             $tasksFromConstructions = $model->getTasksFromConstructions();
-//            debug($tasksFromConstructions);
+            debug($tasksFromConstructions);
             
             $model = new \Model\ProcessModel();  
             $allProcess = $model->findAll();

@@ -1,6 +1,6 @@
-<?php  $this->layout('layoutBootstrap', ['title' => ' Task overview', 'currentPage'=>'viewtasks']) ?>
+<?php $this->layout('layoutBootstrap', ['title' => ' Task overview', 'currentPage' => 'viewtasks']) ?>
 
-<?php  $this->start('main_content') ?>
+<?php $this->start('main_content') ?>
 
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -15,25 +15,20 @@
     var $toto= '<a href="https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Statements/var"></a>'
 //    prnt_r ($tasksFromConstructions);
 Highcharts.chart('containerBubbles', {
-
     chart: {
         type: 'bubble',
         plotBorderWidth: 1,
         zoomType: 'xy'
     },
-
     legend: {
         enabled: false
     },
-
     title: {
         text: 'Overview of all the existing tasks'
     },
-
     subtitle: {
         text: 'Tasks are regrouped by their process (X) and distributed acordind to their date (Y)'
     },
-
     xAxis: {
         gridLineWidth: 1,
         title: {
@@ -74,7 +69,6 @@ Highcharts.chart('containerBubbles', {
             zIndex: 3
         }]
     },
-
     yAxis: {
         startOnTick: false,
         endOnTick: false,
@@ -104,7 +98,6 @@ Highcharts.chart('containerBubbles', {
             zIndex: 3
         }]
     },
-
     tooltip: {
         useHTML: true,
 //                headerFormat: '<a href= "http://localhost><table>',
@@ -128,7 +121,6 @@ Highcharts.chart('containerBubbles', {
         footerFormat: '</table>',
         followPointer: false
     },
-
     plotOptions: {
         series: {
             dataLabels: {
@@ -139,14 +131,17 @@ Highcharts.chart('containerBubbles', {
             point: {
                 events: {
                     click: function () {
-                        location.href = 'http://localhost/construnaire/public/task/add/';
+                            var href = this.options.url;
+                            //window.open(href);
+                        
+//                        location.href = 'http://localhost/construnaire/public/task/mod/';
+                        location.href = href;
                     }
                 }
             }
         }
         
     },
-
     series: [{
         data: [
 <?php foreach ($tasksFromConstructions as $key => $value): ?>
@@ -157,7 +152,8 @@ Highcharts.chart('containerBubbles', {
                 textName: "<?=$value['tas_name']?>", 
                 startdate: "<?=$value['tas_start']?>", 
                 stopdate: "<?=$value['tas_stop']?>", 
-                name: '<a href= "http://localhost<?=$this->url('task_addtask')?>" >    <?=$value['tas_name']?>     </a>', 
+                name: '<a href= "http://localhost<?=$this->url('task_modtask')?>" >    <?=$value['tas_name']?>     </a>', 
+                url: 'http://localhost<?=$this->url('task_modtask')?><?=$value['tas_id']?>/', 
                 Process: ' <?=$value['pro_name']?>' },
 <?php endforeach ; ?>
         ]
@@ -165,9 +161,7 @@ Highcharts.chart('containerBubbles', {
                 credits: {
                 enabled: false
             }
-
 });
-
 </script>
 
 <!--classic box-iesque view of the tasks-->
